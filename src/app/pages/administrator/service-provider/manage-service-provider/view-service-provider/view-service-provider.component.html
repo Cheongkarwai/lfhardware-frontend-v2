@@ -1,0 +1,107 @@
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+<div class="container-fluid" *ngIf="serviceProviderDetails$ | async as serviceProviderDetails;else loading">
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <hr/>
+      <span class="px-2"> Service Provider #000{{serviceProviderDetails.id}}</span>
+      <small>{{serviceProviderDetails.status}}</small>
+      <hr/>
+    </div>
+  </div>
+  <div class="row g-4 p-3">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      Verified
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <small>{{serviceProviderDetails.is_verified}}</small>
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      Overview
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <small>{{serviceProviderDetails.overview ? serviceProviderDetails.overview : 'N/A'}}</small>
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      Rating
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <small>{{serviceProviderDetails.rating ? serviceProviderDetails.rating : 'N/A'}}</small>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+    <hr/>
+    <span class="px-2"> Service Provider Coverage</span>
+    <hr/>
+    </div>
+  </div>
+  <div class="row g-4 p-3">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      States
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <ng-container *ngFor="let stateCoverage of serviceProviderDetails.state_coverages; let last = last;">
+        <small>{{stateCoverage + (!last ? ',' : '')}}</small>
+      </ng-container>
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      City
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <ng-container *ngFor="let cityCoverage of serviceProviderDetails.city_coverages; let last = last;">
+        <small>{{cityCoverage + (!last ? ',' : '')}}</small>
+      </ng-container>
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      Country
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <ng-container *ngFor="let countryCoverage of serviceProviderDetails.country_coverages; let last = last;">
+        <small>{{countryCoverage + (!last ? ',' : '')}}</small>
+      </ng-container>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <hr/>
+      <span class="px-2">Services Offered</span>
+      <hr/>
+    </div>
+  </div>
+  <div class="row g-4 p-3">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <ng-container *ngFor="let service of serviceProviderDetails.services; let last = last;">
+        <small>{{service.name + (!last ? ',' : '')}}</small>
+      </ng-container>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <hr/>
+      <span class="px-2">Contact Information</span>
+      <hr/>
+    </div>
+  </div>
+  <div class="row g-4 p-3">
+    <div class="col-md-3 col-lg-3 col-sm-3">
+      Email address
+    </div>
+    <div class="col-md-8 col-lg-8 col-sm-8">
+      <small>{{serviceProviderDetails.contact_info.email_address}}</small>
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-3">
+      Phone number
+    </div>
+    <div class="col-md-8 col-lg-8 col-sm-8">
+      <small>{{serviceProviderDetails.contact_info.phone_number}}</small>
+    </div>
+    <div class="col-md-3 col-lg-3 col-sm-3">
+      Whatsapp
+    </div>
+    <div class="col-md-8 col-lg-8 col-sm-8">
+      <small>{{serviceProviderDetails.contact_info.whatsapp}}</small>
+    </div>
+  </div>
+</div>

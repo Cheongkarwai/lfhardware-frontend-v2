@@ -1,0 +1,113 @@
+
+<form class="row g-4" [formGroup]="bankAccountForm" (ngSubmit)="submitBankingDetails()">
+  <div class="col-md-12 col-lg-12 col-sm-12">
+    <div class="row">
+      <div class="col-md-3 col-lg-3 col-sm-12">
+        <label [tuiLabel]="label">
+        </label>
+        <ng-template #label>
+      <span>
+        Add Bank Account
+      </span>
+          <tui-tooltip
+            content="This is the name"
+            describeId="uniqueId"
+            direction="top-right"
+          ></tui-tooltip>
+        </ng-template>
+      </div>
+      <div class="col-md-9 col-lg-9 col-sm-12">
+        <div class="row g-3">
+          <div class="col-md-12 col-lg-12 col-sm-12">
+            <div class="row g-2">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <label>
+                  Bank
+                </label>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <tui-combo-box
+                  formControlName="bank"
+                  [tuiTextfieldLabelOutside]="true"
+                  tuiTextfieldSize="m"
+                >
+                  Select a bank name
+
+                  <tui-data-list-wrapper
+                    *tuiDataList
+                    [items]="banks"
+                  ></tui-data-list-wrapper>
+                </tui-combo-box>
+                <tui-error
+                  formControlName="bank"
+                  [error]="[] | tuiFieldError | async"
+                ></tui-error>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12">
+            <div class="row g-2">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <label>
+                  Full name
+                </label>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <tui-input
+                  formControlName="full_name"
+                  tuiTextfieldSize="m"
+                  [tuiTextfieldCleaner]="true"
+                >
+                  Enter full name
+                  <input
+                    tuiTextfield
+                    type="text"
+                  />
+                </tui-input>
+                <tui-error
+                  formControlName="full_name"
+                  [error]="[] | tuiFieldError | async"
+                ></tui-error>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12">
+            <div class="row g-2">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <label>
+                  Account Number
+                </label>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <tui-input
+                  formControlName="account_number"
+                  tuiTextfieldSize="m"
+                  [tuiTextfieldCleaner]="true"
+                >
+                  Enter account number
+                  <input
+                    tuiTextfield
+                    type="text"
+                  />
+                </tui-input>
+                <tui-error
+                  formControlName="account_number"
+                  [error]="[] | tuiFieldError | async"
+                ></tui-error>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 col-lg-12 col-sm-12">
+    <div class="d-flex justify-content-between">
+      <button class="btn btn-outline-primary" type="button" [routerLink]="'../'+routes[currentIndex-1].path" (click)="setActiveIndex(currentIndex-1)">
+        Back
+      </button>
+      <button class="btn btn-primary" type="submit">Next
+      </button>
+    </div>
+  </div>
+</form>

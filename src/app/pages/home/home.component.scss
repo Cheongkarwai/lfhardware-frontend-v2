@@ -1,0 +1,55 @@
+
+
+.bg-gray{
+  background-color: #dfdfdf;
+}
+
+
+.card-img-overlay{
+  background-color:rgba(175, 36, 19,0.6);
+  transition:1s ease-in-out;
+}
+
+.card-img-overlay:hover{
+  background-color: rgb(114, 27, 16);
+}
+.brand{
+  background-color:#241c15;
+}
+.about-us{
+
+  /*background-image:url("assets/image/about-us-background.png");*/
+}
+
+.rating-card{
+  transition:1s ease-in-out;
+}
+
+.rating-card:hover,.category-card:hover{
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+}
+
+.title{
+  hr{
+    width:5%;
+    border:0;
+    border-bottom:6px solid #C02425;
+  }
+}
+
+.join-now-section,.overview-section{
+  min-height: 50vh;
+
+}
+.overview-section{
+  background-color:whitesmoke;
+}
+.join-now-section{
+  background-color:lightblue;
+}
+
+
+
+
+
+

@@ -1,0 +1,39 @@
+.hidden {
+  margin-left: -300px;
+  width:0;
+  transition: 2.2s cubic-bezier(.36, -0.01, 0, .77);
+}
+
+.show {
+  flex: 0 0 400px;
+  width: 250px;
+  flex-direction: column;
+  backdrop-filter: blur(30px) saturate(2);
+  -webkit-backdrop-filter: blur(30px) saturate(2);
+  overflow-y: hidden;
+  overflow-x: hidden;
+  transition: 2.2s cubic-bezier(.36, -0.01, 0, .77);
+  padding-left:10px;
+}
+
+
+
+.sub-link li a {
+  padding: 8px 8px;
+}
+
+.sub-link li a:hover, ul li button:hover {
+  background-color: #97ceb7;
+}
+
+.sub-link li a:hover{
+  color:white;
+}
+
+.sub-link li {
+  padding: 10px 10px;
+}
+
+
+
+

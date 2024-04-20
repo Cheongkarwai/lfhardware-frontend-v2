@@ -1,0 +1,407 @@
+
+<div class="bg-gray-50 p-0">
+  <!--
+    Mobile filter dialog
+
+    Off-canvas menu for mobile, show/hide based on off-canvas menu state.
+  -->
+  <div class="relative z-40 sm:hidden" role="dialog" aria-modal="true" [hidden]="!isMobileCanvasMenuOpen">
+    <!--
+      Off-canvas menu backdrop, show/hide based on off-canvas menu state.
+
+      Entering: "transition-opacity ease-linear duration-300"
+        From: "opacity-0"
+        To: "opacity-100"
+      Leaving: "transition-opacity ease-linear duration-300"
+        From: "opacity-100"
+        To: "opacity-0"
+    -->
+    <div class="fixed inset-0 bg-black bg-opacity-25"></div>
+
+    <div class="fixed inset-0 z-40 flex">
+      <!--
+        Off-canvas menu, show/hide based on off-canvas menu state.
+
+        Entering: "transition ease-in-out duration-300 transform"
+          From: "translate-x-full"
+          To: "translate-x-0"
+        Leaving: "transition ease-in-out duration-300 transform"
+          From: "translate-x-0"
+          To: "translate-x-full"
+      -->
+      <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-6 shadow-xl">
+        <div class="flex items-center justify-between px-4">
+          <h2 class="text-lg font-medium text-gray-900">Filter</h2>
+          <button type="button" class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  (click)="closeMobileCanvasMenu()">
+            <span class="sr-only">Close menu</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+        <!-- Filters -->
+        <form class="mt-4" [formGroup]="filterForm">
+          <div class="border-t border-gray-200 px-4 py-6">
+            <h3 class="-mx-2 -my-3 flow-root">
+              <!-- Expand/collapse question button -->
+              <button type="button" class="flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400" aria-controls="filter-section-0" aria-expanded="false"
+              (click)="toggleCategoryFilterSection()">
+                <span class="font-medium text-gray-900">Category</span>
+                <span class="ml-6 flex items-center">
+                  <!--
+                    Expand/collapse icon, toggle classes based on question open state.
+
+                    Open: "-rotate-180", Closed: "rotate-0"
+                  -->
+                  <svg class="rotate-0 h-5 w-5 transform" [ngClass]="isCategoryFilterSectionVisible ? 'rotate-180' : ''"  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+              </button>
+            </h3>
+            <div class="pt-6" id="filter-section-0" [hidden]="!isCategoryFilterSectionVisible" formArrayName="categories">
+              <div class="space-y-6" *ngIf="categories$ | async as categories">
+                <div class="flex items-center" *ngFor="let category of categories; let i = index;" [formGroupName]="i">
+                  <input id="filter-mobile-category-0" formControlName="selected" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                  <label for="filter-mobile-category-0" class="ml-3 text-sm text-gray-500">{{category.name}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="border-t border-gray-200 px-4 py-6">
+            <h3 class="-mx-2 -my-3 flow-root">
+              <!-- Expand/collapse question button -->
+              <button type="button" class="flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400" aria-controls="filter-section-1" aria-expanded="false"
+              (click)="toggleBrandFilterSection()">
+                <span class="font-medium text-gray-900">Brand</span>
+                <span class="ml-6 flex items-center">
+                  <!--
+                    Expand/collapse icon, toggle classes based on question open state.
+
+                    Open: "-rotate-180", Closed: "rotate-0"
+                  -->
+                  <svg class="rotate-0 h-5 w-5 transform" [ngClass]="isBrandFilterSectionVisible ? 'rotate-180' : ''" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                  </svg>
+                </span>
+              </button>
+            </h3>
+            <div class="pt-6" id="filter-section-1" [hidden]="!isBrandFilterSectionVisible" formArrayName="brands">
+              <div class="space-y-6" *ngIf="brands$ | async as brands">
+                <div class="flex items-center" *ngFor="let brand of brands;let i = index;" [formGroupName]="i">
+                  <input id="filter-mobile-brand-0" formControlName="selected" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                  <label for="filter-mobile-brand-0" class="ml-3 text-sm text-gray-500">{{brand.name}}</label>
+                </div>
+              </div>
+            </div>
+            <div class="pt-8">
+              <app-button text="Apply Filter" (click)="applyFilter()"></app-button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-9xl px-4 text-center sm:px-6 lg:max-w-9xl lg:px-8">
+    <div class="py-24">
+      <h1 class="text-4xl font-bold tracking-tight text-gray-900">Products</h1>
+      <p class="mx-auto mt-4 max-w-3xl text-base text-gray-500">Thoughtfully designed objects for the workspace, home, and travel.</p>
+    </div>
+
+    <section aria-labelledby="filter-heading" class="border-t border-gray-200 py-6">
+      <h2 id="filter-heading" class="sr-only">Product filters</h2>
+
+      <div class="flex items-center justify-between">
+        <div class="relative inline-block text-left">
+          <div>
+            <button type="button" class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900" id="mobile-menu-button" aria-expanded="false" aria-haspopup="true"
+            (click)="toggleSortFilter()">
+              Sort
+              <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+
+          <!--
+            Dropdown menu, show/hide based on menu state.
+
+            Entering: "transition ease-out duration-100"
+              From: "transform opacity-0 scale-95"
+              To: "transform opacity-100 scale-100"
+            Leaving: "transition ease-in duration-75"
+              From: "transform opacity-100 scale-100"
+              To: "transform opacity-0 scale-95"
+          -->
+          <div class="absolute left-0 z-10 mt-2 w-40 origin-top-left rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="mobile-menu-button" tabindex="-1"
+          [hidden]="!isSortFilterOpen">
+            <div class="py-1" role="none">
+              <!-- Active: "bg-gray-100", Not Active: "" -->
+              <a href="#" class="block px-4 py-2 text-sm font-medium text-gray-900" role="menuitem" tabindex="-1" id="mobile-menu-item-0">A-Z</a>
+<!--              <a href="#" class="block px-4 py-2 text-sm font-medium text-gray-900" role="menuitem" tabindex="-1" id="mobile-menu-item-1">Best Rating</a>-->
+<!--              <a href="#" class="block px-4 py-2 text-sm font-medium text-gray-900" role="menuitem" tabindex="-1" id="mobile-menu-item-2">Newest</a>-->
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile filter dialog toggle, controls the 'mobileFilterDialogOpen' state. -->
+
+        <button type="button" class="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden" (click)="openMobileCanvas()">Filters</button>
+
+
+        <form class="hidden sm:flex sm:items-baseline sm:space-x-8" [formGroup]="filterForm">
+          <div id="desktop-menu-0" class="relative inline-block text-left">
+            <div>
+              <button type="button" class="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900" aria-expanded="false" (click)="toggleCategoryFilter()">
+                <span>Category</span>
+<!--                <span class="ml-1.5 rounded bg-gray-200 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-gray-700">1</span>-->
+                <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+
+            <!--
+              Entering: "transition ease-out duration-100"
+                From: "transform opacity-0 scale-95"
+                To: "transform opacity-100 scale-100"
+              Leaving: "transition ease-in duration-75"
+                From: "transform opacity-100 scale-100"
+                To: "transform opacity-0 scale-95"
+            -->
+            <div class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none" [hidden]="!isCategoryFilterOpen" formArrayName="categories">
+              <div class="space-y-4 overflow-auto h-52" *ngIf="categories$ | async as categories">
+                <div class="flex items-center" *ngFor="let category of categories;let i = index;" [formGroupName]="i">
+                  <input id="filter-category-0"  formControlName="selected" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                  <label for="filter-category-0" class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{category.name}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="desktop-menu-1" class="relative inline-block text-left">
+            <div>
+              <button type="button" class="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900" aria-expanded="false" (click)="toggleBrandFilter()">
+                <span>Brand</span>
+                <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+
+            <!--
+              Entering: "transition ease-out duration-100"
+                From: "transform opacity-0 scale-95"
+                To: "transform opacity-100 scale-100"
+              Leaving: "transition ease-in duration-75"
+                From: "transform opacity-100 scale-100"
+                To: "transform opacity-0 scale-95"
+            -->
+            <div class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none" [hidden]="!isBrandFilterOpen" formArrayName="brands">
+              <div class="space-y-4 overflow-auto h-52" *ngIf="brands$ | async as brands;">
+                <div class="flex items-center" *ngFor="let brand of brands;let i = index;" [formGroupName]="i">
+                  <input id="filter-brand-0" formControlName="selected" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">
+                  <label for="filter-brand-0" class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{brand.name}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+<!--          <div class="relative inline-block text-center">-->
+<!--            <div class="relative mt-2 rounded-md shadow-sm max-w-full">-->
+<!--              <input type="text" name="price" id="price" class="block w-full rounded-md border-0 py-1.5 pl-3 pr-16 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">-->
+<!--              <div class="absolute inset-y-0 right-4 flex items-center">-->
+<!--                <a href="#" class="-m-2 p-2 text-gray-400 hover:text-gray-500">-->
+<!--                  <span class="sr-only">Apply</span>-->
+<!--                  <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"-->
+<!--                       aria-hidden="true">-->
+<!--                    <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--                          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>-->
+<!--                  </svg>-->
+<!--                </a>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+          <app-button text="Apply Filter" (click)="applyFilter()"></app-button>
+<!--          <button class="rounded-none bg-rose-600">Save Changes</button>-->
+<!--          <div id="desktop-menu-2" class="relative inline-block text-left">-->
+<!--            <div>-->
+<!--              <button type="button" class="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900" aria-expanded="false">-->
+<!--                <span>Color</span>-->
+<!--                <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">-->
+<!--                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />-->
+<!--                </svg>-->
+<!--              </button>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash;-->
+<!--              Entering: "transition ease-out duration-100"-->
+<!--                From: "transform opacity-0 scale-95"-->
+<!--                To: "transform opacity-100 scale-100"-->
+<!--              Leaving: "transition ease-in duration-75"-->
+<!--                From: "transform opacity-100 scale-100"-->
+<!--                To: "transform opacity-0 scale-95"-->
+<!--            &ndash;&gt;-->
+<!--            <div class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">-->
+<!--              <form class="space-y-4">-->
+<!--                <div class="flex items-center">-->
+<!--                  <input id="filter-color-0" name="color[]" value="white" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
+<!--                  <label for="filter-color-0" class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">White</label>-->
+<!--                </div>-->
+<!--                <div class="flex items-center">-->
+<!--                  <input id="filter-color-1" name="color[]" value="black" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
+<!--                  <label for="filter-color-1" class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">Black</label>-->
+<!--                </div>-->
+<!--                <div class="flex items-center">-->
+<!--                  <input id="filter-color-2" name="color[]" value="grey" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
+<!--                  <label for="filter-color-2" class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">Grey</label>-->
+<!--                </div>-->
+<!--              </form>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div id="desktop-menu-3" class="relative inline-block text-left">-->
+<!--            <div>-->
+<!--              <button type="button" class="group inline-flex items-center justify-center text-sm font-medium text-gray-700 hover:text-gray-900" aria-expanded="false">-->
+<!--                <span>Sizes</span>-->
+<!--                <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">-->
+<!--                  <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />-->
+<!--                </svg>-->
+<!--              </button>-->
+<!--            </div>-->
+
+<!--            &lt;!&ndash;-->
+<!--              Entering: "transition ease-out duration-100"-->
+<!--                From: "transform opacity-0 scale-95"-->
+<!--                To: "transform opacity-100 scale-100"-->
+<!--              Leaving: "transition ease-in duration-75"-->
+<!--                From: "transform opacity-100 scale-100"-->
+<!--                To: "transform opacity-0 scale-95"-->
+<!--            &ndash;&gt;-->
+<!--            <div class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">-->
+<!--              <form class="space-y-4">-->
+<!--                <div class="flex items-center">-->
+<!--                  <input id="filter-sizes-0" name="sizes[]" value="s" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
+<!--                  <label for="filter-sizes-0" class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">S</label>-->
+<!--                </div>-->
+<!--                <div class="flex items-center">-->
+<!--                  <input id="filter-sizes-1" name="sizes[]" value="m" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
+<!--                  <label for="filter-sizes-1" class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">M</label>-->
+<!--                </div>-->
+<!--                <div class="flex items-center">-->
+<!--                  <input id="filter-sizes-2" name="sizes[]" value="l" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500">-->
+<!--                  <label for="filter-sizes-2" class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">L</label>-->
+<!--                </div>-->
+<!--              </form>-->
+<!--            </div>-->
+<!--          </div>-->
+        </form>
+      </div>
+    </section>
+  </div>
+</div>
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+<main class="min-h-screen flex justify-center p-24 gap-3">
+  <div *ngIf="(productPageable$ | async) as productPageable; else loading;">
+      <ng-container *ngIf="productPageable.items.length === 0;else found;">
+        <div class="py-6 min-w-screen h-full flex justify-center items-center">
+          <div class="flex flex-col justify-center items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+
+            <p class="text-lg pt-10 font-medium text-gray-900 mb-3 text-center">Product not found</p>
+            <p class="text-sm font-medium text-gray-500 mb-3 text-center">Looks like there is no matching product</p>
+            <app-button text="Reset filter" (click)="resetFilter()"></app-button>
+          </div>
+        </div>
+      </ng-container>
+    <ng-template #found>
+      <div class="flex flex-col items-center float-end" *ngIf="productPageable.items.length > 0">
+        <!-- Help text -->
+        <span class="text-sm text-gray-700 dark:text-gray-400">
+      Showing <span
+          class="font-semibold text-gray-900 dark:text-gray-400">{{productPageable.current_page * pageRequest.page_size}}</span> to <span
+          class="font-semibold text-gray-900 dark:text-gray-400">{{productPageable.size * (productPageable.current_page + 1)}}</span> of <span
+          class="font-semibold text-gray-900 dark:text-gray-400">{{productPageable.total_elements / pageRequest.page_size | mathCeil}}</span> Entries
+  </span>
+        <div class="inline-flex mt-2 xs:mt-0">
+          <button
+            class="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-rose-600 border-0  border-rose-600 rounded-s hover:bg-rose-600 dark:bg-rose-600 dark:border-rose-600 dark:text-gray-400 dark:hover:bg-rose-600 dark:hover:text-white disabled:bg-gray-200"
+            (click)="previousPage()" [disabled]="!productPageable.has_previous_page">
+            Prev
+          </button>
+          <button
+            class="flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-rose-600 border-0  border-rose-600 rounded-e hover:bg-rose-600 dark:bg-rose-600 dark:border-rose-600 dark:text-gray-400 dark:hover:bg-rose-600 dark:hover:text-white disabled:bg-gray-200"
+            (click)="nextPage()" [disabled]="!productPageable.has_next_page">
+            Next
+          </button>
+        </div>
+      </div>
+<!--      <tui-pagination class="float-end"-->
+<!--                      [index]="productPageable.current_page"-->
+<!--                      [length]="productPageable.total_elements / productPageable.size | mathCeil"-->
+<!--                      (indexChange)="fetchPage($event)"-->
+<!--      ></tui-pagination>-->
+      <div class="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
+        <div *ngFor="let product of productPageable.items">
+          <div class="relative">
+            <div class="relative h-72 w-full overflow-hidden rounded-lg">
+              <img [src]="product.product_images[0]?.path" [alt]="product.description" class="h-full w-full object-cover object-center">
+            </div>
+            <div class="relative mt-4">
+              <h3 class="text-sm font-medium text-gray-900">{{product.name}}</h3>
+              <p class="mt-1 text-sm text-gray-500">{{product.description}}</p>
+            </div>
+            <div class="absolute inset-x-0 top-0 flex h-72 items-end justify-end overflow-hidden rounded-lg p-4">
+              <div aria-hidden="true" class="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black opacity-50"></div>
+              <p class="relative text-lg font-semibold text-white">{{product.price |currency : 'MYR'}}</p>
+            </div>
+          </div>
+          <div class="mt-6">
+            <button class="relative flex items-center justify-center rounded-md border border-transparent bg-gray-100 px-8 py-2 text-sm font-medium text-gray-900 hover:bg-gray-200 w-full" (click)="quickView(product)">Quick View</button>
+          </div>
+        </div>
+        <!--        <div class="grid grid-cols-4 gap-4">-->
+        <!--          <div *ngFor="let product of productPageable.items">-->
+        <!--            <div class="p-5 shadow-2xl">-->
+        <!--              <div class="card-body">-->
+        <!--                <div class="row">-->
+        <!--                  <div class="col-md-12 col-lg-12 col-sm-12">-->
+        <!--                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/new/img(5).webp"-->
+        <!--                         class="w-100" />-->
+        <!--                  </div>-->
+        <!--                  <div class="col-md-12 col-lg-12 col-sm-12">-->
+        <!--                    <h3>{{product.name}}</h3>-->
+        <!--                    <h5>Description</h5>-->
+        <!--                    <p class="text-truncate mb-4 mb-md-0">-->
+        <!--                      {{product.description}}-->
+        <!--                    </p>-->
+        <!--                  </div>-->
+        <!--                  <div class="col-md-12 col-lg-12 col-sm-12">-->
+        <!--                    <h4 class="mb-1 me-1">{{ product.price | currency : 'MYR '}}</h4>-->
+        <!--                  </div>-->
+        <!--                  <div class="col-md-12 col-lg-12 col-sm-12">-->
+        <!--                    <div class="row g-2">-->
+        <!--                      <div class="col-md-12 col-lg-12 col-sm-12">-->
+        <!--                        <button class="btn btn-primary w-100 h-100"  type="button" [routerLink]="['../','details',product.id]">View Details</button>-->
+        <!--                      </div>-->
+        <!--                      <div class="col-md-12 col-lg-12 col-sm-12">-->
+        <!--                        <button  class="btn btn-primary w-100 h-100" type="button">-->
+        <!--                          Add to wishlist-->
+        <!--                        </button>-->
+        <!--                      </div>-->
+        <!--                    </div>-->
+        <!--                  </div>-->
+        <!--                </div>-->
+        <!--              </div>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </div>-->
+      </div>
+    </ng-template>
+  </div>
+</main>
+
+<app-product-quickview [product]="selectedData"></app-product-quickview>

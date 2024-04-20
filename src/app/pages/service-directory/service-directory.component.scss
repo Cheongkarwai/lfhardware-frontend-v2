@@ -1,0 +1,27 @@
+.item{
+  display:inline;
+}
+
+.service-category-card-img-overlay{
+  background-color:rgba(175, 36, 19,0.6);
+  transition:1s ease-in-out;
+}
+
+.service-category-card-img-overlay:hover{
+  background-color: rgb(114, 27, 16);
+}
+
+.border-left{
+  border-right:1px solid black;
+}
+
+.test{
+
+  opacity: 0.5;
+}
+
+.img-background{
+  min-height:20rem;
+  opacity:0.4;
+}
+

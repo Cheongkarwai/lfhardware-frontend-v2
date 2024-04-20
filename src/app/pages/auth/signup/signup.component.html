@@ -1,0 +1,180 @@
+<div class="max-w-full" style="min-width:20rem;">
+  <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-lg">
+    <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign up now</h2>
+    <form class="space-y-4 md:space-y-6 pt-8" [formGroup]="signUpForm">
+      <div class="grid gap-6 mb-6 md:grid-cols-2">
+        <div>
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your email</label>
+          <input type="email" name="email" id="email"
+                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5  dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                 placeholder="name@company.com"
+                 [ngClass]="usernameControl.touched && usernameControl.errors ? 'ring-1 ring-rose-600' : ''"
+                 formControlName="username">
+          <span *ngIf="(usernameControl.hasError('required')) && usernameControl.touched" class="text-rose-600 text-sm">
+                                *Email is required
+                              </span>
+          <span *ngIf="(usernameControl.hasError('usernameExists')) && usernameControl.touched"
+                class="text-rose-600 text-sm">
+                                *Email has been taken
+                              </span>
+          <span *ngIf="(usernameControl.hasError('pattern')) && usernameControl.touched" class="text-rose-600 text-sm">
+                                *Email is invalid
+                              </span>
+        </div>
+        <div formGroupName="profile">
+          <label for="phone_number" class="block mb-2 text-sm font-medium text-gray-900">Your phone number</label>
+          <input type="tel" name="phone_number" id="phone_number"
+                 class="bg-gray-50 border border-gray-300 sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5  dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                 placeholder="+60xx-xxxxxx"
+                 [ngClass]="phoneNumberControl.touched && phoneNumberControl.errors ? 'ring-1 ring-rose-600' : ''"
+                 formControlName="phone_number">
+          <span *ngIf="(phoneNumberControl.hasError('required')) && phoneNumberControl.touched"
+                class="text-rose-600 text-sm">
+                                *Phone number is required
+                              </span>
+          <span *ngIf="(phoneNumberControl.hasError('phoneNumberExists')) && phoneNumberControl.touched"
+                class="text-rose-600 text-sm">
+                                *Phone number has been taken
+                              </span>
+        </div>
+        <div class="col-span-2">
+          <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>
+          <input type="password" name="password" id="password" placeholder="Password"
+                 class="bg-gray-50 border border-gray-300  sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                 [ngClass]="passwordControl.touched && passwordControl.errors ? 'ring-1 ring-rose-600' : ''"
+                 formControlName="password">
+          <span *ngIf="(passwordControl.hasError('required')) && passwordControl.touched" class="text-rose-600 text-sm">
+                                *Password is required
+                              </span>
+          <span *ngIf="(passwordControl.hasError('pattern')) && passwordControl.touched" class="text-rose-600 text-sm">
+                                *Password must be at least 8 characters, at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character
+                              </span>
+        </div>
+        <div formGroupName="profile" class="col-span-2">
+          <div class="grid gap-6 mb-6 md:grid-cols-2" formGroupName="address">
+            <div class="col-span-2">
+              <label for="address_line_1" class="block mb-2 text-sm font-medium text-gray-900">Address Line 1</label>
+              <input type="text" name="address_line_1" id="address_line_1" placeholder="Address Line 1"
+                     class="bg-gray-50 border border-gray-300  sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                     [ngClass]="addressLine1Control.touched && addressLine1Control.errors ? 'ring-1 ring-rose-600' : ''"
+                     formControlName="address_line_1">
+              <span *ngIf="(addressLine1Control.hasError('required')) && addressLine1Control.touched"
+                    class="text-rose-600 text-sm">
+                                *Address line 1 is required
+                              </span>
+            </div>
+            <div class="col-span-2">
+              <label for="address_line_2" class="block mb-2 text-sm font-medium text-gray-900">Address Line 2
+                (Optional)</label>
+              <input type="text" name="address_line_2" id="address_line_2" placeholder="Address Line 2"
+                     class="bg-gray-50 border border-gray-300  sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                     [ngClass]="addressLine2Control.touched && addressLine2Control.errors ? 'ring-1 ring-rose-600' : ''"
+                     formControlName="address_line_2">
+              <span *ngIf="(addressLine2Control.hasError('required')) && addressLine2Control.touched"
+                    class="text-rose-600 text-sm">
+                                *Address line 2 is required
+                              </span>
+            </div>
+            <div>
+              <label for="city" class="block mb-2 text-sm font-medium text-gray-900">City</label>
+              <input type="text" name="city" id="city" placeholder="City"
+                     class="bg-gray-50 border border-gray-300  sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                     [ngClass]="cityControl.touched && cityControl.errors ? 'ring-1 ring-rose-600' : ''"
+                     formControlName="city">
+              <span *ngIf="(cityControl.hasError('required')) && cityControl.touched"
+                    class="text-rose-600 text-sm">
+                                *City is required
+                              </span>
+            </div>
+            <div>
+              <label for="state" class="block mb-2 text-sm font-medium text-gray-900">State</label>
+              <input type="text" name="state" id="state" placeholder="State"
+                     class="bg-gray-50 border border-gray-300  sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                     [ngClass]="stateControl.touched && stateControl.errors ? 'ring-1 ring-rose-600' : ''"
+                     formControlName="state">
+              <span *ngIf="(stateControl.hasError('required')) && stateControl.touched"
+                    class="text-rose-600 text-sm">
+                                *State is required
+                              </span>
+            </div>
+            <div>
+              <label for="zipcode" class="block mb-2 text-sm font-medium text-gray-900">Postcode</label>
+              <input type="text" name="zipcode" id="zipcode" placeholder="Postcode"
+                     class="bg-gray-50 border border-gray-300  sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                     [ngClass]="zipcodeControl.touched && zipcodeControl.errors ? 'ring-1 ring-rose-600' : ''"
+                     formControlName="zipcode">
+              <span *ngIf="(zipcodeControl.hasError('required')) && zipcodeControl.touched"
+                    class="text-rose-600 text-sm">
+                                *Zipcode is required
+                              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-span-2 flex items-center justify-between flex-col w-full">
+          <button type="submit"
+                  class="w-full text-white bg-rose-600 hover:bg-rose-700 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                  (click)="signUp()">Sign up
+          </button>
+        </div>
+
+          <p class="col-span-2 text-sm font-light text-gray-500 dark:text-gray-400">
+            Already registered an account? <a href="#"
+                                              class="font-medium text-rose-600 hover:underline dark:text-rose-500"
+                                              routerLink="/auth/login">Sign in</a>
+          </p>
+
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!--<div class="col">-->
+<!--  <h1 class="text-center my-5 title">Sign Up</h1>-->
+<!--</div>-->
+<!--<form [formGroup]="signUpForm" (ngSubmit)="signUp()">-->
+<!--  &lt;!&ndash; Full Name input &ndash;&gt;-->
+<!--  <div class="form-outline mb-3">-->
+<!--    <input type="text" class="form-control form-control-lg"-->
+<!--           placeholder="Email Address" formControlName="username" />-->
+<!--    <div class="text-danger" *ngIf="signUpForm.controls['username'].hasError('required') && signUpForm.controls['username'].touched">-->
+<!--      Please fill in the required field-->
+<!--    </div>-->
+<!--    <div class="text-danger" *ngIf="signUpForm.controls['username'].hasError('usernameExists') && signUpForm.controls['username'].touched">-->
+<!--      Username is taken-->
+<!--    </div>-->
+<!--  </div>-->
+<!--<ng-container formGroupName="profile">-->
+<!--  <div class="form-outline mb-3">-->
+<!--    <input type="text" class="form-control form-control-lg"-->
+<!--           placeholder="Phone Number" formControlName="phone_number" />-->
+<!--    <div class="text-danger" *ngIf="signUpForm.get('profile.phone_number')?.hasError('required') && signUpForm.get('profile.phone_number')?.touched">-->
+<!--      Please fill in the required field-->
+<!--    </div>-->
+<!--    <div class="text-danger" *ngIf="signUpForm.get('profile.phone_number')?.hasError('phoneNumberExists')  && signUpForm.get('profile.phone_number')?.touched">-->
+<!--      Phone number is taken-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  &lt;!&ndash; Email input &ndash;&gt;-->
+<!--&lt;!&ndash;  <div class="form-outline mb-4">&ndash;&gt;-->
+<!--&lt;!&ndash;    <input type="email" class="form-control form-control-lg"&ndash;&gt;-->
+<!--&lt;!&ndash;           placeholder="Email Address" formControlName="email_address" />&ndash;&gt;-->
+<!--&lt;!&ndash;  </div>&ndash;&gt;-->
+<!--</ng-container>-->
+
+<!--  &lt;!&ndash; Password input &ndash;&gt;-->
+<!--  <div class="form-outline mb-3">-->
+<!--    <input type="password" class="form-control form-control-lg"-->
+<!--           placeholder="Password" formControlName="password" />-->
+<!--  </div>-->
+<!--  <div class="d-flex justify-content-between align-items-center">-->
+<!--    <div class="text-center text-lg-start my-2 pb-5 d-grid gap-2 col-12 mx-auto">-->
+<!--      <button type="submit" class="btn btn-rose btn-lg">Create Account</button>-->
+
+
+<!--      <p class="small  mt-2 pt-1 mb-0 pb-5 text-align-center text-center">Already have an account? <a-->
+<!--        class="link-danger" href="" routerLink="/auth/login">Log-->
+<!--        In</a></p>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</form>-->

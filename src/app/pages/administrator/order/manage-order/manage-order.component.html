@@ -1,0 +1,146 @@
+<div class="flex justify-between py-10 flex-wrap">
+  <div class="flex flex-col gap-3">
+    <nav class="flex mb-5" aria-label="Breadcrumb">
+      <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+        <li class="inline-flex items-center">
+          <a href="#"
+             class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+            <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+            </svg>
+            Home
+          </a>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <a href="#"
+               class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Orders</a>
+          </div>
+        </li>
+        <li>
+          <div class="flex items-center">
+            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">Manage Orders</span>
+          </div>
+        </li>
+      </ol>
+    </nav>
+    <div>
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All orders</h1>
+    </div>
+  </div>
+</div>
+<div class="flex p-6 justify-between flex-wrap gap-4 flex-shrink">
+  <div class="flex gap-3">
+    <div>
+      <label for="table-search" class="sr-only">Search</label>
+      <div class="relative">
+        <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+          </svg>
+        </div>
+        <input [formControl]="search" type="text" id="search-order" class="block p-3 ps-12 text-sm text-gray-900 border border-gray-300 rounded-lg w-52 sm:w-80 md:w-80 lg:w-80 bg-gray-50 focus:ring-rose-500 focus:border-rose-600 " placeholder="Search for orders">
+      </div>
+    </div>
+    <div class="flex items-center w-full">
+      <div class="flex pl-2 space-x-1">
+        <a href="#"
+           class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z"
+                  clip-rule="evenodd"></path>
+          </svg>
+        </a>
+        <a href="#"
+           class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
+                  clip-rule="evenodd"></path>
+          </svg>
+        </a>
+        <a href="#"
+           class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+                  clip-rule="evenodd"></path>
+          </svg>
+        </a>
+        <a href="#"
+           class="inline-flex justify-center p-1 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"></path>
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button type="button" class="text-white bg-rose-600 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2" (click)="exportCsv()">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 me-4">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
+      </svg>
+      Export Data
+    </button>
+  </div>
+</div>
+<!--<div class="flex justify-between py-10 flex-wrap">-->
+<!--  <div>-->
+<!--    <h5 class="text-xl">Order</h5>-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <button type="button" class="text-white bg-rose-600 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2" (click)="exportCsv()">-->
+<!--      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 me-4">-->
+<!--        <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />-->
+<!--      </svg>-->
+<!--      Export Data-->
+<!--    </button>-->
+
+<!--  </div>-->
+<!--</div>-->
+<div
+  class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+  <ul class="flex flex-wrap -mb-px">
+    <li class="me-2" *ngFor="let link of links">
+      <a (click)="navChange(link.fragment)" [ngClass]="activeId === link.fragment ? 'bg-rose-600 text-white' : '' "
+         class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:border-rose-600 hover:text-rose-300 cursor-pointer">{{link.title}}</a>
+    </li>
+  </ul>
+</div>
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+<ng-container *ngIf="pageableOrder$ | async as orderPageable; else loading;">
+  <div class="relative overflow-x-auto shadow-md sm:rounded-lg border">
+    <app-table [columns]="columns" layout="list" [data]="orderPageable" [search]="searchValue" [menuItems]="menuItems"
+               (contextMenu)="handleContextMenu($event)"></app-table>
+    <!--        <mat-paginator [pageSizeOptions]="[5, 10, 20]"-->
+    <!--                       showFirstLastButtons-->
+    <!--                       aria-label="Select page of periodic elements">-->
+    <!--        </mat-paginator>-->
+  </div>
+  <tui-table-pagination
+    class="px-3 py-3"
+    [total]="orderPageable.total_elements"
+    [page]="pageRequest.page"
+    [size]="pageRequest.page_size"
+    (paginationChange)="changePagination($event)"
+  ></tui-table-pagination>
+</ng-container>
+

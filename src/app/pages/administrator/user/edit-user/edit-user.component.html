@@ -1,0 +1,194 @@
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+<div class="grid grid-cols-1 gap-12 p-12">
+  <div class="grid-cols-subgrid">
+    <h5 class="text-xl">Edit user</h5>
+  </div>
+  <ng-container *ngIf="user$ | async as user">
+    <form [formGroup]="editUserForm" class="grid grid-cols-1 gap-12" *ngIf="formObservables$ | async as formObs; else loading;">
+      <div class="grid grid-cols-subgrid col-span-1 gap-6">
+        <div>
+          <label for="username" class="block text-sm font-medium text-gray-700">Email Address</label>
+          <div class="mt-1">
+            <input type="text" name="username" id="username" formControlName="username"
+                   [ngClass]="usernameControl.touched && usernameControl.errors ? 'ring-1 ring-rose-600' : ''"
+                   class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                   placeholder="Enter username">
+            <span
+              *ngIf="(usernameControl.hasError('whitespace') || usernameControl.hasError('required')) && usernameControl.touched"
+              class="text-rose-600 text-sm">
+                        *Name is required
+                      </span>
+            <span
+              *ngIf="usernameControl.hasError('usernameExists') && usernameControl.touched"
+              class="text-rose-600 text-sm">
+                        *Username is taken
+                      </span>
+          </div>
+        </div>
+        <div>
+          <label for="roles" class="block mb-2 text-sm font-medium text-gray-700">Roles</label>
+          <select id="roles" name="roles" formControlName="roles"
+                  [compareWith]="compareRole"
+                  [ngClass]="rolesControl.touched && rolesControl.errors ? 'ring-1 ring-rose-600' : ''"
+                  class="block w-full rounded-md border-0 py-2 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+            <option value="">Please select a role</option>
+            <option *ngFor="let role of formObs[0]" [ngValue]="role">{{role.name}}</option>
+          </select>
+          <span
+            *ngIf="rolesControl.hasError('required') && rolesControl.touched"
+            class="text-rose-600  text-sm">
+                        *Please select a role
+                      </span>
+        </div>
+        <ng-container formGroupName="profile">
+
+          <!--        <div>-->
+          <!--          <label for="email_address" class="block text-sm font-medium text-gray-700">Email address</label>-->
+          <!--          <div class="mt-1">-->
+          <!--            <input type="email" name="email_address" id="email_address" formControlName="email_address"-->
+          <!--                   [ngClass]="emailAddressControl.touched && emailAddressControl.errors ? 'ring-1 ring-rose-600' : ''"-->
+          <!--                   class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"-->
+          <!--                   placeholder="Enter email address">-->
+          <!--            <span-->
+          <!--              *ngIf="(emailAddressControl.hasError('whitespace') || emailAddressControl.hasError('required')) && emailAddressControl.touched"-->
+          <!--              class="text-rose-600 text-sm">-->
+          <!--                        *Email address is required-->
+          <!--                      </span>-->
+          <!--          </div>-->
+          <!--        </div>-->
+          <div>
+            <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone number</label>
+            <div class="mt-1">
+              <input type="tel" name="phone_number" id="phone_number" formControlName="phone_number"
+                     [ngClass]="phoneNumberControl.touched && phoneNumberControl.errors ? 'ring-1 ring-rose-600' : ''"
+                     class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                     placeholder="Enter phone number">
+              <span
+                *ngIf="(phoneNumberControl.hasError('whitespace') || phoneNumberControl.hasError('required')) && phoneNumberControl.touched"
+                class="text-rose-600 text-sm">
+                        *Phone number is required
+                      </span>
+              <span
+                *ngIf="phoneNumberControl.hasError('phoneNumberExists')  && phoneNumberControl.touched"
+                class="text-rose-600 text-sm">
+                        *Phone number is taken
+                      </span>
+            </div>
+          </div>
+          <ng-container formGroupName="address">
+            <div>
+              <label for="address_line_1" class="block text-sm font-medium text-gray-700">Address Line 1</label>
+              <div class="mt-1">
+                <input type="text" name="address_line_1" id="address_line_1" formControlName="address_line_1"
+                       [ngClass]="addressLine1Control.touched && addressLine1Control.errors ? 'ring-1 ring-rose-600' : ''"
+                       class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                       placeholder="Enter address line 1">
+                <span
+                  *ngIf="(addressLine1Control.hasError('whitespace') || addressLine1Control.hasError('required')) && addressLine1Control.touched"
+                  class="text-rose-600 text-sm">
+                        *Address line 1 is required
+                      </span>
+              </div>
+            </div>
+            <div>
+              <label for="address_line_2" class="block text-sm font-medium text-gray-700">Address Line 2</label>
+              <div class="mt-1">
+                <input type="text" name="address_line_2" id="address_line_2" formControlName="address_line_2"
+                       [ngClass]="addressLine2Control.touched && addressLine2Control.errors ? 'ring-1 ring-rose-600' : ''"
+                       class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                       placeholder="Enter address line 2">
+                <span
+                  *ngIf="(addressLine2Control.hasError('whitespace') || addressLine2Control.hasError('required')) && addressLine2Control.touched"
+                  class="text-rose-600 text-sm">
+                        *Address line 2 is required
+                      </span>
+              </div>
+            </div>
+            <div>
+              <label for="city" class="block mb-2 text-sm font-medium text-gray-700">City</label>
+              <select id="city" name="city" formControlName="city"
+                      [compareWith]="compareCity"
+                      [ngClass]="cityControl.touched && cityControl.errors ? 'ring-1 ring-rose-600' : ''"
+                      class="block w-full rounded-md border-0 py-2 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+                <option value="">Please select a city</option>
+                <option *ngFor="let city of formObs[1]" [value]="city.name">{{city.name}}</option>
+              </select>
+              <span
+                *ngIf="cityControl.hasError('required') && cityControl.touched"
+                class="text-rose-600  text-sm">
+                        *Please select a city
+                      </span>
+            </div>
+            <div>
+              <label for="state" class="block mb-2 text-sm font-medium text-gray-700">State</label>
+              <select id="state" name="state" formControlName="state"
+                      [compareWith]="compareState"
+                      [ngClass]="stateControl.touched && stateControl.errors ? 'ring-1 ring-rose-600' : ''"
+                      class="block w-full rounded-md border-0 py-2 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+                <option value="">Please select a state</option>
+                <option *ngFor="let state of formObs[2]" [value]="state.name">{{state.name}}</option>
+              </select>
+              <span
+                *ngIf="stateControl.hasError('required') && stateControl.touched"
+                class="text-rose-600  text-sm">
+                        *Please select a state
+                      </span>
+            </div>
+            <div>
+              <label for="zipcode" class="block text-sm font-medium text-gray-700">Zipcode</label>
+              <div class="mt-1">
+                <input type="text" name="zipcode" id="zipcode" formControlName="zipcode"
+                       [ngClass]="zipcodeControl.touched && zipcodeControl.errors ? 'ring-1 ring-rose-600' : ''"
+                       class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                       placeholder="Enter zipcode">
+                <span
+                  *ngIf="(zipcodeControl.hasError('whitespace') || zipcodeControl.hasError('required')) && zipcodeControl.touched"
+                  class="text-rose-600 text-sm">
+                        *Zipcode is required
+                      </span>
+              </div>
+            </div>
+          </ng-container>
+          <!--        <div>-->
+          <!--          <label for="category" class="block mb-2 text-sm font-medium text-gray-700">Select a-->
+          <!--            category</label>-->
+          <!--          <select id="category" name="category" formControlName="category" *ngIf="categories$ | async as categories"-->
+          <!--                  [ngClass]="categoryControl.touched && categoryControl.errors ? 'ring-1 ring-rose-600' : ''"-->
+          <!--                  class="block w-full rounded-md border-0 py-2 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">-->
+          <!--            <option value="">Please select a category</option>-->
+          <!--            <option *ngFor="let category of categories" [ngValue]="category">{{category.name}}</option>-->
+          <!--          </select>-->
+          <!--          <span-->
+          <!--            *ngIf="categoryControl.hasError('required') && categoryControl.touched"-->
+          <!--            class="text-rose-600  text-sm">-->
+          <!--                        *Please select a category-->
+          <!--                      </span>-->
+          <!--        </div>-->
+          <!--        <div>-->
+          <!--          <label for="brand" class="block mb-2 text-sm font-medium text-gray-700">Select a category</label>-->
+          <!--          <select id="brand" name="brand" formControlName="brand" *ngIf="brands$ | async as brands"-->
+          <!--                  [ngClass]="brandControl.touched && brandControl.errors ? 'ring-1 ring-rose-600' : ''"-->
+          <!--                  class="block w-full rounded-md border-0 py-2 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">-->
+          <!--            <option value="">Please select a brand</option>-->
+          <!--            <option *ngFor="let brand of brands" [ngValue]="brand">{{brand.name}}</option>-->
+          <!--          </select>-->
+          <!--          <span-->
+          <!--            *ngIf="brandControl.hasError('required') && brandControl.touched"-->
+          <!--            class="text-rose-600  text-sm">-->
+          <!--                        *Please select a brand-->
+          <!--                      </span>-->
+          <!--        </div>-->
+        </ng-container>
+      </div>
+      <div class="flex justify-end col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2">
+        <div>
+          <app-button text="Save" [disabled]="showLoading" (click)="editUser()"></app-button>
+        </div>
+      </div>
+    </form>
+  </ng-container>
+</div>
+
+

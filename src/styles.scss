@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+  font-family: 'Poppins Medium','Montserrat Medium';
+}
+@font-face {
+  font-family: 'Montserrat Medium';
+  src: url('assets/fonts/Montserrat/static/Montserrat-Medium.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Montserrat Bold';
+  src: url('assets/fonts/Montserrat/static/Montserrat-Bold.ttf') format('truetype');
+  font-weight: bold;
+}
+
+@font-face{
+  font-family:'Poppins Bold';
+  src:url('assets/fonts/Poppins/Poppins-Bold.ttf') format('truetype');
+}
+
+@font-face{
+  font-family:'Poppins Light';
+  src:url('assets/fonts/Poppins/Poppins-Light.ttf') format('truetype');
+}
+
+@font-face{
+  font-family:'Poppins Medium';
+  src:url('assets/fonts/Poppins/Poppins-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat Semi Bold';
+  src: url('assets/fonts/Montserrat/static/Montserrat-SemiBold.ttf') format('truetype');
+  font-weight: bold;
+}
+
+.title{
+  font-family: 'Poppins Bold','Montserrat Bold';
+  font-size:40px;
+}
+
+.subtitle{
+  font-family:'Poppins Medium','Montserrat Semi Bold';
+  font-size:18px;
+}
+
+:root{
+  --base-color: #C02425;
+  --color-btn-success: green;
+}
+
+
+.base-button{
+  background-color:var(--base-color);
+  color:white;
+}
+
+.base-button:active{
+  background-color:var(--base-color);
+  color:white;
+}
+
+.base-text{
+  color:var(--base-color);
+}
+
+.light-gray {
+  color: var(--tui-text-03);
+}
+
+.bg-light-gray{
+  background-color:var(--tui-text-03);
+}
+
+.cursor-pointer{
+  cursor:pointer;
+}
+
+* {
+  --tui-radius-m: 7px;
+
+}
+
+:host ::ng-deep.t-content{
+  font-weight:normal;
+}
+
+.rating {
+  color: #faaf00;
+}
+
+.bg-light{
+
+}
+
+input,select, textarea{
+  outline:0;
+}
+
+
+
+

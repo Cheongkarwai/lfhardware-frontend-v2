@@ -1,0 +1,84 @@
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+<div class="row g-5 justify-content-center py-5" *ngIf="$serviceProviderDetails | async as serviceProvider;else loading;">
+  <div class="col-md-7 col-lg-7 col-sm-7">
+    <div class="card p-4 shadow">
+      <div class="card-title"><h5 class="title">
+        Request a service from:</h5></div>
+      <hr/>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-md-12 col-lg-12 col-sm-12">
+            <div class="card border-0">
+              <div class="row">
+                <img class="card-title col-md-2 col-lg-2 col-sm-12 m-0 img-fluid" src="./assets/image/logo.png"
+                     width="100" height="150"/>
+                <div class="col-md-10 col-lg-10 col-sm-12">
+                  <div class="card-body">
+                    <div class="d-flex flex-column">
+                      <p>{{serviceProvider.name}}</p>
+                      <tui-rating
+                        class="yellow"
+                        [(ngModel)]="firstRate"
+                      ></tui-rating>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row text-center py-5 g-3">
+              <div class="col-md-4 col-lg-4 col-sm-12">
+                <div>
+                  <h6>High quality worksmanship</h6>
+                </div>
+              </div>
+              <div class="col-md-4 col-lg-4 col-sm-12">
+                <div>
+                  <h6>Guaranteed booking slot</h6>
+                </div>
+              </div>
+              <div class="col-md-4 col-lg-4 col-sm-12">
+                <div>
+                  <h6>Warranty</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 col-lg-12 col-sm-12">
+          <h6 class="subtitle">What kind of service you offered</h6>
+          <tui-select
+            tuiTextfieldSize="m"
+            class="tui-space_vertical-4"
+            [tuiTextfieldLabelOutside]="true"
+            [formControl]="service"
+            (select)="selectService($event)"
+          >
+            Choose type of service
+            <input
+              placeholder="Services Offered"
+              tuiTextfield
+            />
+            <tui-data-list-wrapper
+              *tuiDataList
+              [items]="serviceProvider.services"
+            ></tui-data-list-wrapper>
+          </tui-select>
+        </div>
+        <router-outlet />
+      </div>
+    </div>
+  </div>
+  <div class="col-md-7 col-lg-7 col-sm-7">
+    <app-dynamic-form [layout]="($layout | async) !"></app-dynamic-form>
+  </div>
+  <div class="col-md-6 col-lg-7 col-sm-7">
+    <app-contact-details></app-contact-details>
+  </div>
+  <div class="col-md-7 col-lg-7 col-sm-7">
+    <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSc6Vb6fjCiyx4qIo3yQJ1ZF5vPZzBo-ONkII2WCZx35eHb3qw/viewform?embedded=true" width="640" height="382" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+  </div>
+</div>

@@ -1,0 +1,82 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6 col-sm-12 pb-2">
+    <div class="d-flex align-items-center">
+      <a
+        tuiIconButton
+        type="button"
+        class="tui-space_right-3 tui-space_bottom-3"
+        icon="tuiIconChevronLeft"
+        routerLink="/admin/service-provider/manage-service-provider"
+        size="s"
+      >Back</a>
+      <h2 class="text-gray">Add Service Provider</h2>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-lg-6 col-sm-6">
+    <form class="row g-3" [formGroup]="serviceProviderForm">
+      <div class="col-md-6 col-lg-6 col-sm-12">
+        <tui-input
+          tuiHintContent="Type 5 letters or more"
+          class="b-form"
+          formControlName="username"
+          [tuiTextfieldCleaner]="true"
+          tuiTextfieldSize="m"
+          tuiHintAppearance="onDark"
+          tuiHintContent
+          tuiHintDirection="right"
+          [tuiTextfieldCustomContent]="serviceProviderForm.controls['username'].valid ? success : ''"
+        >
+          Username
+        </tui-input>
+        <ng-template #success>
+          <tui-svg
+            src="tuiIconCheck"
+            class="success tui-space_left-3"
+          ></tui-svg>
+        </ng-template>
+      </div>
+      <div class="col-md-6 col-lg-6 col-sm-12">
+        <tui-input
+          tuiHintContent="Type 5 letters or more"
+          class="b-form"
+          formControlName="email_address"
+          [tuiTextfieldCleaner]="true"
+          tuiTextfieldSize="m"
+          tuiHintAppearance="onDark"
+          tuiHintContent
+          tuiHintDirection="right"
+          [tuiTextfieldCustomContent]="serviceProviderForm.controls['email_address'].valid ? success : ''"
+        >
+          Email Address
+        </tui-input>
+        <ng-template #success>
+          <tui-svg
+            src="tuiIconCheck"
+            class="success tui-space_left-3"
+          ></tui-svg>
+        </ng-template>
+      </div>
+      <div class="col-md-6 col-lg-6 col-sm-12">
+        <tui-input-password
+          formControlName="password"
+          tuiTextfieldSize="m"
+          [tuiTextfieldCustomContent]="serviceProviderForm.controls['password'].valid ? success : ''"
+        >
+          Password
+          <input
+            placeholder="Type a password"
+            tuiTextfield
+          />
+        </tui-input-password>
+        <ng-template #success>
+          <tui-svg
+            src="tuiIconCheck"
+            class="success tui-space_left-3"
+          ></tui-svg>
+        </ng-template>
+      </div>
+    </form>
+  </div>
+</div>

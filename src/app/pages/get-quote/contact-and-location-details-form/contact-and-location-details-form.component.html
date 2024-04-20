@@ -1,0 +1,199 @@
+<div class="row py-5 justify-content-center">
+  <div class="col-md-8 col-lg-8 col-sm-8">
+    <div class="card shadow p-4 form">
+      <div class="card-title">
+        <h5 class="title">Contact & Location Details</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3">
+          <div class="col-md-6 col-lg-6 col-sm-12">
+            <label [tuiLabel]="label">
+              <tui-input
+                nativeId="uniqueId"
+                tuiTextfieldSize="m"
+                type="text"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                Enter your first name
+              </tui-input>
+            </label>
+            <ng-template #label>
+              Last Name
+              <tui-tooltip
+                content="I am a tooltip that is ready for Screen Readers"
+                describeId="uniqueId"
+                direction="top-right"
+              ></tui-tooltip>
+            </ng-template>
+          </div>
+          <div class="col-md-6 col-lg-6 col-sm-12">
+            <label [tuiLabel]="label">
+              <tui-input
+                nativeId="uniqueId"
+                tuiTextfieldSize="m"
+                type="text"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                Enter your last name
+              </tui-input>
+            </label>
+            <ng-template #label>
+              Last Name
+              <tui-tooltip
+                content="I am a tooltip that is ready for Screen Readers"
+                describeId="uniqueId"
+                direction="top-right"
+              ></tui-tooltip>
+            </ng-template>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12">
+            <label [tuiLabel]="emailLabel">
+              <tui-input
+                nativeId="uniqueId"
+                tuiTextfieldSize="m"
+                type="email"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                Enter your email address
+              </tui-input>
+            </label>
+            <ng-template #emailLabel>
+              Email Address
+              <tui-tooltip
+                content="I am a tooltip that is ready for Screen Readers"
+                describeId="uniqueId"
+                direction="top-right"
+              ></tui-tooltip>
+            </ng-template>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12">
+            <label [tuiLabel]="phoneNumberLabel">
+              <tui-input
+                nativeId="uniqueId"
+                tuiTextfieldSize="m"
+                type="text"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                Enter your phone number
+              </tui-input>
+            </label>
+            <ng-template #phoneNumberLabel>
+              Phone Number
+              <tui-tooltip
+                content="I am a tooltip that is ready for Screen Readers"
+                describeId="uniqueId"
+                direction="top-right"
+              ></tui-tooltip>
+            </ng-template>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12">
+            <label [tuiLabel]="addressLine1Label">
+              <tui-input
+                nativeId="uniqueId"
+                tuiTextfieldSize="m"
+                type="text"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                Enter your address line 1
+              </tui-input>
+            </label>
+            <ng-template #addressLine1Label>
+              Address Line 1
+              <tui-tooltip
+                content="I am a tooltip that is ready for Screen Readers"
+                describeId="uniqueId"
+                direction="top-right"
+              ></tui-tooltip>
+            </ng-template>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12">
+            <label [tuiLabel]="addressLine2Label">
+              <tui-input
+                nativeId="uniqueId"
+                tuiTextfieldSize="m"
+                type="text"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                Enter your address line 2
+              </tui-input>
+            </label>
+            <ng-template #addressLine2Label>
+              Address Line 2
+              <tui-tooltip
+                content="I am a tooltip that is ready for Screen Readers"
+                describeId="uniqueId"
+                direction="top-right"
+              ></tui-tooltip>
+            </ng-template>
+          </div>
+          <div class="col-md-4 col-lg-4 col-sm-4">
+            <label [tuiLabel]="cityLabel">
+              <tui-input
+                nativeId="uniqueId"
+                tuiTextfieldSize="m"
+                type="text"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                City
+              </tui-input>
+            </label>
+            <ng-template #cityLabel>
+              City
+              <tui-tooltip
+                content="I am a tooltip that is ready for Screen Readers"
+                describeId="uniqueId"
+                direction="top-right"
+              ></tui-tooltip>
+            </ng-template>
+          </div>
+          <div class="col-md-4 col-lg-4 col-sm-4">
+            <label [tuiLabel]="stateLabel">
+              <tui-input
+                nativeId="uniqueId"
+                tuiTextfieldSize="m"
+                type="text"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                Enter your state
+              </tui-input>
+            </label>
+            <ng-template #stateLabel>
+              State
+              <tui-tooltip
+                content="I am a tooltip that is ready for Screen Readers"
+                describeId="uniqueId"
+                direction="top-right"
+              ></tui-tooltip>
+            </ng-template>
+          </div>
+          <div class="col-md-4 col-lg-4 col-sm-4">
+            <label [tuiLabel]="zipcodeLabel">
+              <tui-input
+                nativeId="uniqueId"
+                tuiTextfieldSize="m"
+                type="text"
+                [tuiTextfieldLabelOutside]="true"
+              >
+                Enter your zipcode
+              </tui-input>
+            </label>
+            <ng-template #zipcodeLabel>
+              Zipcode
+              <tui-tooltip
+                content="I am a tooltip that is ready for Screen Readers"
+                describeId="uniqueId"
+                direction="top-right"
+              ></tui-tooltip>
+            </ng-template>
+          </div>
+          <div class="col-md-12 col-lg-12 col-sm-12">
+            <tui-checkbox-labeled formControlName="testValue1">
+              Agree to <a>Term & Conditions</a>
+              <div class="light-gray">By submitting your request, you are agreeing to our Terms of Use</div>
+            </tui-checkbox-labeled>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

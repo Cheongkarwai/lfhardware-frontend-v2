@@ -1,0 +1,38 @@
+<div class="col">
+  <h1 class="text-center my-5">Log In using email</h1>
+</div>
+<form [formGroup]="otpForm" (ngSubmit)="sendCode()">
+  <div class="form-outline mb-3">
+    <input type="email"  [ngClass]="otpForm.controls['email_address'].errors &&  (otpForm.controls['email_address'].touched || otpForm.controls['email_address'].dirty) ? 'form-control form-control-lg form-control is-invalid' : 'form-control form-control-lg'"
+           placeholder="Enter your Email address" formControlName="email_address" />
+    <div class="invalid-feedback" *ngIf="otpForm.controls['email_address'].hasError('required') && (otpForm.controls['email_address'].touched || otpForm.controls['email_address'].dirty)">Email is required</div>
+  </div>
+  <div class="form-outline mb-3" *ngIf="isSent">
+    <input type="number"  [ngClass]="otpForm.controls['otp'].errors &&  (otpForm.controls['otp'].touched || otpForm.controls['otp'].dirty) ? 'form-control form-control-lg form-control is-invalid' : 'form-control form-control-lg'"
+           placeholder="Enter your OTP code" formControlName="otp" />
+    <div class="invalid-feedback" *ngIf="otpForm.controls['otp'].hasError('required') && (otpForm.controls['otp'].touched || otpForm.controls['otp'].dirty)">OTP is required</div>
+    <div class="invalid-feedback" *ngIf="otpForm.controls['otp'].hasError('min') && otpForm.controls['otp'].hasError('max') && (otpForm.controls['otp'].touched || otpForm.controls['otp'].dirty)">Invalid OTP</div>
+  </div>
+  <div class="d-flex justify-content-between align-items-center">
+    <div class="text-center text-lg-start pb-2 d-grid gap-2 col-12 mx-auto">
+      <ng-container *ngIf="isSent;else notSend">
+        <button type="button" class="btn btn-primary btn-lg" (click)="verifyCode()">Verify Code</button>
+      </ng-container>
+      <ng-template #notSend>
+        <button type="submit" class="btn btn-primary btn-lg">Send Code</button>
+      </ng-template>
+      <div>
+        <div *ngIf="$timer | async as timer">
+          You can send a link in {{ timer | millisecondToMinuteSecond }}
+        </div>
+      </div>
+      <p *ngIf="resend" class="small  mt-1 pt-1 mb-0 pb-2 text-align-center text-center">Don't receive a code yet?
+        <a class="link-danger cursor-pointer" (click)="sendCode()"> Resend code</a>
+      </p>
+      <hr>
+      <p class="small  mt-1 pt-1 mb-0 pb-2 text-align-center text-center">
+        <a  class="link-danger" routerLink="/auth/signup">Sign up for new account</a>
+      </p>
+    </div>
+  </div>
+</form>

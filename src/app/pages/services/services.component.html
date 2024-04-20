@@ -1,0 +1,833 @@
+<header class="p-24 border-b border-gray-200">
+  <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+  <h1 class="text-4xl">Service</h1>
+  <p class="text-sm text-gray-400 pt-7">Find services that suits your needs</p>
+</header>
+<div class="bg-white">
+  <!--
+    Mobile filter dialog
+
+    Off-canvas filters for mobile, show/hide based on off-canvas filters state.
+  -->
+  <div class="relative z-40 sm:hidden" role="dialog" aria-modal="true">
+    <!--
+      Off-canvas menu backdrop, show/hide based on off-canvas menu state.
+
+      Entering: "transition-opacity ease-linear duration-300"
+        From: "opacity-0"
+        To: "opacity-100"
+      Leaving: "transition-opacity ease-linear duration-300"
+        From: "opacity-100"
+        To: "opacity-0"
+    -->
+    <div class="fixed inset-0 bg-black bg-opacity-25"></div>
+
+    <div class="fixed inset-0 z-40 flex">
+      <!--
+        Off-canvas menu, show/hide based on off-canvas menu state.
+
+        Entering: "transition ease-in-out duration-300 transform"
+          From: "translate-x-full"
+          To: "translate-x-0"
+        Leaving: "transition ease-in-out duration-300 transform"
+          From: "translate-x-0"
+          To: "translate-x-full"
+      -->
+      <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
+        <div class="flex items-center justify-between px-4">
+          <h2 class="text-lg font-medium text-gray-900">Filters</h2>
+          <button type="button"
+                  class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400">
+            <span class="sr-only">Close menu</span>
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                 aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Filters -->
+        <form class="mt-4">
+          <div class="border-t border-gray-200 px-4 py-6">
+            <h3 class="-mx-2 -my-3 flow-root">
+              <!-- Expand/collapse section button -->
+              <button type="button"
+                      class="flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400"
+                      aria-controls="filter-section-0" aria-expanded="false">
+                <span class="font-medium text-gray-900">States</span>
+                <span class="ml-6 flex items-center">
+                  <!--
+                    Expand/collapse icon, toggle classes based on section open state.
+
+                    Open: "-rotate-180", Closed: "rotate-0"
+                  -->
+                  <svg class="rotate-0 h-5 w-5 transform" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                          clip-rule="evenodd"/>
+                  </svg>
+                </span>
+              </button>
+            </h3>
+            <!-- Filter section, show/hide based on section state. -->
+            <div class="pt-6" id="filter-section-0">
+              <div class="space-y-6" *ngIf="states$ | async as states">
+                <div class="flex items-center" *ngFor="let state of states">
+                  <input id="filter-mobile-category-0" name="category[]" value="new-arrivals" type="checkbox"
+                         class="h-4 w-4 rounded border-gray-300 text-rose-600 focus:ring-rose-500">
+                  <label for="filter-mobile-category-0" class="ml-3 text-sm text-gray-500">{{state.name}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="border-t border-gray-200 px-4 py-6">
+            <h3 class="-mx-2 -my-3 flow-root">
+              <!-- Expand/collapse section button -->
+              <button type="button"
+                      class="flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400"
+                      aria-controls="filter-section-1" aria-expanded="false">
+                <span class="font-medium text-gray-900">Rating</span>
+                <span class="ml-6 flex items-center">
+                  <!--
+                    Expand/collapse icon, toggle classes based on section open state.
+
+                    Open: "-rotate-180", Closed: "rotate-0"
+                  -->
+                  <svg class="rotate-0 h-5 w-5 transform" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                          clip-rule="evenodd"/>
+                  </svg>
+                </span>
+              </button>
+            </h3>
+            <!-- Filter section, show/hide based on section state. -->
+            <div class="pt-6" id="filter-section-1">
+              <div class="space-y-6">
+                <div class="flex items-center">
+                  <input id="filter-mobile-color-1" name="color[]" value="beige" type="checkbox"
+                         class="h-4 w-4 rounded border-gray-300 text-rose-600 focus:ring-rose-500">
+                  <label for="filter-mobile-color-1" class="ml-3 text-sm text-gray-500">4.0 - 5.0</label>
+                </div>
+                <div class="flex items-center">
+                  <input id="filter-mobile-color-2" name="color[]" value="blue" type="checkbox"
+                         class="h-4 w-4 rounded border-gray-300 text-rose-600 focus:ring-rose-500">
+                  <label for="filter-mobile-color-2" class="ml-3 text-sm text-gray-500">3.0 - 4.0</label>
+                </div>
+                <div class="flex items-center">
+                  <input id="filter-mobile-color-2" name="color[]" value="blue" type="checkbox"
+                         class="h-4 w-4 rounded border-gray-300 text-rose-600 focus:ring-rose-500">
+                  <label for="filter-mobile-color-2" class="ml-3 text-sm text-gray-500">2.0 - 3.0</label>
+                </div>
+                <div class="flex items-center">
+                  <input id="filter-mobile-color-2" name="color[]" value="blue" type="checkbox"
+                         class="h-4 w-4 rounded border-gray-300 text-rose-600 focus:ring-rose-500">
+                  <label for="filter-mobile-color-2" class="ml-3 text-sm text-gray-500">1.0 - 2.0</label>
+                </div>
+                <div class="flex items-center">
+                  <input id="filter-mobile-color-2" name="color[]" value="blue" type="checkbox"
+                         class="h-4 w-4 rounded border-gray-300 text-rose-600 focus:ring-rose-500">
+                  <label for="filter-mobile-color-2" class="ml-3 text-sm text-gray-500"> Less than 1.0</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="border-t border-gray-200 px-4 py-6">
+            <h3 class="-mx-2 -my-3 flow-root">
+              <!-- Expand/collapse section button -->
+              <button type="button"
+                      class="flex w-full items-center justify-between bg-white px-2 py-3 text-sm text-gray-400"
+                      aria-controls="filter-section-2" aria-expanded="false">
+                <span class="font-medium text-gray-900">Price</span>
+                <span class="ml-6 flex items-center">
+                  <!--
+                    Expand/collapse icon, toggle classes based on section open state.
+
+                    Open: "-rotate-180", Closed: "rotate-0"
+                  -->
+                  <svg class="rotate-0 h-5 w-5 transform" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                          clip-rule="evenodd"/>
+                  </svg>
+                </span>
+              </button>
+            </h3>
+            <!-- Filter section, show/hide based on section state. -->
+            <div class="pt-6" id="filter-section-2">
+              <div class="space-y-6">
+                <label for="default-range"
+                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">$100</label>
+                <input id="default-range" type="range" value="50"
+                       class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- Filters -->
+  <section aria-labelledby="filter-heading">
+    <h2 id="filter-heading" class="sr-only">Filters</h2>
+
+    <div class="border-b border-gray-200 bg-white py-4">
+      <div class="mx-auto flex  items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div class="relative inline-block text-left">
+          <div>
+            <button type="button" (click)="toggleSortMenu()"
+                    class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
+                    id="menu-button" aria-expanded="false" aria-haspopup="true">
+              Sort
+              <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500" viewBox="0 0 20 20"
+                   fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                      clip-rule="evenodd"/>
+              </svg>
+            </button>
+          </div>
+
+          <!--
+            Dropdown menu, show/hide based on menu state.
+
+            Entering: "transition ease-out duration-100"
+              From: "transform opacity-0 scale-95"
+              To: "transform opacity-100 scale-100"
+            Leaving: "transition ease-in duration-75"
+              From: "transform opacity-100 scale-100"
+              To: "transform opacity-0 scale-95"
+          -->
+          <div *ngIf="isSortMenuOpen"
+               class="absolute left-0 z-10 mt-2 w-40 origin-top-left rounded-md bg-white shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+               role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+            <div class="py-1" role="none">
+              <!--
+                Active: "bg-gray-100", Not Active: ""
+
+                Selected: "font-medium text-gray-900", Not Selected: "text-gray-500"
+              -->
+              <a href="#" class="font-medium text-gray-900 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                 id="menu-item-0">Most Popular</a>
+              <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Best
+                Rating</a>
+              <a href="#" class="text-gray-500 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2">Newest</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mobile filter dialog toggle, controls the 'mobileFiltersOpen' state. -->
+        <button type="button" class="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden">
+          Filters
+        </button>
+
+        <div class="hidden sm:block">
+          <div class="flow-root">
+            <div class="-mx-4 flex items-center divide-x divide-gray-200">
+              <div class="relative inline-block px-4 text-left">
+                <button type="button" (click)="toggleStateMenu()"
+                        class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
+                        aria-expanded="false">
+                  <span>States</span>
+                  <span
+                    class="ml-1.5 rounded bg-gray-200 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-gray-700">1</span>
+                  <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                       viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                          clip-rule="evenodd"/>
+                  </svg>
+                </button>
+
+                <!--
+                  'Category' dropdown, show/hide based on dropdown state.
+
+                  Entering: "transition ease-out duration-100"
+                    From: "transform opacity-0 scale-95"
+                    To: "transform opacity-100 scale-100"
+                  Leaving: "transition ease-in duration-75"
+                    From: "transform opacity-100 scale-100"
+                    To: "transform opacity-0 scale-95"
+                -->
+                <div *ngIf="isStateFilterMenuOpen"
+                     class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <form class="space-y-4" *ngIf="states$ | async as states" [formGroup]="filterForm">
+                    <ng-container formArrayName="states">
+                      <div class="flex items-center"
+                           *ngFor="let stateControl of stateFormArray.controls; let i = index;">
+                        <ng-container [formGroupName]="i">
+                          <input id="filter-category-0" name="state" formControlName="selected" type="checkbox"
+                                 class="h-4 w-4 rounded border-gray-300 text-rose-600 focus:ring-rose-500">
+                          <label for="filter-category-0"
+                                 class="ml-3 whitespace-nowrap pr-6 text-sm font-medium text-gray-900">{{stateControl?.get('state')?.getRawValue().name}}</label>
+                        </ng-container>
+                      </div>
+                    </ng-container>
+                  </form>
+                </div>
+              </div>
+              <div class="relative inline-block px-4 text-left">
+                <button type="button" (click)="toggleRatingMenu()"
+                        class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
+                        aria-expanded="false">
+                  <span>Rating</span>
+                  <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                       viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                          clip-rule="evenodd"/>
+                  </svg>
+                </button>
+
+                <!--
+                  'Color' dropdown, show/hide based on dropdown state.
+
+                  Entering: "transition ease-out duration-100"
+                    From: "transform opacity-0 scale-95"
+                    To: "transform opacity-100 scale-100"
+                  Leaving: "transition ease-in duration-75"
+                    From: "transform opacity-100 scale-100"
+                    To: "transform opacity-0 scale-95"
+                -->
+                <div *ngIf="isRatingFilterMenuOpen"
+                     class="absolute w-52 right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <form class="space-y-4" [formGroup]="filterForm">
+                    <ng-container formArrayName="rating">
+                      <ng-container *ngFor="let control of ratingFormArray.controls; let i = index;"
+                                    [formGroupName]="i">
+                        <div class="flex items-center">
+                          <input id="filter-mobile-color-1" name="rating" formControlName="selected" type="checkbox"
+                                 class="h-4 w-4 rounded border-gray-300 text-rose-600 focus:ring-rose-500">
+                          <label for="filter-mobile-color-1" class="ml-3 text-sm text-gray-500">
+                            {{control?.get('min')?.getRawValue() + ' - ' + control?.get('max')?.getRawValue()}}
+                          </label>
+                        </div>
+                      </ng-container>
+                    </ng-container>
+                  </form>
+                </div>
+              </div>
+              <div class="relative inline-block px-4 text-left">
+                <button type="button" (click)="togglePriceMenu()"
+                        class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
+                        aria-expanded="false">
+                  <span>Price</span>
+                  <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
+                       viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                          clip-rule="evenodd"/>
+                  </svg>
+                </button>
+
+                <!--
+                  'Sizes' dropdown, show/hide based on dropdown state.
+
+                  Entering: "transition ease-out duration-100"
+                    From: "transform opacity-0 scale-95"
+                    To: "transform opacity-100 scale-100"
+                  Leaving: "transition ease-in duration-75"
+                    From: "transform opacity-100 scale-100"
+                    To: "transform opacity-0 scale-95"
+                -->
+                <div *ngIf="isPriceFilterMenuOpen"
+                     class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <form class="space-y-4">
+                    <app-range-input [control]="maxPriceControl"></app-range-input>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Active filters -->
+    <div class="bg-gray-100">
+      <div class="mx-auto px-4 py-3 sm:flex sm:items-center sm:px-6 lg:px-8">
+        <h3 class="text-sm font-medium text-gray-500">
+          Filters
+          <span class="sr-only">, active</span>
+        </h3>
+
+        <div aria-hidden="true" class="hidden h-5 w-px bg-gray-300 sm:ml-4 sm:block"></div>
+
+        <div class="mt-2 sm:ml-4 sm:mt-0">
+          <div class="-m-1 flex flex-wrap items-center">
+            <span
+              class="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900">
+              <span>Objects</span>
+              <button type="button"
+                      class="ml-1 inline-flex h-4 w-4 flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500">
+                <span class="sr-only">Remove filter for Objects</span>
+                <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
+                  <path stroke-linecap="round" stroke-width="1.5" d="M1 1l6 6m0-6L1 7"/>
+                </svg>
+              </button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<main class="p-20">
+  <ng-template #loading>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full"
+       *ngIf="providerPageable$ | async as serviceProviderPageable; else loading;">
+    <div class="relative mx-auto w-full" *ngFor="let serviceProvider of serviceProviderPageable.items">
+      <a [routerLink]="['/','service-provider-details', serviceProvider.id]"
+         class="relative inline-block duration-300 ease-in-out transition-transform transform hover:-translate-y-2 w-full">
+        <div class="shadow border-2 p-4 rounded-lg bg-white">
+          <img class="flex justify-center relative rounded-lg overflow-hidden h-52 w-full"
+               src="./assets/image/logo.png"/>
+          <div class="mt-4 flex gap-3 items-center">
+            <h2 class="font-medium text-base md:text-lg text-gray-800 line-clamp-1" title="New York">
+              {{serviceProvider.name}}
+            </h2>
+            <svg xmlns="http://www.w3.org/2000/svg" *ngIf="serviceProvider.is_verified" fill="none" viewBox="0 0 24 24"
+                 stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-green-500">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z"/>
+            </svg>
+
+          </div>
+
+          <div class="grid grid-cols-2 grid-rows-2 gap-4 mt-8">
+            <p class="inline-flex flex-col xl:flex-row xl:items-center text-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                   stroke="currentColor" class="w-5 h-5">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                      d="M16.5 12a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25"/>
+              </svg>
+              <span class="mt-2 ms-2 xl:mt-0">
+			  			  {{serviceProvider.contact_info.email_address || 'N/A'}}
+			</span>
+
+            </p>
+            <p class="inline-flex flex-col xl:flex-row xl:items-center text-gray-800">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-5 h-5">
+                <path
+                  d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>
+              </svg>
+
+              <span class="mt-2 ms-2 xl:mt-0">
+			  {{serviceProvider.contact_info.phone_number || 'N/A'}}
+			</span>
+            </p>
+            <p class="inline-flex flex-col xl:flex-row xl:items-center text-gray-800">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 448 512"
+                class="w-5 h-5">
+                <path
+                  d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7 .9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+              </svg>
+              <span class="mt-2 ms-2 xl:mt-0">
+			  {{serviceProvider.contact_info.whatsapp || 'N/A'}}
+			</span>
+            </p>
+          </div>
+
+          <div class="grid grid-cols-3 mt-8">
+            <div class="flex justify-start col-span-2">
+              <div class="flex items-center">
+                <app-rating [rating]="serviceProvider.rating"></app-rating>
+                <p class="text-sm text-gray-700">
+                  {{serviceProvider.rating}}
+                  <span class="sr-only"> out of 5 stars</span>
+                </p>
+                <div aria-hidden="true" class="ml-4 text-sm text-gray-300">·</div>
+                <div class="ml-4 flex">
+                  <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">See all {{serviceProvider.rating}} reviews</a>
+                </div>
+              </div>
+            </div>
+            <div class="flex justify-end col-span-1">
+              <a>View More</a>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+
+
+  </div>
+
+</main>
+
+<!--<div class="row justify-content-center">-->
+<!--  <div class="col-md-7 col-lg-7 col-sm-12">-->
+<!--&lt;!&ndash;    <div class="row pt-4">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="col-md-12 col-lg-12 col-sm-12">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card border-0 p-4">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="card-title text-center">&ndash;&gt;-->
+<!--&lt;!&ndash;            <h2>Our Pros</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;            <h4>The best aircon installer in Malaysia</h4>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="row g-5">&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="col-md-3 col-lg-3 col-sm-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="row text-center">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="border">Hi</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                    &lt;!&ndash;                  <p>Verified Contractor</p>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                    &lt;!&ndash;                  <small>4 star rating or higher</small>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="col-md-3 col-lg-3 col-sm-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="row text-center border">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="border">Hi</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p>Verified</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="col-md-3 col-lg-3 col-sm-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="row text-center border">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="border">Hi</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p>Verified</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="col-md-3 col-lg-3 col-sm-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="row text-center border">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p class="border">Hi</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p>Verified</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--    <form class="row g-2 pt-5" [formGroup]="filterForm">-->
+<!--      <div class="col-md-6 col-lg-6 col-sm-6">-->
+<!--        <tui-input-->
+<!--          tuiTextfieldAppearance="outline"-->
+<!--          tuiTextfieldIconLeft="tuiIconSearchLarge"-->
+<!--          formControlName="search" tuiTextfieldSize="m"-->
+<!--        >-->
+<!--          Search Pro By Name-->
+<!--          <tui-data-list-wrapper-->
+<!--            *tuiDataList-->
+<!--            emptyContent="No results found"-->
+<!--            size="xs"-->
+<!--            [items]="serviceProvidersName$ | async"-->
+<!--          ></tui-data-list-wrapper>-->
+<!--        </tui-input>-->
+<!--      </div>-->
+<!--      <div class="col-md-4 col-lg-4 col-sm-4 d-flex gap-2">-->
+<!--        <div>-->
+<!--          <tui-hosted-dropdown-->
+<!--            [content]="dropdownContent"-->
+<!--          >-->
+<!--            <button-->
+<!--              iconRight="tuiIconChevronDown"-->
+<!--              tuiButton-->
+<!--              type="button"-->
+<!--              size="m"-->
+<!--              appearance="outline"-->
+<!--              (click)="onClick()">-->
+<!--              <small>Rating</small>-->
+<!--              <ng-template #dropdownContent>-->
+<!--                <div class="card border-0">-->
+<!--                  <div class="card-body">-->
+<!--                    <tui-rating-->
+<!--                      class="rating px-2"-->
+<!--                      formControlName="rating"-->
+<!--                      size="s"-->
+<!--                    ></tui-rating>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </ng-template>-->
+<!--            </button>-->
+<!--          </tui-hosted-dropdown>-->
+<!--        </div>-->
+<!--        <div class="w-100">-->
+<!--          <tui-hosted-dropdown-->
+<!--            [content]="priceRangeContent"-->
+<!--            class="w-100"-->
+<!--          >-->
+<!--            <button-->
+<!--              iconRight="tuiIconChevronDown"-->
+<!--              tuiButton-->
+<!--              type="button"-->
+<!--              size="m"-->
+<!--              appearance="outline"-->
+<!--              formControlName="price">-->
+<!--              <small>Price Range</small>-->
+<!--              <ng-template #priceRangeContent>-->
+<!--                <div class="card border-0">-->
+<!--                  <div class="card-body" style="min-width:30em;">-->
+<!--                    <div class="card-title">-->
+<!--                      Select a range-->
+<!--                    </div>-->
+<!--                    <div class="row g-2">-->
+<!--                      <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                        <tui-input-number-->
+<!--                          tuiTextfieldSize="s"-->
+<!--                          tuiHintContent="Euro sign (numeric code 978) is commonly placed AFTER the amount. Use [postfix]."-->
+<!--                          [tuiTextfieldPrefix]="'MYR' | tuiCurrency"-->
+<!--                          formControlName="min_price"-->
+<!--                          decimal="always"-->
+<!--                        >-->
+<!--                          Start range-->
+
+<!--                        </tui-input-number>-->
+<!--                      </div>-->
+<!--                      <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                        <tui-input-number-->
+<!--                          tuiTextfieldSize="s"-->
+<!--                          tuiHintContent="Euro sign (numeric code 978) is commonly placed AFTER the amount. Use [postfix]."-->
+<!--                          [tuiTextfieldPrefix]="'MYR' | tuiCurrency"-->
+<!--                          formControlName="max_price"-->
+<!--                          decimal="always"-->
+<!--                        >-->
+<!--                          End range-->
+<!--                        </tui-input-number>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </ng-template>-->
+<!--            </button>-->
+<!--          </tui-hosted-dropdown>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-md-2 col-lg-2 col-sm-2 d-flex gap-2">-->
+<!--        <app-button text="Apply"></app-button>-->
+<!--&lt;!&ndash;        <div class="w-100 h-100">&ndash;&gt;-->
+<!--&lt;!&ndash;          <button&ndash;&gt;-->
+<!--&lt;!&ndash;            tuiButton&ndash;&gt;-->
+<!--&lt;!&ndash;            type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;            class="tui-space_right-3 tui-space_bottom-3 w-100 h-100"&ndash;&gt;-->
+<!--&lt;!&ndash;            size="s"&ndash;&gt;-->
+<!--&lt;!&ndash;            (click)="applyFilter()"&ndash;&gt;-->
+<!--&lt;!&ndash;          >&ndash;&gt;-->
+<!--&lt;!&ndash;            Apply&ndash;&gt;-->
+<!--&lt;!&ndash;          </button>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--        <app-button text="Clear"></app-button>-->
+<!--&lt;!&ndash;        <div class="w-100 h-100">&ndash;&gt;-->
+<!--&lt;!&ndash;          <button&ndash;&gt;-->
+<!--&lt;!&ndash;            tuiButton&ndash;&gt;-->
+<!--&lt;!&ndash;            type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;            class="tui-space_right-3 tui-space_bottom-3 w-100 h-100"&ndash;&gt;-->
+<!--&lt;!&ndash;            size="s"&ndash;&gt;-->
+<!--&lt;!&ndash;            (click)="clearFilter()"&ndash;&gt;-->
+<!--&lt;!&ndash;          >&ndash;&gt;-->
+<!--&lt;!&ndash;            Clear&ndash;&gt;-->
+<!--&lt;!&ndash;          </button>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--      </div>-->
+<!--      <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--        <span>Filter by state</span>-->
+<!--        <tui-filter *ngIf="states$ | async as states"-->
+<!--                    formControlName="states"-->
+<!--                    [content]="stateContent"-->
+<!--                    [items]="states"-->
+<!--                    size="s"-->
+
+<!--        ></tui-filter>-->
+<!--      </div>-->
+<!--      <ng-template-->
+<!--        #stateContent-->
+<!--        let-item-->
+<!--      >-->
+<!--        {{ item }}-->
+<!--      </ng-template>-->
+<!--    </form>-->
+<!--        <div class="row pt-4 pb-5">-->
+<!--          <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--            <div class="card shadow border-0 p-4">-->
+<!--              <div class="card-title text-center">-->
+<!--                <h2>Our Pros</h2>-->
+<!--                <h4>The best aircon installer in Malaysia</h4>-->
+<!--              </div>-->
+<!--              <div class="card-body">-->
+<!--                <div class="row g-5">-->
+<!--                  <div class="col-md-3 col-lg-3 col-sm-6">-->
+<!--                    <div class="row text-center">-->
+<!--                      <div class="col-md-2 col-sm-2 col-lg-2">-->
+<!--                        <img class="" src="./assets/image/service-provider/approve.png" />-->
+<!--                      </div>-->
+<!--                      <div class="col-md-6 col-sm-6 col-lg-6">-->
+<!--                        <p>Verified Contractor</p>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-3 col-lg-3 col-sm-6">-->
+<!--                    <div class="row text-center">-->
+<!--                      <div class="col-md-2 col-sm-2 col-lg-2">-->
+<!--                        <img class="" src="./assets/image/service-provider/arrows.png" />-->
+<!--                      </div>-->
+<!--                      <div class="col-md-6 col-sm-6 col-lg-6">-->
+<!--                        <p>Compare Quotes</p>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-3 col-lg-3 col-sm-6">-->
+<!--                    <div class="row text-center">-->
+<!--                      <div class="col-md-2 col-sm-2 col-lg-2">-->
+<!--                        <img class="" src="./assets/image/service-provider/protection.png" />-->
+<!--                      </div>-->
+<!--                      <div class="col-md-6 col-sm-6 col-lg-6">-->
+<!--                        <p>Project Guarantee</p>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                  <div class="col-md-3 col-lg-3 col-sm-6">-->
+<!--                    <div class="row text-center">-->
+<!--                      <div class="col-md-2 col-sm-2 col-lg-2">-->
+<!--                        <img class="" src="./assets/image/service-provider/money.png" />-->
+<!--                      </div>-->
+<!--                      <div class="col-md-6 col-sm-6 col-lg-6">-->
+<!--                        <p>Payment Protection</p>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--    <ng-template #loading>-->
+<!--      <app-loading-spinner></app-loading-spinner>-->
+<!--    </ng-template>-->
+<!--    <div class="row g-3 pt-3 py-5" *ngIf="providerPageable$ | async as serviceProviderPageable; else loading;">-->
+<!--      <ng-template #notFound>-->
+<!--        <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--          <div class="card border-0" style="min-height:50rem;">-->
+<!--            <div class="card-body d-flex flex-column justify-content-center align-items-center">-->
+<!--              <div class="pb-3">-->
+<!--                &lt;!&ndash;                  <fa-icon [icon]="faMagnifyingGlass" size="9x"></fa-icon>&ndash;&gt;-->
+<!--                <img src="./assets/image/search.png">-->
+<!--              </div>-->
+<!--              <div class="text-center">-->
+<!--                <span class="h3 pb-5">Service Not Found</span>-->
+<!--              </div>-->
+<!--              <div class="text-center">-->
+<!--                <br/><span class="light-gray">Your search did not match any services.</span>-->
+<!--                <br/> <span class="light-gray">Please try again.</span></div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </ng-template>-->
+<!--      <ng-container *ngIf="serviceProviderPageable.items.length > 0;else notFound;">-->
+<!--        <div class="col-md-12 col-lg-12 col-sm-12"-->
+<!--             *ngFor="let provider of serviceProviderPageable.items; let i = index;">-->
+<!--          <div class="card border-0">-->
+<!--            <div class="row p-0 m-0">-->
+<!--              <img class="card-title col-md-4 col-lg-4 col-sm-12 m-0" src="./assets/image/logo.png"/>-->
+<!--              <div class="col-md-8 col-lg-8 col-sm-12">-->
+<!--                <div class="card-body h-100">-->
+<!--                  <div class="row">-->
+<!--                    <div class="col-md-6 col-lg-6 col-sm-12">-->
+<!--                      <div class="row">-->
+<!--                        <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                          <div class="d-flex gap-4">-->
+<!--                            <h3>{{provider.name}}-->
+<!--                            </h3>-->
+<!--                            <div>-->
+<!--                              <tui-tag-->
+<!--                                size="m"-->
+<!--                                [value]="provider.is_verified ? 'Verified' : 'Not Verified'"-->
+<!--                              ></tui-tag>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      <div class="row">-->
+<!--                        <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                          <tui-rating-->
+<!--                            class="rating px-2"-->
+<!--                            [readOnly]="true"-->
+<!--                            [formControl]="ratingFormArray.at(i)"-->
+<!--                            tuiTextfieldSize="s"-->
+<!--                          ></tui-rating>-->
+<!--                          <small class="rating">{{provider.rating | number : '1.2-2'}}</small>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                      <div class="row pt-5">-->
+<!--                        <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                          <a class="cursor-pointer text-decoration-none base-text" [routerLink]="['/','service-provider-details','SP000'+provider.id]">Read more</a>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-md-6 col-lg-6 col-sm-12">-->
+<!--                      <div class="row g-2">-->
+<!--                        <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                          <app-button text="Request this vendor" [routerLink]="['get-quote']"></app-button>-->
+<!--                        </div>-->
+<!--                        <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                          <div class="row">-->
+<!--                            <div class="col-md-6 col-lg-6 col-sm-12">-->
+<!--                              <button class="btn border w-100 h-100">Whatsapp</button>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6 col-lg-6 col-sm-12">-->
+<!--                              <button class="btn border w-100 h-100">Call</button>-->
+<!--                            </div>-->
+<!--                          </div>-->
+<!--                        </div>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--&lt;!&ndash;                    <p>Phone Number&ndash;&gt;-->
+<!--&lt;!&ndash;                      : {{provider.contact_info.phone_number ? provider.contact_info.phone_number : 'N/A'}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <p>Email Address&ndash;&gt;-->
+<!--&lt;!&ndash;                      : {{provider.contact_info.email_address ? provider.contact_info.email_address : 'N/A'}}</p>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <div class="d-flex gap-1 flex-wrap align-items-center pt-3">&ndash;&gt;-->
+<!--&lt;!&ndash;                      <button&ndash;&gt;-->
+<!--&lt;!&ndash;                        appearance="primary"&ndash;&gt;-->
+<!--&lt;!&ndash;                        tuiButton&ndash;&gt;-->
+<!--&lt;!&ndash;                        type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;                        class="tui-space_right-3 tui-space_bottom-3"&ndash;&gt;-->
+<!--&lt;!&ndash;                        size="s"&ndash;&gt;-->
+<!--&lt;!&ndash;                      >&ndash;&gt;-->
+<!--&lt;!&ndash;                        Contact Now&ndash;&gt;-->
+<!--&lt;!&ndash;                      </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                      <button&ndash;&gt;-->
+<!--&lt;!&ndash;                        appearance="primary"&ndash;&gt;-->
+<!--&lt;!&ndash;                        tuiButton&ndash;&gt;-->
+<!--&lt;!&ndash;                        type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;                        class="tui-space_right-3 tui-space_bottom-3"&ndash;&gt;-->
+<!--&lt;!&ndash;                        size="s"&ndash;&gt;-->
+<!--&lt;!&ndash;                      >&ndash;&gt;-->
+<!--&lt;!&ndash;                        Get Quoted now&ndash;&gt;-->
+<!--&lt;!&ndash;                      </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <hr />-->
+<!--        </div>-->
+<!--        <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--          <tui-pagination-->
+<!--            [index]="serviceProviderPageable.current_page"-->
+<!--            [length]="serviceProviderPageable.total_elements / serviceProviderPageable.size | mathCeil"-->
+<!--            (indexChange)="fetchPage($event)"-->
+<!--          ></tui-pagination>-->
+<!--        </div>-->
+<!--      </ng-container>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

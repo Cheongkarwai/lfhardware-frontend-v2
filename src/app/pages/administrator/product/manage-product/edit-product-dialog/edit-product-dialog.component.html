@@ -1,0 +1,310 @@
+
+<div class="grid grid-cols-1 gap-12 p-12">
+  <div class="grid-cols-subgrid">
+    <h5 class="text-xl">Edit product</h5>
+  </div>
+  <ng-template #loading>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
+  <form *ngIf="productObs$ | async as product; else loading;" [formGroup]="editProductForm" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-12">
+    <div class="grid grid-cols-subgrid col-span-1 gap-6">
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+        <div class="mt-1">
+          <input type="text" name="name" id="name" formControlName="name"
+                 [ngClass]="nameControl.touched && nameControl.errors ? 'ring-1 ring-rose-600' : ''"
+                 class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                 placeholder="Enter product name">
+          <span
+            *ngIf="(nameControl.hasError('whitespace') || nameControl.hasError('required')) && nameControl.touched"
+            class="text-rose-600 text-sm">
+                        *Name is required
+                      </span>
+        </div>
+      </div>
+      <div>
+        <label for="description" class="block text-sm font-medium text-gray-700">Name</label>
+        <div class="mt-1">
+        <textarea id="description" name="description" formControlName="description" rows="4"
+                  class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                  placeholder="Description"></textarea>
+        </div>
+      </div>
+      <div>
+        <label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+        <div class="relative mt-2 rounded-md shadow-sm">
+          <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+            <span class="text-gray-500 sm:text-sm">MYR</span>
+          </div>
+          <input type="text" name="price" id="price" formControlName="price"
+                 [ngClass]="priceControl.touched && priceControl.errors ? 'ring-1 ring-rose-600' : ''"
+                 class="block w-full rounded-md border-0 py-1.5 pl-12 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                 placeholder="0.00">
+        </div>
+        <div>
+          <span
+            *ngIf="priceControl.hasError('required') && priceControl.touched"
+            class="text-rose-600 text-sm block">
+                        *Price is required
+                      </span>
+          <span
+            *ngIf="priceControl.hasError('min') && priceControl.touched"
+            class="text-rose-600  text-sm">
+                        Must be greater than 0
+                      </span>
+        </div>
+      </div>
+      <div>
+        <label for="category" class="block mb-2 text-sm font-medium text-gray-700">Select a
+          category</label>
+        <select id="category" name="category" formControlName="category"
+                [compareWith]="compareCategory"
+                [ngClass]="categoryControl.touched && categoryControl.errors ? 'ring-1 ring-rose-600' : ''"
+                class="block w-full rounded-md border-0 py-2 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+          <option value="">Please select a category</option>
+          <option *ngFor="let category of product[1]" [ngValue]="category" [selected]="category.id === product[2]?.category?.id">{{category.name}}</option>
+        </select>
+        <span
+          *ngIf="categoryControl.hasError('required') && categoryControl.touched"
+          class="text-rose-600  text-sm">
+                        *Please select a category
+                      </span>
+      </div>
+      <div>
+        <label for="brand" class="block mb-2 text-sm font-medium text-gray-700">Select a category</label>
+        <select id="brand" name="brand" formControlName="brand"
+                [compareWith]="compareBrand"
+                [ngClass]="brandControl.touched && brandControl.errors ? 'ring-1 ring-rose-600' : ''"
+                class="block w-full rounded-md border-0 py-2 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6">
+          <option value="">Please select a brand</option>
+          <option *ngFor="let brand of product[0]" [ngValue]="brand">{{brand.name}}</option>
+        </select>
+        <span
+          *ngIf="brandControl.hasError('required') && brandControl.touched"
+          class="text-rose-600  text-sm">
+                        *Please select a brand
+                      </span>
+      </div>
+      <div>
+        <label>Stock</label>
+        <div class="flex flex-col" formArrayName="stocks">
+          <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <div class="inline-block min-w-full py-2 sm:px-6 lg:px-8">
+              <div class="overflow-hidden">
+                <table
+                  class="border min-w-full text-left text-sm font-light text-surface">
+                  <thead
+                    class="border-b border-neutral-200 bg-white font-medium">
+                  <tr>
+                    <th scope="col" class="px-3 py-4">#</th>
+                    <th scope="col" class="px-3 py-4">Size</th>
+                    <th scope="col" class="px-3 py-4">Quantity</th>
+                    <th scope="col" class="px-3 py-4">Length</th>
+                    <th scope="col" class="px-3 py-4">Width</th>
+                    <th scope="col" class="px-3 py-4">Height</th>
+                    <th scope="col" class="px-3 py-4">Weight</th>
+                    <th>
+                      <svg (click)="addStockRow()" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-rose-500 cursor-pointer">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                      </svg>
+                    </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr
+                    class="border-b border-neutral-200 bg-black/[0.02]" *ngFor="let stockForm of stockFormArray.controls;let i = index;" [formGroupName]="i">
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">{{i + 1}}</td>
+                    <td class="whitespace-nowrap px-6 py-4 font-medium">
+                      <div class="mt-1">
+                        <input type="text" name="size" id="size" formControlName="size"
+                               [ngClass]="stockFormArray.at(i).get('size')?.touched && stockFormArray.at(i).get('size')?.errors ? 'ring-1 ring-rose-600' : ''"
+                               class="block rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                               placeholder="Enter size">
+                        <span
+                          *ngIf="stockFormArray.at(i).get('size')?.hasError('required') && stockFormArray.at(i).get('size')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Size is required
+                      </span>
+                      </div>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <div class="mt-1">
+                        <input type="text" name="quantity" id="quantity" formControlName="available_quantity"
+                               [ngClass]="stockFormArray.at(i).get('available_quantity')?.touched && stockFormArray.at(i).get('available_quantity')?.errors ? 'ring-1 ring-rose-600' : ''"
+                               class="block rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                               placeholder="Enter quantity">
+                        <span
+                          *ngIf="stockFormArray.at(i).get('available_quantity')?.hasError('required') && stockFormArray.at(i).get('available_quantity')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Quantity is required
+                      </span>
+                        <span
+                          *ngIf="stockFormArray.at(i).get('quantity')?.hasError('min') && stockFormArray.at(i).get('quantity')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Must be greater than 0
+                      </span>
+                      </div>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <div class="mt-1">
+                        <input type="text" name="length" id="length" formControlName="length"
+                               [ngClass]="stockFormArray.at(i).get('length')?.touched && stockFormArray.at(i).get('length')?.errors ? 'ring-1 ring-rose-600' : ''"
+                               class="block rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                               placeholder="Enter length">
+                        <span
+                          *ngIf="stockFormArray.at(i).get('length')?.hasError('required') && stockFormArray.at(i).get('length')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Length is required
+                      </span>
+                        <span
+                          *ngIf="stockFormArray.at(i).get('length')?.hasError('min') && stockFormArray.at(i).get('length')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Must be greater than 0
+                      </span>
+                      </div>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <div class="mt-1">
+                        <input type="text" name="width" id="width" formControlName="width"
+                               [ngClass]="stockFormArray.at(i).get('width')?.touched && stockFormArray.at(i).get('width')?.errors ? 'ring-1 ring-rose-600' : ''"
+                               class="block rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                               placeholder="Enter width">
+                        <span
+                          *ngIf="stockFormArray.at(i).get('width')?.hasError('required') && stockFormArray.at(i).get('width')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Width is required
+                      </span>
+                        <span
+                          *ngIf="stockFormArray.at(i).get('width')?.hasError('min') && stockFormArray.at(i).get('width')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Must be greater than 0
+                      </span>
+                      </div>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <div class="mt-1">
+                        <input type="text" name="height" id="height" formControlName="height"
+                               [ngClass]="stockFormArray.at(i).get('height')?.touched && stockFormArray.at(i).get('height')?.errors ? 'ring-1 ring-rose-600' : ''"
+                               class="block rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                               placeholder="Enter height">
+                        <span
+                          *ngIf="stockFormArray.at(i).get('height')?.hasError('required') && stockFormArray.at(i).get('height')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Height is required
+                      </span>
+                        <span
+                          *ngIf="stockFormArray.at(i).get('height')?.hasError('min') && stockFormArray.at(i).get('height')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Must be greater than 0
+                      </span>
+                      </div>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <div class="mt-1">
+                        <input type="text" name="weight" id="weight" formControlName="weight"
+                               [ngClass]="stockFormArray.at(i).get('weight')?.touched && stockFormArray.at(i).get('weight')?.errors ? 'ring-1 ring-rose-600' : ''"
+                               class="block rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                               placeholder="Enter weight">
+                        <span
+                          *ngIf="stockFormArray.at(i).get('weight')?.hasError('required') && stockFormArray.at(i).get('weight')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Weight is required
+                      </span>
+                        <span
+                          *ngIf="stockFormArray.at(i).get('weight')?.hasError('min') && stockFormArray.at(i).get('weight')?.touched"
+                          class="text-rose-600 text-sm">
+                        *Must be greater than 0
+                      </span>
+                      </div>
+                    </td>
+                    <td class="whitespace-nowrap px-6 py-4">
+                      <svg *ngIf="i > 0" (click)="removeStockRow(i)" class="h-8 w-8 text-red-500 cursor-pointer"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="5" y1="12" x2="19" y2="12" /></svg>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        <table>-->
+        <!--          <table class="table table-fixed">-->
+        <!--            <thead>-->
+        <!--            <tr>-->
+        <!--              <th>Size</th>-->
+        <!--              <th>Quantity</th>-->
+        <!--              <th>Year</th>-->
+        <!--            </tr>-->
+        <!--            </thead>-->
+        <!--            <tbody>-->
+        <!--            <tr>-->
+        <!--              <td>-->
+        <!--                <label for="price" class="block text-sm font-medium text-gray-700">Size</label>-->
+        <!--                <div class="mt-1">-->
+        <!--                  <input type="text" name="name" id="size" formControlName="size"-->
+        <!--                         [ngClass]="quantityControl.touched && quantityControl.errors ? 'ring-1 ring-rose-600' : ''"-->
+        <!--                         class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"-->
+        <!--                         placeholder="Enter product name">-->
+        <!--                  <span-->
+        <!--                    *ngIf="quantityControl.hasError('required') && quantityControl.touched"-->
+        <!--                    class="text-rose-600 text-sm">-->
+        <!--                        *Name is required-->
+        <!--                      </span>-->
+        <!--                  <span *ngIf="quantityControl.hasError('min') && quantityControl.touched"  class="text-rose-600 text-sm">-->
+        <!--            *Must be greater than 0-->
+        <!--          </span>-->
+        <!--                </div>-->
+        <!--              </td>-->
+        <!--              <td>-->
+        <!--                <div>-->
+        <!--                  <label for="price" class="block text-sm font-medium text-gray-700">Quantity</label>-->
+        <!--                  <div class="mt-1">-->
+        <!--                    <input type="text" name="name" id="quantity" formControlName="quantity"-->
+        <!--                           [ngClass]="quantityControl.touched && quantityControl.errors ? 'ring-1 ring-rose-600' : ''"-->
+        <!--                           class="block w-full rounded-md border-0 py-1.5 pl-3 pr-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"-->
+        <!--                           placeholder="Enter product name">-->
+        <!--                    <span-->
+        <!--                      *ngIf="quantityControl.hasError('required') && quantityControl.touched"-->
+        <!--                      class="text-rose-600 text-sm">-->
+        <!--                        *Name is required-->
+        <!--                      </span>-->
+        <!--                    <span *ngIf="quantityControl.hasError('min') && quantityControl.touched"  class="text-rose-600 text-sm">-->
+        <!--            *Must be greater than 0-->
+        <!--          </span>-->
+        <!--                  </div>-->
+        <!--                </div>-->
+        <!--              </td>-->
+        <!--            </tr>-->
+        <!--            <tr>-->
+        <!--              <td>Witchy Woman</td>-->
+        <!--              <td>The Eagles</td>-->
+        <!--              <td>1972</td>-->
+        <!--            </tr>-->
+        <!--            <tr>-->
+        <!--              <td>Shining Star</td>-->
+        <!--              <td>Earth, Wind, and Fire</td>-->
+        <!--              <td>1975</td>-->
+        <!--            </tr>-->
+        <!--            </tbody>-->
+        <!--          </table>-->
+        <!--        </table>-->
+      </div>
+    </div>
+    <div class="col-span-1" formGroupName="image">
+      <div class="pb-10">
+        <label for="brand" class="block text-sm font-medium text-gray-700">Product Image</label>
+        <app-multiple-file-upload [multiple]="false" [control]="productImageControl"></app-multiple-file-upload>
+      </div>
+      <div>
+        <label for="brand" class="block text-sm font-medium text-gray-700">Product Showcase Image</label>
+        <app-multiple-file-upload [multiple]="true" [control]="productGroupImageControl"></app-multiple-file-upload>
+      </div>
+    </div>
+    <div class="flex justify-end col-span-1 sm:col-span-2 md:col-span-2 lg:col-span-2">
+      <div>
+        <app-button text="Save" [disabled]="showLoading" (click)="editProduct()"></app-button>
+      </div>
+    </div>
+  </form>
+</div>
+

@@ -1,0 +1,57 @@
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+<div class="grid grid-cols-1">
+  <span> Order {{'#000' + order.id}} </span>
+  <div class="pt-4">
+    <label>Select a delivery status</label>
+    <tui-combo-box
+      [formControl]="deliveryStatusControl"
+      [tuiTextfieldLabelOutside]="true"
+      class="w-100"
+    >
+      Delivery Status
+
+      <tui-data-list-wrapper
+        *tuiDataList
+        [items]="deliveryStatus"
+        class="w-100"
+      ></tui-data-list-wrapper>
+    </tui-combo-box>
+  </div>
+  <div class="pt-4">
+    <app-button text="Update" (click)="updateStatus()"></app-button>
+  </div>
+</div>
+<!--<div class="container-fluid container">-->
+<!--  <div class="row">-->
+<!--    <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--      <hr/>-->
+<!--      <span class="px-2"> Order {{'#000' + order.id}} </span>-->
+<!--      <hr/>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <div class="row g-4 p-3">-->
+<!--    <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--      <label>Select a delivery status</label>-->
+<!--    </div>-->
+<!--    <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--        <tui-combo-box-->
+<!--          [formControl]="deliveryStatusControl"-->
+<!--          [tuiTextfieldLabelOutside]="true"-->
+<!--          class="w-100"-->
+<!--        >-->
+<!--          Delivery Status-->
+
+<!--          <tui-data-list-wrapper-->
+<!--            *tuiDataList-->
+<!--            [items]="deliveryStatus"-->
+<!--            class="w-100"-->
+<!--          ></tui-data-list-wrapper>-->
+<!--        </tui-combo-box>-->
+<!--    </div>-->
+<!--    <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--      <button class="btn btn-primary w-100 h-100" (click)="updateStatus()">Update</button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->

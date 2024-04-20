@@ -1,0 +1,392 @@
+<!--<div class="row">-->
+
+<!--  <button-->
+<!--    tuiButton-->
+<!--    type="button"-->
+<!--    (click)="open = true"-->
+<!--  >-->
+<!--    Taiga-->
+<!--  </button>-->
+<!--  <ng-template [(tuiPdfViewer)]="open">-->
+<!--    <iframe-->
+<!--      title="pdf"-->
+<!--      class="iframe"-->
+<!--      [src]="src"-->
+<!--    ></iframe>-->
+<!--  </ng-template>-->
+  <ng-template #loading>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
+<!--  <div class="col-md-12 col-lg-12 col-sm-12" *ngIf="(order$ | async) as order; else loading;">-->
+<!--    <div class="row shadow-sm bg-white">-->
+<!--      <div class="col-md-12 col-lg-12 col-sm-12 p-3">-->
+<!--        <span>-->
+<!--          Order #000{{selectedOrderId}}-->
+<!--        </span>-->
+<!--        <span>-->
+<!--            <tui-tag-->
+<!--              class="tag bg-success ms-3"-->
+<!--              [ngClass]="{'UNPAID':'bg-danger','PAID':'bg-success'}[order.payment_status]"-->
+<!--              [hoverable]="true"-->
+<!--              [value]="order.payment_status | removeUnderscore"-->
+<!--            ></tui-tag>-->
+<!--        </span>-->
+<!--      </div>-->
+<!--      <hr />-->
+<!--      <div class="col-md-12 col-lg-12 col-sm-12 p-5">-->
+<!--        <div class="d-flex flex-column align-items-center w-100">-->
+<!--          <div class="w-100" *ngIf="order.delivery_status === 'CANCELLED'">-->
+<!--            <tui-stepper [activeItemIndex]="4" class="stepper d-flex justify-content-between">-->
+<!--              <button-->
+<!--                stepState="pass"-->
+<!--                tuiStep-->
+<!--                class="d-flex flex-column"-->
+<!--              >-->
+<!--                <span class="pt-3">Order Placed</span>-->
+<!--                <span class="pt-1">31 March 2023</span>-->
+<!--              </button>-->
+<!--              <button-->
+<!--                icon="tuiIconX"-->
+<!--                tuiStep-->
+<!--                class="d-flex flex-column"-->
+<!--              >-->
+<!--                <span class="pt-3">Cancelled</span>-->
+<!--              </button>-->
+<!--            </tui-stepper>-->
+<!--          </div>-->
+<!--          <div class="w-100" *ngIf="order.delivery_status !== 'CANCELLED'">-->
+<!--            <tui-stepper readonly="true"-->
+<!--                         [activeItemIndex]="order.payment_status === 'UNPAID' ? 0 : order.delivery_status === 'PENDING' ? 1 : order.delivery_status === 'OUT_FOR_DELIVERY' ? 2 : order.delivery_status === 'DELIVERED' ? 5 : 1"-->
+<!--                         class="stepper d-flex justify-content-between">-->
+<!--              <button-->
+<!--                [stepState]="order.payment_status === 'PAID' ? 'pass' : 'normal'"-->
+<!--                icon="tuiIconClockLarge"-->
+<!--                tuiStep-->
+<!--                class="d-flex flex-column"-->
+<!--              >-->
+<!--                <span class="pt-3">Make a payment</span>-->
+<!--                <span class="pt-1">31 March 2023</span>-->
+<!--              </button>-->
+<!--              <button-->
+<!--                [stepState]="order.delivery_status === 'DELIVERED' || order.delivery_status === 'OUT_FOR_DELIVERY' ? 'pass' : 'normal'"-->
+<!--                icon="tuiIconClockLarge"-->
+<!--                tuiStep-->
+<!--                class="d-flex flex-column"-->
+<!--              >-->
+<!--                <span class="pt-3">Seller is preparing</span>-->
+<!--                <span class="pt-1">31 March 2023</span>-->
+<!--              </button>-->
+<!--              <button-->
+<!--                [stepState]="order.delivery_status === 'DELIVERED' ? 'pass' : 'normal'"-->
+<!--                icon="tuiIconClockLarge"-->
+<!--                tuiStep-->
+<!--                class="d-flex flex-column"-->
+<!--              >-->
+<!--                <span class="pt-3">Out For Delivery</span>-->
+<!--                <span class="pt-1">25 March 2023</span>-->
+<!--              </button>-->
+<!--              <button-->
+<!--                icon="tuiIconClockLarge"-->
+<!--                tuiStep-->
+<!--                class="d-flex flex-column"-->
+<!--                [stepState]="order.delivery_status === 'DELIVERED' ? 'pass' : 'normal'"-->
+<!--              >-->
+<!--                <span class="pt-3">Delivered</span>-->
+<!--                <span class="pt-1">31 March 2023</span>-->
+<!--              </button>-->
+<!--            </tui-stepper>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    &lt;!&ndash; Main content &ndash;&gt;-->
+<!--    <div class="row shadow-sm bg-white mt-3 pt-4">-->
+<!--      <div class="col-lg-12 m-0 p-0">-->
+<!--        <div class="py-2 px-4">-->
+<!--          <h3 class="h6">Shipping Information</h3>-->
+<!--          <strong>FedEx</strong>-->
+<!--          <span><a href="#" class="text-decoration-underline" target="_blank">FF1234567890</a> <i-->
+<!--            class="bi bi-box-arrow-up-right"></i> </span>-->
+<!--        </div>-->
+<!--          <hr>-->
+<!--        <div class="py-2 px-4">-->
+<!--          <h3 class="h6">Recipient</h3>-->
+
+<!--&lt;!&ndash;          <b>Name </b> &ndash;&gt;-->
+<!--          {{order.shipping_details.recipient.first_name}} {{order.shipping_details.recipient.last_name}}-->
+<!--          <br>-->
+<!--          {{order.shipping_details.recipient.email_address}}<br>-->
+<!--          {{order.shipping_details.recipient.phone_number}}<br>-->
+<!--        </div>-->
+<!--          <hr>-->
+<!--        <div class="py-2 px-4">-->
+<!--          <h3 class="h6">Address</h3>-->
+<!--          <address>-->
+<!--            {{order.shipping_details.recipient.delivery_address.address_line_1}}-->
+<!--            <br>-->
+<!--            {{order.shipping_details.recipient.delivery_address.address_line_2}}-->
+<!--            <br>-->
+<!--            {{order.shipping_details.recipient.delivery_address.city}}<br>-->
+<!--            {{order.shipping_details.recipient.delivery_address.state}}<br>-->
+<!--            {{order.shipping_details.recipient.delivery_address.zipcode}}<br>-->
+<!--          </address>-->
+<!--        </div>-->
+<!--          <hr>-->
+<!--      </div>-->
+<!--      <div class="col-lg-12 col-md-12 col-sm-12 m-0 p-0">-->
+<!--        &lt;!&ndash; Details &ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card mb-4">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="mb-3 d-flex justify-content-between">&ndash;&gt;-->
+<!--&lt;!&ndash;              <div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <span class="me-3">22-11-2021</span>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;                <span class="me-3">#000{{selectedOrderId}}</span>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;                <span class="me-3">Visa -1234</span>&ndash;&gt;&ndash;&gt;-->
+
+<!--&lt;!&ndash;                <span [ngClass]="{'PENDING':'bg-warning'}[order.delivery_status]"&ndash;&gt;-->
+<!--&lt;!&ndash;                      class="badge rounded-pill">{{order.delivery_status}}</span>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="d-flex">&ndash;&gt;-->
+<!--&lt;!&ndash;                <button class="btn btn-link p-0 me-3 d-none d-lg-block btn-icon-text"><i class="bi bi-download"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <span class="text">Invoice</span></button>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div class="dropdown">&ndash;&gt;-->
+<!--&lt;!&ndash;                  <button class="btn btn-link p-0 text-muted" type="button" data-bs-toggle="dropdown">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <i class="bi bi-three-dots-vertical"></i>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                  <ul class="dropdown-menu dropdown-menu-end">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <li><a class="dropdown-item" href="#"><i class="bi bi-pencil"></i> Edit</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <li><a class="dropdown-item" href="#"><i class="bi bi-printer"></i> Print</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                  </ul>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--            <table class="table table-border h-100">-->
+<!--              <tbody>-->
+<!--              <tr *ngFor="let item of order.items">-->
+<!--                <td>-->
+<!--                  <div class="d-flex mb-2">-->
+<!--                    <div class="flex-shrink-0">-->
+<!--                      <img src="https://www.bootdey.com/image/280x280/87CEFA/000000" alt="" width="100" height="50"-->
+<!--                           class="img-fluid">-->
+<!--                    </div>-->
+<!--                    <div class="flex-lg-grow-1 ms-3">-->
+<!--                      <h4 class="mb-0"><a href="#" class="text-reset">{{item.name ? item.name : 'N/A'}}</a></h4>-->
+<!--                      <br/>-->
+<!--                      <span class="small">Size: {{ item.size ? item.size : 'N/A' }}</span>-->
+<!--                      <br />-->
+<!--                      <span class="small">Quantity: {{ item.quantity ? item.quantity : 'N/A' }}</span>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td></td>-->
+<!--                <td class="text-end align-middle">{{item.price | currency : 'MYR '}}</td>-->
+<!--              </tr>-->
+<!--              </tbody>-->
+<!--              <tfoot>-->
+<!--              <tr>-->
+<!--                <td colspan="2">Payment Method</td>-->
+<!--                <td class="text-end">{{order.payment_status}}</td>-->
+<!--              </tr>-->
+<!--              <tr>-->
+<!--                <td colspan="2">Subtotal</td>-->
+<!--                <td class="text-end">{{order.subtotal | currency : 'MYR '}}</td>-->
+<!--              </tr>-->
+<!--              <tr>-->
+<!--                <td colspan="2">Shipping</td>-->
+<!--                <td class="text-end">{{order.shipping_fees | currency : 'MYR '}}</td>-->
+<!--              </tr>-->
+<!--              <tr>-->
+<!--                <td colspan="2">Tax</td>-->
+<!--                <td class="text-end"></td>-->
+<!--              </tr>-->
+<!--              &lt;!&ndash;              <tr>&ndash;&gt;-->
+<!--              &lt;!&ndash;                <td colspan="2">Discount (Code: NEWYEAR)</td>&ndash;&gt;-->
+<!--              &lt;!&ndash;                <td class="text-danger text-end">-$10.00</td>&ndash;&gt;-->
+<!--              &lt;!&ndash;              </tr>&ndash;&gt;-->
+<!--              <tr class="fw-bold">-->
+<!--                <td colspan="2">TOTAL</td>-->
+<!--                <td class="text-end">{{order.total | currency : 'MYR '}}</td>-->
+<!--              </tr>-->
+<!--              </tfoot>-->
+<!--            </table>-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--        &lt;!&ndash; payment.interface.ts &ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card mb-4">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div class="row">&ndash;&gt;-->
+<!--&lt;!&ndash;              <div class="col-lg-6">&ndash;&gt;-->
+<!--&lt;!&ndash;                <h3 class="h6">Payment Method</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;                <p>Visa -1234 <br>&ndash;&gt;-->
+<!--&lt;!&ndash;                  Total: $169,98 <span class="badge bg-success rounded-pill">PAID</span></p>&ndash;&gt;-->
+<!--&lt;!&ndash;              </div>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--      </div>-->
+<!--&lt;!&ndash;      <div class="col-lg-4">&ndash;&gt;-->
+<!--&lt;!&ndash;        &lt;!&ndash; Customer Notes &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card mb-4">&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;            <h3 class="h6">Customer Notes</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;            <p>Sed enim, faucibus litora velit vestibulum habitasse. Cras lobortis cum sem aliquet mauris rutrum.&ndash;&gt;-->
+<!--&lt;!&ndash;              Sollicitudin. Morbi, sem tellus vestibulum porttitor.</p>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="card mb-4">&ndash;&gt;-->
+<!--          &lt;!&ndash; Shipping information &ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="card-body">&ndash;&gt;-->
+<!--&lt;!&ndash;            <h3 class="h6">Shipping Information</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;            <strong>FedEx</strong>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span><a href="#" class="text-decoration-underline" target="_blank">FF1234567890</a> <i&ndash;&gt;-->
+<!--&lt;!&ndash;              class="bi bi-box-arrow-up-right"></i> </span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <hr>&ndash;&gt;-->
+<!--&lt;!&ndash;            <h3 class="h6">Recipient</h3>&ndash;&gt;-->
+
+<!--&lt;!&ndash;            <b>First Name:</b> {{order.shipping_details.recipient.first_name}}&ndash;&gt;-->
+<!--&lt;!&ndash;            <br>&ndash;&gt;-->
+<!--&lt;!&ndash;            <b>Last Name:</b> {{order.shipping_details.recipient.last_name}}&ndash;&gt;-->
+<!--&lt;!&ndash;            <br>&ndash;&gt;-->
+<!--&lt;!&ndash;            <b>Email Address:</b> {{order.shipping_details.recipient.email_address}}<br>&ndash;&gt;-->
+<!--&lt;!&ndash;            <b>Phone Number:</b> {{order.shipping_details.recipient.phone_number}}<br>&ndash;&gt;-->
+<!--&lt;!&ndash;            <hr>&ndash;&gt;-->
+<!--&lt;!&ndash;            <h3 class="h6">Address</h3>&ndash;&gt;-->
+<!--&lt;!&ndash;            <address>&ndash;&gt;-->
+<!--&lt;!&ndash;              <b>Address Line 1:</b> {{order.shipping_details.recipient.delivery_address.address_line_1}}&ndash;&gt;-->
+<!--&lt;!&ndash;              <br>&ndash;&gt;-->
+<!--&lt;!&ndash;              <b>Address Line 2:</b> {{order.shipping_details.recipient.delivery_address.address_line_2}}&ndash;&gt;-->
+<!--&lt;!&ndash;              <br>&ndash;&gt;-->
+<!--&lt;!&ndash;              <b>City: </b>{{order.shipping_details.recipient.delivery_address.city}}<br>&ndash;&gt;-->
+<!--&lt;!&ndash;              <b>State: </b>{{order.shipping_details.recipient.delivery_address.state}}<br>&ndash;&gt;-->
+<!--&lt;!&ndash;              <b>Zipcode:</b> {{order.shipping_details.recipient.delivery_address.zipcode}}<br>&ndash;&gt;-->
+<!--&lt;!&ndash;            </address>&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<main class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8" *ngIf="(order$ | async) as order; else loading;">
+  <h1 class="text-3xl font-bold tracking-tight text-gray-900">Order Details</h1>
+
+  <div class="mt-2 border-b border-gray-200 pb-5 text-sm sm:flex sm:justify-between">
+    <dl class="flex">
+      <dt class="text-gray-500">Order number&nbsp;</dt>
+      <dd class="font-medium text-gray-900">#000{{order.id}}</dd>
+      <dt>
+        <span class="sr-only">{{order.created_at | date : 'fullDate'}}</span>
+        <span class="mx-2 text-gray-400" aria-hidden="true">&middot;</span>
+      </dt>
+      <dd class="font-medium text-gray-900"><time datetime="2021-03-22">{{order.created_at | date : 'fullDate'}}</time></dd>
+    </dl>
+    <div class="mt-4 sm:mt-0">
+      <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+        View invoice
+        <span aria-hidden="true"> &rarr;</span>
+      </a>
+    </div>
+  </div>
+
+  <section aria-labelledby="products-heading" class="mt-8">
+    <h2 id="products-heading" class="sr-only">Products purchased</h2>
+
+    <div class="space-y-24" *ngFor="let item of order.items;">
+      <div class="grid grid-cols-1 text-sm sm:grid-cols-12 sm:grid-rows-1 sm:gap-x-6 md:gap-x-8 lg:gap-x-8">
+        <div class="sm:col-span-4 md:col-span-5 md:row-span-2 md:row-end-2">
+          <div class="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-50">
+            <img src="https://tailwindui.com/img/ecommerce-images/confirmation-page-04-product-01.jpg" alt="Off-white t-shirt with circular dot illustration on the front of mountain ridges that fade." class="object-cover object-center">
+          </div>
+        </div>
+        <div class="mt-6 sm:col-span-7 sm:mt-0 md:row-end-1">
+          <h3 class="text-lg font-medium text-gray-900">
+            <a class="text-rose-400">{{item.name}}</a>
+          </h3>
+          <p class="mt-1 font-medium text-gray-900">{{item.price | currency : 'MYR '}}</p>
+          <p class="mt-3 text-gray-500">{{''}}</p>
+        </div>
+        <div class="sm:col-span-12 md:col-span-7">
+          <dl class="grid grid-cols-1 gap-y-8 border-b border-gray-200 py-8 sm:grid-cols-2 sm:gap-x-6 sm:py-6 md:py-10">
+            <div>
+              <dt class="font-medium text-gray-900">Delivery address</dt>
+              <dd class="mt-3 text-gray-500">
+                <span class="block">{{order.shipping_details.recipient.delivery_address.address_line_1}}</span>
+                <span class="block">{{order.shipping_details.recipient.delivery_address.address_line_2}}</span>
+                <span class="block">{{order.shipping_details.recipient.delivery_address.zipcode+ ', ' + order.shipping_details.recipient.delivery_address.city +', ' + order.shipping_details.recipient.delivery_address.state}}</span>
+              </dd>
+            </div>
+            <div>
+              <dt class="font-medium text-gray-900">Shipping updates</dt>
+              <dd class="mt-3 space-y-3 text-gray-500">
+                <p>{{order.shipping_details.recipient.phone_number}}</p>
+                <p>{{order.shipping_details.recipient.email_address}}</p>
+                <button type="button" class="font-medium text-indigo-600 hover:text-indigo-500">Edit</button>
+              </dd>
+            </div>
+          </dl>
+          <p class="mt-6 font-medium text-gray-900 md:mt-10">Processing on <time datetime="2021-03-24">March 24, 2021</time></p>
+          <div class="mt-6">
+            <div class="overflow-hidden rounded-full bg-gray-200">
+              <div class="h-2 rounded-full bg-rose-600" style="width: calc((1 * 2 + 1) / 8 * 100%)"
+              [ngStyle]="{ 'width': order.delivery_status === 'PROCESSING' ? 'calc((1 * 2 + 1) / 8 * 100%)' : '' ? 'width' : order.delivery_status === 'OUT_FOR_DELIVERY' ? 'calc((1 * 4 + 1) / 8 * 100%)' : ''
+              ? 'width' : order.delivery_status === 'DELIVERED' ? 'calc((1 * 8 + 1) / 8 * 100%)' : ''}"></div>
+            </div>
+            <div class="mt-6 hidden grid-cols-4 font-medium text-gray-600 sm:grid">
+              <div class="" [ngClass]="order.delivery_status === 'PENDING' ? 'text-rose-600' : ''">Order placed</div>
+              <div class="text-center" [ngClass]="order.delivery_status === 'PROCESSING' ? 'text-rose-600' : ''">Processing</div>
+              <div class="text-center" [ngClass]="order.delivery_status === 'OUT_FOR_DELIVERY' ? 'text-rose-600' : ''">Shipped</div>
+              <div class="text-right" [ngClass]="order.delivery_status === 'DELIVERED' ? 'text-rose-600' : ''">Delivered</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- More products... -->
+    </div>
+  </section>
+
+  <!-- Billing -->
+  <section aria-labelledby="summary-heading" class="mt-24">
+    <h2 id="summary-heading" class="sr-only">Billing Summary</h2>
+
+    <div class="rounded-lg bg-gray-50 px-6 py-6 lg:grid lg:grid-cols-12 lg:gap-x-8 lg:px-0 lg:py-8">
+      <dl class="grid grid-cols-1 gap-6 text-sm sm:grid-cols-2 md:gap-x-8 lg:col-span-5 lg:pl-8">
+        <div>
+          <dt class="font-medium text-gray-900">Payment Method</dt>
+          <dd class="mt-3 flex">
+<!--            <div>-->
+<!--              <svg aria-hidden="true" width="36" height="24" viewBox="0 0 36 24" class="h-6 w-auto">-->
+<!--                <rect width="36" height="24" rx="4" fill="#224DBA" />-->
+<!--                <path d="M10.925 15.673H8.874l-1.538-6c-.073-.276-.228-.52-.456-.635A6.575 6.575 0 005 8.403v-.231h3.304c.456 0 .798.347.855.75l.798 4.328 2.05-5.078h1.994l-3.076 7.5zm4.216 0h-1.937L14.8 8.172h1.937l-1.595 7.5zm4.101-5.422c.057-.404.399-.635.798-.635a3.54 3.54 0 011.88.346l.342-1.615A4.808 4.808 0 0020.496 8c-1.88 0-3.248 1.039-3.248 2.481 0 1.097.969 1.673 1.653 2.02.74.346 1.025.577.968.923 0 .519-.57.75-1.139.75a4.795 4.795 0 01-1.994-.462l-.342 1.616a5.48 5.48 0 002.108.404c2.108.057 3.418-.981 3.418-2.539 0-1.962-2.678-2.077-2.678-2.942zm9.457 5.422L27.16 8.172h-1.652a.858.858 0 00-.798.577l-2.848 6.924h1.994l.398-1.096h2.45l.228 1.096h1.766zm-2.905-5.482l.57 2.827h-1.596l1.026-2.827z" fill="#fff" />-->
+<!--              </svg>-->
+<!--              <p class="sr-only">Visa</p>-->
+<!--            </div>-->
+            <div class="ml-4">
+              <p class="text-gray-900">Ending with 4242</p>
+              <p class="text-gray-600">Expires 02 / 24</p>
+            </div>
+          </dd>
+        </div>
+      </dl>
+
+      <dl class="mt-8 divide-y divide-gray-200 text-sm lg:col-span-7 lg:mt-0 lg:pr-8">
+        <div class="flex items-center justify-between pb-4">
+          <dt class="text-gray-600">Subtotal</dt>
+          <dd class="font-medium text-gray-900">{{order.subtotal | currency : 'MYR '}}</dd>
+        </div>
+        <div class="flex items-center justify-between py-4">
+          <dt class="text-gray-600">Shipping</dt>
+          <dd class="font-medium text-gray-900">{{order.shipping_fees | currency : 'MYR '}}</dd>
+        </div>
+        <div class="flex items-center justify-between py-4">
+          <dt class="text-gray-600">Tax</dt>
+          <dd class="font-medium text-gray-900">{{0 | currency : 'MYR '}}</dd>
+        </div>
+        <div class="flex items-center justify-between pt-4">
+          <dt class="font-medium text-gray-900">Order total</dt>
+          <dd class="font-medium text-indigo-600">{{order.total | currency : 'MYR '}}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</main>

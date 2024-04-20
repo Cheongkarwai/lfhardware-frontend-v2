@@ -1,0 +1,57 @@
+<div *ngIf="_layout" class="card p-4 shadow">
+  <div class="row pb-5">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <h4>Fill in the form</h4>
+    </div>
+  </div>
+  <form class="row g-3" [formGroup]="formGroup" (ngSubmit)="submit()">
+      <ng-container *ngFor="let layout of _layout.configurations; let i = index;">
+        <h6>{{layout.title}}</h6>
+        <ng-container *ngFor="let control of layout.form_groups">
+          <div [ngSwitch]="control.type" class="col-md-12 col-lg-12 col-sm-12">
+            <tui-input *ngSwitchCase="'text'" [formControlName]="control.name" tuiTextfieldSize="m">
+              {{control.label}}
+              <input
+                tuiTextfield
+                type="text"
+              />
+            </tui-input>
+            <tui-input *ngSwitchCase="'number'" [formControlName]="control.name" tuiTextfieldSize="m">
+              {{control.label}}
+              <input
+                tuiTextfield
+                type="number"
+              />
+            </tui-input>
+            <div *ngSwitchCase="'radio'"
+                 tuiGroup
+                 class="group"
+                 [collapsed]="true"
+            >
+              <tui-radio-block *ngFor="let radioOptions of control.options"
+                               contentAlign="right"
+                               [formControlName]="control.name"
+                               [item]="radioOptions.value"
+                               size="m"
+              >
+                {{radioOptions.label}}
+              </tui-radio-block>
+            </div>
+            <div *ngSwitchCase="'checkbox'" [formArrayName]="control.name">
+              <div *ngFor="let option of getFormArray(control.name).controls;let i = index">
+                {{control.name}}
+                <tui-checkbox-labeled
+                  [formControlName]="i"
+                  class="tui-space_top-3"
+                >
+                  ng-dompurify
+                  <div class="example">Inclusive Angular API for DOMPurify</div>
+                </tui-checkbox-labeled>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
+</div>

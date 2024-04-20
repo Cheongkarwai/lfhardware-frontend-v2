@@ -1,0 +1,458 @@
+<app-autocomplete-search [control]="searchControl" *ngIf="searchItems$ | async as searchItems"
+                         [items]="searchItems"></app-autocomplete-search>
+<div class="grid grid-cols-1 gap-20">
+  <swiper-container class="max-w-full" fmSwiper [config]="config" init="false">
+    <swiper-slide *ngFor="let ad of ads">
+      <img src="./assets/image/test-ads-2.png" class="w-full object-contain">
+    </swiper-slide>
+  </swiper-container>
+  <section class="px-23 lg:px-32 md:px-32 sm:px-32">
+    <div class="text-center py-20">
+      <h3 class="text-2xl font-bold">Choose a service</h3>
+    </div>
+    <form class="grid grid-cols-3 gap-5">
+      <div class="grid-cols-subgrid col-span-3">
+        <label for="table-search" class="sr-only">Search</label>
+        <div class="relative cursor-pointer" (click)="openSearch()">
+          <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                 fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+            </svg>
+          </div>
+          <div type="text" id="table-search-users"
+               class="w-80 block p-2 ps-12 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-rose-500 focus:border-rose-600 ">
+            Click to search
+          </div>
+        </div>
+      </div>
+    </form>
+<!--    <div class="flex gap-10 py-20 overflow-auto">-->
+<!--      <ng-container *ngFor="let item of items; let i = index">-->
+<!--        <div-->
+<!--          class="shadow-xl flex justify-content-center items-center min-w-72 min-h-52 text-center hover:scale-110 transition-transform cursor-pointer">-->
+
+<!--          <div class="text-center w-full">-->
+<!--            {{item}}-->
+<!--          </div>-->
+
+<!--        </div>-->
+<!--      </ng-container>-->
+<!--    </div>-->
+  </section>
+  <section>
+    <div class="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+      <div class="absolute inset-0 -z-10 overflow-hidden">
+        <svg
+          class="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-gray-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
+          aria-hidden="true">
+          <defs>
+            <pattern id="e813992c-7d03-4cc4-a2bd-151760b470a0" width="200" height="200" x="50%" y="-1"
+                     patternUnits="userSpaceOnUse">
+              <path d="M100 200V.5M.5 .5H200" fill="none"/>
+            </pattern>
+          </defs>
+          <svg x="50%" y="-1" class="overflow-visible fill-gray-50">
+            <path d="M-100.5 0h201v201h-201Z M699.5 0h201v201h-201Z M499.5 400h201v201h-201Z M-300.5 600h201v201h-201Z"
+                  stroke-width="0"/>
+          </svg>
+          <rect width="100%" height="100%" stroke-width="0" fill="url(#e813992c-7d03-4cc4-a2bd-151760b470a0)"/>
+        </svg>
+      </div>
+      <div
+        class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
+        <div
+          class="lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+          <div class="lg:pr-4">
+            <div class="lg:max-w-lg">
+              <p class="text-base font-semibold leading-7 text-rose-600">More enhanced</p>
+              <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">A better shopping
+                experience</h1>
+              <p class="mt-6 text-xl leading-8 text-gray-700">The more you shop, the more you save.</p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="-ml-12 -mt-12 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden" data-aos="fade-in" data-aos-offset="-100" data-aos-duration="1000">
+          <img  class="w-[48rem] max-w-none rounded-xl bg-gray-900 shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem]"
+               src="https://scontent.fkul8-2.fna.fbcdn.net/v/t39.30808-6/429676550_935437745254716_649325635966827457_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=5f2048&_nc_ohc=wDj_3YE3ZhcAb7iicmt&_nc_ht=scontent.fkul8-2.fna&oh=00_AfBf3j3P0U1MbW4iuijqmxZPGXSTkxCJvt1CQnooPmGvJA&oe=6616AEC4"
+               alt="">
+        </div>
+        <div
+          class="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+          <div class="lg:pr-4">
+            <div class="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
+              <p>
+                LF Hardware is a leading provider of high-quality building materials, hand tools, power tools, sanitary
+                ware, paint,
+                household wares, power machinery, padlocks for businesses.
+              </p>
+              <ul role="list" class="mt-8 space-y-8 text-gray-600">
+                <li class="flex gap-x-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                       stroke="currentColor" class="mt-1 h-5 w-5 flex-none text-rose-600">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M18 18.72a9.094 9.094 0 0 0 3.741-.479 3 3 0 0 0-4.682-2.72m.94 3.198.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0 1 12 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 0 1 6 18.719m12 0a5.971 5.971 0 0 0-.941-3.197m0 0A5.995 5.995 0 0 0 12 12.75a5.995 5.995 0 0 0-5.058 2.772m0 0a3 3 0 0 0-4.681 2.72 8.986 8.986 0 0 0 3.74.477m.94-3.197a5.971 5.971 0 0 0-.94 3.197M15 6.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Zm-13.5 0a2.25 2.25 0 1 1-4.5 0 2.25 2.25 0 0 1 4.5 0Z"/>
+                  </svg>
+                  <span><strong class="font-semibold text-gray-900">Services.</strong> We have multiple service providers that serve your needs.</span>
+                </li>
+                <li class="flex gap-x-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                       stroke="currentColor" class="mt-1 h-5 w-5 flex-none text-rose-600">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
+                  </svg>
+                  <span><strong class="font-semibold text-gray-900">Products </strong> We have multiple products that can help you. </span>
+                </li>
+                <li class="flex gap-x-3">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                       stroke="currentColor" class="mt-1 h-5 w-5 flex-none text-rose-600">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 0 0-3.213-9.193 2.056 2.056 0 0 0-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 0 0-10.026 0 1.106 1.106 0 0 0-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/>
+                  </svg>
+                  <span><strong class="font-semibold text-gray-900">Delivery.</strong>
+                    We also provide delivery services to your location if you need.</span>
+                </li>
+              </ul>
+              <!--              <p class="mt-8">Et vitae blandit facilisi magna lacus commodo. Vitae sapien duis odio id et. Id blandit molestie auctor fermentum dignissim. Lacus diam tincidunt ac cursus in vel. Mauris varius vulputate et ultrices hac adipiscing egestas. Iaculis convallis ac tempor et ut. Ac lorem vel integer orci.</p>-->
+              <h2 class="mt-16 text-2xl font-bold tracking-tight text-gray-900">Not free to pickup? No problem.</h2>
+              <p class="mt-6">
+                We provides delivery services to your location if you need.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="min-h-screen bg-gray-50">
+    <div class="grid min-h-full grid-cols-1 grid-rows-2 lg:grid-cols-2 lg:grid-rows-1">
+      <div class="relative flex">
+        <img src="https://tailwindui.com/img/ecommerce-images/home-page-02-edition-01.jpg" alt=""
+             class="absolute inset-0 h-full w-full object-cover object-center">
+        <div class="relative flex w-full flex-col items-start justify-end bg-black bg-opacity-40 p-8 sm:p-12">
+          <h2 class="text-lg font-medium text-white text-opacity-75">Service Providers</h2>
+          <p class="mt-1 text-2xl font-medium text-white">Get someone to help you out</p>
+          <a href="#" class="mt-4 rounded-md bg-white px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-50">Explore
+            now</a>
+        </div>
+      </div>
+      <div class="relative flex">
+        <img
+          src="https://scontent.fkul8-2.fna.fbcdn.net/v/t39.30808-6/305771170_760709001850559_6748374487399760068_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=5f2048&_nc_ohc=_VNPnT_5z_4Ab7R5VM0&_nc_ht=scontent.fkul8-2.fna&oh=00_AfBOUCkZVgKwS3AmZr0O-p2vmt9DDTnPWvUd8L3XeKHNvw&oe=6616A7FA"
+          alt="" class="absolute inset-0 h-full w-full object-cover object-center">
+        <div class="relative flex w-full flex-col items-start justify-end bg-black bg-opacity-40 p-8 sm:p-12">
+          <h2 class="text-lg font-medium text-white text-opacity-75">Products</h2>
+          <p class="mt-1 text-2xl font-medium text-white">Find what you need</p>
+          <a href="#" class="mt-4 rounded-md bg-white px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-50">Shop
+            now</a>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="bg-white py-56 sm:py-56">
+    <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <dl class="grid grid-cols-1 gap-x-8 gap-y-16 text-center lg:grid-cols-3">
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+          <dt class="text-base leading-7 text-gray-600">Highly-Rated Contractors</dt>
+          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">0</dd>
+        </div>
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+          <dt class="text-base leading-7 text-gray-600">Total Orders</dt>
+          <dd
+            class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">{{'50' | currency : ' MYR'}}</dd>
+        </div>
+        <div class="mx-auto flex max-w-xs flex-col gap-y-4">
+          <dt class="text-base leading-7 text-gray-600">Total Delivery</dt>
+          <dd class="order-first text-3xl font-semibold tracking-tight text-gray-900 sm:text-5xl">100++</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+</div>
+
+<!--<section class="row">-->
+<!--  <div class="col-md-12 col-lg-12 col-sm-12 border p-0 m-0">-->
+<!--    <swiper-container fmSwiper [config]="config" init="false">-->
+<!--      <swiper-slide *ngFor="let ad of ads">-->
+<!--          <img src="./assets/image/test-ads-2.png" class="w-100 card-img-top carousel-image cursor-pointer">-->
+<!--      </swiper-slide>-->
+<!--    </swiper-container>-->
+<!--  </div>-->
+<!--</section>-->
+<!--<section class="row justify-content-center pt-5">-->
+<!--  <div class="col-md-8 col-lg-8 col-sm-12">-->
+<!--    <div class="card p-3 shadow border-0">-->
+<!--      <div class="card-title ps-3"><h3 class="title">Choose a service</h3></div>-->
+<!--      <div class="card-body">-->
+<!--        <form [formGroup]="filterForm" class="row g-3">-->
+<!--          <div class="col-md-5 col-lg-5 col-sm-12">-->
+<!--            <tui-combo-box-->
+<!--              formControlName="service"-->
+<!--              tuiTextfieldSize="m"-->
+<!--            >-->
+<!--              Service-->
+
+<!--              <tui-data-list-wrapper-->
+<!--                *tuiDataList-->
+<!--                [items]="items"-->
+<!--              ></tui-data-list-wrapper>-->
+<!--            </tui-combo-box>-->
+<!--          </div>-->
+<!--          <div class="col-md-5 col-lg-5 col-sm-12">-->
+<!--            <tui-combo-box-->
+<!--              formControlName="state"-->
+<!--              tuiTextfieldSize="m"-->
+<!--            >-->
+<!--              State-->
+
+<!--              <tui-data-list-wrapper-->
+<!--                *tuiDataList-->
+<!--                [items]="items"-->
+<!--              ></tui-data-list-wrapper>-->
+<!--            </tui-combo-box>-->
+<!--          </div>-->
+<!--          <div class="col-md-2 col-lg-2 col-sm-12">-->
+<!--            <app-button text="Get Quotes"></app-button>-->
+<!--          </div>-->
+<!--          <div>-->
+
+<!--          </div>-->
+<!--&lt;!&ndash;          <div class="col-md-12 col-lg-12 col-sm-12">&ndash;&gt;-->
+<!--&lt;!&ndash;            <div&ndash;&gt;-->
+<!--&lt;!&ndash;              tuiCarouselButtons&ndash;&gt;-->
+<!--&lt;!&ndash;              class="wrapper d-flex align-items-center gap-2"&ndash;&gt;-->
+<!--&lt;!&ndash;            >&ndash;&gt;-->
+<!--&lt;!&ndash;              <button&ndash;&gt;-->
+<!--&lt;!&ndash;                icon="tuiIconChevronLeftLarge"&ndash;&gt;-->
+<!--&lt;!&ndash;                title="Previous"&ndash;&gt;-->
+<!--&lt;!&ndash;                tuiIconButton&ndash;&gt;-->
+<!--&lt;!&ndash;                type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;                (click)="carousel.prev()"&ndash;&gt;-->
+<!--&lt;!&ndash;              ></button>&ndash;&gt;-->
+<!--&lt;!&ndash;            <tui-carousel #carousel&ndash;&gt;-->
+<!--&lt;!&ndash;                          class="carousel"&ndash;&gt;-->
+<!--&lt;!&ndash;              [draggable]="true"&ndash;&gt;-->
+<!--&lt;!&ndash;              [itemsCount]="4"&ndash;&gt;-->
+<!--&lt;!&ndash;              [duration]="0"&ndash;&gt;-->
+<!--&lt;!&ndash;            >&ndash;&gt;-->
+<!--&lt;!&ndash;              <ng-container *ngFor="let ad of ads; let i = index">&ndash;&gt;-->
+
+<!--&lt;!&ndash;                  <img&ndash;&gt;-->
+<!--&lt;!&ndash;                    *tuiItem&ndash;&gt;-->
+<!--&lt;!&ndash;                    alt=""&ndash;&gt;-->
+<!--&lt;!&ndash;                    draggable="false"&ndash;&gt;-->
+<!--&lt;!&ndash;                    src="./assets/image/{{ad}}"&ndash;&gt;-->
+<!--&lt;!&ndash;                    class="item"&ndash;&gt;-->
+<!--&lt;!&ndash;                    [class.item_active]="i === index + 1"&ndash;&gt;-->
+<!--&lt;!&ndash;                    width="300"&ndash;&gt;-->
+<!--&lt;!&ndash;                    height="150"&ndash;&gt;-->
+<!--&lt;!&ndash;                  />&ndash;&gt;-->
+<!--&lt;!&ndash;              </ng-container>&ndash;&gt;-->
+<!--&lt;!&ndash;            </tui-carousel>&ndash;&gt;-->
+<!--&lt;!&ndash;              <button&ndash;&gt;-->
+<!--&lt;!&ndash;                icon="tuiIconChevronRightLarge"&ndash;&gt;-->
+<!--&lt;!&ndash;                title="Next"&ndash;&gt;-->
+<!--&lt;!&ndash;                tuiIconButton&ndash;&gt;-->
+<!--&lt;!&ndash;                type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;                (click)="carousel.next()"&ndash;&gt;-->
+<!--&lt;!&ndash;              ></button>&ndash;&gt;-->
+<!--&lt;!&ndash;            </div>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            <tui-pagination&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              size="s"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              class="pagination"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              [length]="ads.length"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;              [(index)]="index"&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            ></tui-pagination>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          </div>&ndash;&gt;-->
+<!--        </form>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <div class="row pt-3">-->
+<!--      <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--        <tui-carousel-->
+<!--          [draggable]="true"-->
+<!--          [itemsCount]="5"-->
+<!--          [duration]="0"-->
+<!--        class="py-5 row"-->
+<!--        >-->
+<!--          <ng-container *ngFor="let item of items; let i = index">-->
+<!--            <div class="col-md-12 col-lg-12 col-sm-12" style="border-radius:4px;min-height:50px;"-->
+<!--                        *tuiItem-->
+<!--            >-->
+<!--              <div class="row border py-4  cursor-pointer justify-content-center align-items-center"  style="border-radius:4px;min-height:50px;">-->
+<!--                <div class="col-md-6 col-lg-6 col-sm-12 text-center">-->
+<!--                  <fa-icon [icon]="faPaintRoller" size="3x"></fa-icon>-->
+<!--                </div>-->
+<!--                <div class="col-md-6 col-lg-6 col-sm-12">-->
+<!--                  {{item}}-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </ng-container>-->
+<!--        </tui-carousel>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--    <ng-container *ngFor="let service of services">-->
+<!--      <div class="d-flex flex-wrap justify-content-between pt-5">-->
+<!--        <div data-aos="fade-in" data-aos-offset="-300" data-aos-duration="1000"><h3 class="title">{{service}}</h3>-->
+<!--          <p>Get quotes and quality workmanship from local professional</p>-->
+<!--        </div>-->
+<!--        <div>-->
+<!--          <button class="btn">View all</button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="row g-3 pt-3">-->
+<!--        <div class="col-md-3 col-lg-3 col-sm-12">-->
+<!--          <div class="card cursor-pointer">-->
+<!--            <div  class="card-img"-->
+<!--                 alt="Construction & Painting Service">-->
+<!--              <img class="img-fluid" src="../../../assets/image/construction-painting.jpg" width="400" height="400"/>-->
+<!--            </div>-->
+<!--            <div class="card-img-overlay bg-red-transparent">-->
+<!--              <div class="d-flex flex-column justify-content-center align-items-center h-100">-->
+<!--                <h5 class="card-title text-light title">Construction & Painting Service</h5>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--      </div>-->
+<!--    </ng-container>-->
+<!--    <section class="row g-4 py-5">-->
+<!--      <div class="title" data-aos-offset="-300" data-aos="fade-left" data-aos-duration="1000">-->
+<!--        <h3 class="text-center title">Lets see how customers rate our service.</h3>-->
+<!--        <div class="d-flex justify-content-center">-->
+<!--          <hr />-->
+<!--        </div>-->
+<!--      </div>-->
+<!--        <div class="col-md-4 col-lg-4 col-sm-12">-->
+<!--          <div class="card rating-card" data-aos-offset="-300" data-aos="zoom-in" data-aos-duration="400">-->
+<!--            <div class="card-title">Berjasa Engineering</div>-->
+<!--            <div class="card-body">Berjasa Engineering</div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      <div class="col-md-4 col-lg-4 col-sm-12">-->
+<!--        <div class="card rating-card" data-aos-offset="-300" data-aos="zoom-in" data-aos-duration="400">-->
+<!--          <div class="card-title">Berjasa Engineering</div>-->
+<!--          <div class="card-body">Berjasa Engineering</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-md-4 col-lg-4 col-sm-12">-->
+<!--        <div class="card rating-card" data-aos-offset="-300" data-aos="zoom-in" data-aos-duration="400">-->
+<!--          <div class="card-title">Berjasa Engineering</div>-->
+<!--          <div class="card-body">Berjasa Engineering</div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </section>-->
+<!--  </div>-->
+<!--</section>-->
+<!--<section class="row  border justify-content-center mt-5 overview-section align-items-center">-->
+<!--  <div class="col-md-8 col-md-8 col-sm-8 py-5">-->
+<!--    <div class="row justify-content-center py-5">-->
+<!--        <div class="card bg-transparent border-0" data-aos-offset="-300" data-aos="zoom-in" data-aos-duration="400">-->
+<!--          <div class="card-body">-->
+<!--            <div class="d-flex justify-content-center align-items-center gap-4">-->
+<!--              <fa-icon [icon]="faUsers" size="7x"></fa-icon>-->
+<!--              <div>-->
+<!--                <span class="h3" [countUp]="200" [duration]="10000"></span><span class="h3">+</span>-->
+<!--                <br />-->
+<!--                <span class="h5">Registered Service Providers</span>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row justify-content-center py-5">-->
+<!--      <div class="col-md-4 col-lg-4 col-sm-12">-->
+<!--        <div class="card bg-transparent border-0" data-aos-offset="-300" data-aos="zoom-in" data-aos-duration="400">-->
+<!--          <div class="row justify-content-center">-->
+<!--            <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--              <div class="row justify-content-center">-->
+<!--                <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                  <div class="card-title">-->
+<!--                    <div class="d-flex flex-column align-items-center gap-3">-->
+<!--                      <fa-icon [icon]="faShield" size="6x"></fa-icon>-->
+<!--                      <h3 class="text-center title">Highly-Rated Contractors</h3>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                  <div class="card-body">-->
+<!--                    <p class="text-center" [countUp]="200" [duration]="10000"></p>-->
+<!--                    <p class="text-center">Customer Served</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-md-4 col-lg-4 col-sm-12">-->
+<!--        <div class="card bg-transparent border-0" data-aos-offset="-300" data-aos="zoom-in" data-aos-duration="400">-->
+<!--          <div class="row justify-content-center">-->
+<!--            <div class="col-md-12 col-lg-12 col-sm-8">-->
+<!--              <div class="row justify-content-center">-->
+<!--                <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                  <div class="card-title">-->
+<!--                    <div class="d-flex flex-column align-items-center gap-3">-->
+<!--                      <fa-icon [icon]="faCheck" size="6x"></fa-icon>-->
+<!--                      <h3 class="text-center title">Matched to your needs</h3>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                  <div class="card-body">-->
+<!--                    <p class="text-center" [countUp]="200000" [duration]="10000"></p>-->
+<!--                    <p class="text-center"> Customer Served</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <div class="col-md-4 col-lg-4 col-sm-12">-->
+<!--        <div class="card bg-transparent border-0" data-aos-offset="-300" data-aos="zoom-in" data-aos-duration="400">-->
+<!--          <div class="row justify-content-center">-->
+<!--            <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--              <div class="row justify-content-center">-->
+<!--                <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                  <div class="card-title">-->
+<!--                    <div class="d-flex flex-column align-items-center gap-3">-->
+<!--                      <fa-icon [icon]="faThumbsUp" size="6x"></fa-icon>-->
+<!--                      <h3 class="text-center title">Save & Convenient</h3>-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-12 col-lg-12 col-sm-12">-->
+<!--                  <div class="card-body">-->
+<!--                    <p class="text-center">4.5/5</p>-->
+<!--                    <p class="text-center"> Average Rating</p>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+<!--<section class="row join-now-section h-100">-->
+<!--  <div class="col-md-6 col-lg-6 col-sm-12">-->
+<!--    <div class="d-flex flex-column justify-content-center align-items-center h-100 text-light">-->
+<!--      <div>-->
+<!--        <h3 class="py-2 title">Do you provide services?</h3>-->
+<!--        <h5 class="py-2 title">Join our network now</h5>-->
+<!--        <button-->
+<!--          type="button"-->
+<!--          class="btn btn-primary"-->
+<!--        >-->
+<!--          Join now-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->

@@ -1,0 +1,369 @@
+
+  <!--  <div class="col-md-3 col-lg-3 col-sm-3">-->
+  <!--    <tui-combo-box-->
+  <!--      [tuiTextfieldLabelOutside]="true" tuiTextfieldSize="m">-->
+  <!--      Sort By-->
+
+  <!--      <tui-data-list-wrapper-->
+  <!--        *tuiDataList>-->
+  <!--        &lt;!&ndash;    [items]="items"&ndash;&gt;-->
+  <!--      </tui-data-list-wrapper>-->
+  <!--    </tui-combo-box>-->
+  <!--  </div>-->
+  <!--  <div class="col-md-1 col-lg-1 col-sm-3">-->
+  <!--    <tui-combo-box-->
+  <!--      [tuiTextfieldLabelOutside]="true" tuiTextfieldSize="m" [(ngModel)]="sortBy.order">-->
+  <!--      Order-->
+
+  <!--      <tui-data-list-wrapper-->
+  <!--        *tuiDataList [items]="orderDirections">-->
+  <!--      </tui-data-list-wrapper>-->
+  <!--    </tui-combo-box>-->
+  <!--  </div>-->
+  <!--  <div class="col-md-8 col-lg-8 col-sm-6">-->
+  <!--    <div class="tui-space_bottom-4">Filter By</div>-->
+
+  <!--    <div class="">-->
+  <!--      <button-->
+  <!--        size="m"-->
+  <!--        tuiButton-->
+  <!--        type="button"-->
+  <!--        class="item tui-space_right-1">-->
+  <!--&lt;!&ndash;        [appearance]="buttonAppearance$ | async"&ndash;&gt;-->
+  <!--&lt;!&ndash;        (click)="toggleAll()"&ndash;&gt;-->
+
+  <!--        All-->
+  <!--      </button>-->
+
+  <!--      <tui-filter-->
+  <!--        class="d-inline" [items]="items">-->
+  <!--&lt;!&ndash;        [items]="items"&ndash;&gt;-->
+  <!--&lt;!&ndash;        [ngModel]="model$ | async"&ndash;&gt;-->
+  <!--&lt;!&ndash;        (ngModelChange)="onModelChange($event)"&ndash;&gt;-->
+  <!--      ></tui-filter>-->
+  <!--    </div>-->
+  <!--  </div>-->
+
+<ng-container *ngIf="layout === 'list';else grid">
+<!--  <table class="tui-table">-->
+<!--    <thead>-->
+<!--    <tr class="tui-table__tr">-->
+<!--      <ng-container *ngFor="let column of columns;let first = first;let last = last;">-->
+<!--        <th class="tui-table__th .tui-table__td_text_overflow" *ngIf="!last">{{column.value}}</th>-->
+<!--        <th class="tui-table__th .tui-table__td_text_overflow text-center" *ngIf="last">{{column.value}}</th>-->
+<!--      </ng-container>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <ng-template #noContent>-->
+<!--      <tr class="tui-table__tr tui-table__tr_border_none">-->
+<!--        <td class="tui-table__td" [colSpan]="columns.length">-->
+<!--          <div class="d-flex flex-column justify-content-center gap-4 py-5">-->
+<!--            <div class="text-center">-->
+<!--              <fa-icon [icon]="faNotAvailable" size="6x" class="text-danger"></fa-icon>-->
+<!--            </div>-->
+<!--            <div class="text-center">-->
+<!--              <h5>No record found</h5>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--    </ng-template>-->
+<!--    <tbody *ngIf="data.items?.length > 0;else noContent">-->
+<!--    <tr class="tui-table__tr tui-table__tr_border_none"  #dropdown="tuiDropdown"-->
+<!--        tuiDropdownContext  [tuiDropdown]="contextMenu" *ngFor="let item of data['items'];let i = index;">-->
+<!--      <ng-template #contextMenu>-->
+<!--        <tui-data-list-->
+<!--          role="menu"-->
+<!--          tuiDataListDropdownManager-->
+<!--          class="context-menu"-->
+<!--        >-->
+<!--          <button-->
+<!--            *ngFor="let menuItem of menuItems"-->
+<!--            tuiOption-->
+<!--            (click)="handleContextMenu(menuItem.title, item);dropdown.toggle(false)"-->
+<!--          >-->
+<!--            {{ menuItem.title }}-->
+<!--            <tui-svg-->
+<!--              class="icon"-->
+<!--              [src]="menuItem['iconName']"-->
+<!--            ></tui-svg>-->
+<!--          </button>-->
+<!--        </tui-data-list>-->
+<!--      </ng-template>-->
+<!--      &lt;!&ndash;      <td class="tui-table__td tui-table__td_first"></td>&ndash;&gt;-->
+<!--      <ng-container *ngFor="let column of columns;let last = last;let first = first;">-->
+<!--        <ng-container [ngSwitch]="column.key">-->
+<!--          <td class="tui-table__td" *ngSwitchCase="'no'" [tuiHighlight]="search"-->
+<!--              [tuiHighlightColor]="yellow">{{i + 1}}</td>-->
+<!--          <td class="tui-table__td tui-table__td" [tuiHighlight]="search" [tuiHighlightColor]="yellow" *ngSwitchDefault>{{item[column.key]}}</td>-->
+<!--          <td class="tui-table__td tui-table__td" *ngSwitchCase="'status'">-->
+<!--            <tui-tag-->
+<!--              status="custom"-->
+<!--              class="tag bg-success text-white"-->
+<!--              [hoverable]="true"-->
+<!--              [value]="'Success'"-->
+<!--            ></tui-tag>-->
+<!--          </td>-->
+<!--          <td class="tui-table__td text-center" *ngSwitchCase="'action'">-->
+<!--            <button-->
+<!--              appearance="flat"-->
+<!--              icon="tuiIconInfo"-->
+<!--              shape="rounded"-->
+<!--              size="s"-->
+<!--              title="Info"-->
+<!--              tuiIconButton-->
+<!--              type="button"-->
+<!--              class="info"-->
+<!--              *ngIf="enableInfo" (click)="handleInfo(item)"-->
+<!--            ></button>-->
+<!--            <button-->
+<!--              appearance="flat"-->
+<!--              icon="tuiIconEdit3"-->
+<!--              shape="rounded"-->
+<!--              size="s"-->
+<!--              title="Edit"-->
+<!--              tuiIconButton-->
+<!--              type="button"-->
+<!--              class="edit"-->
+<!--              *ngIf="enableEdit" (click)="handleEdit(item)"-->
+<!--            ></button>-->
+<!--            <button-->
+<!--              appearance="flat"-->
+<!--              icon="tuiIconTrash"-->
+<!--              shape="rounded"-->
+<!--              size="s"-->
+<!--              title="Delete"-->
+<!--              tuiIconButton-->
+<!--              type="button"-->
+<!--              class="remove"-->
+<!--              *ngIf="enableDelete" (click)="handleDelete(item)"-->
+<!--            ></button>-->
+<!--            <button-->
+<!--              appearance="flat"-->
+<!--              icon="tuiIconCheck"-->
+<!--              shape="rounded"-->
+<!--              size="s"-->
+<!--              title="Complete"-->
+<!--              tuiIconButton-->
+<!--              type="button"-->
+<!--              class="edit"-->
+<!--              *ngIf="enableComplete" (click)="handleComplete(item)"-->
+<!--            ></button>-->
+<!--            <button-->
+<!--              appearance="flat"-->
+<!--              icon="tuiIconSlash"-->
+<!--              shape="rounded"-->
+<!--              size="s"-->
+<!--              title="Cancel"-->
+<!--              tuiIconButton-->
+<!--              type="button"-->
+<!--              class="cancel"-->
+<!--              *ngIf="enableCancel"-->
+<!--              (click)="handleCancel(item)"-->
+<!--            ></button>-->
+<!--          </td>-->
+<!--        </ng-container>-->
+
+<!--      </ng-container>-->
+<!--      &lt;!&ndash;      <td class="tui-table__td tui-table__td_first">How to cook RxJS in an Angular app</td>&ndash;&gt;-->
+<!--      &lt;!&ndash;      <td class="tui-table__td">Roman Sedov</td>&ndash;&gt;-->
+<!--      &lt;!&ndash;      <td class="tui-table__td">20.06.2020</td>&ndash;&gt;-->
+<!--      &lt;!&ndash;      <td class="tui-table__td tui-table__td_last">angular.institute</td>&ndash;&gt;-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--    <div class="flex items-center justify-between flex-column flex-wrap md:flex-row md:space-y-0 pb-4 bg-white">-->
+<!--      <div>-->
+<!--        &lt;!&ndash; Dropdown menu &ndash;&gt;-->
+<!--        <div id="dropdownAction" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">-->
+<!--          <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">-->
+<!--            <li>-->
+<!--              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate account</a>-->
+<!--            </li>-->
+<!--          </ul>-->
+<!--          <div class="py-1">-->
+<!--            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete User</a>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+  <form [formGroup]="tableForm" class="overflow-x-auto">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+      <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+      <tr>
+
+        <th scope="col" class="p-4" *ngIf="multiSelect">
+          <div class="flex items-center">
+            <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-1 cursor-pointer" (click)="checkAll()">
+            <label for="checkbox-all-search" class="sr-only">checkbox</label>
+          </div>
+        </th>
+        <td class="px-6 py-7" *ngFor="let column of columns;">
+          {{column.value}}
+        </td>
+      </tr>
+      </thead>
+      <tbody formArrayName="checkboxes">
+      <tr class="bg-white hover:bg-gray-50" tuiDropdownContext  [tuiDropdown]="contextMenu" *ngFor="let item of data['items'];let i = index;" #dropdown="tuiDropdown">
+        <ng-template #contextMenu>
+          <tui-data-list
+            role="menu"
+            tuiDataListDropdownManager
+            class="context-menu"
+          >
+            <button
+              *ngFor="let menuItem of menuItems"
+              tuiOption
+              (click)="handleContextMenu(menuItem.title, item);dropdown.toggle(false)"
+            >
+              {{ menuItem.title }}
+              <tui-svg
+                class="icon"
+                [src]="menuItem['iconName']"
+              ></tui-svg>
+            </button>
+          </tui-data-list>
+        </ng-template>
+        <td class="w-4 p-4" *ngIf="multiSelect">
+          <div class="flex items-center">
+            <input id="checkbox-table-search-1" [formControlName]="i"  type="checkbox" class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+          </div>
+        </td>
+        <ng-container  *ngFor="let column of columns;">
+          <td scope="row" class="flex items-center px-4 py-4 text-gray-900 whitespace-nowrap" *ngIf="column.key === 'image';else textRow;">
+            <img class="w-10 h-10 rounded-full" src="./assets/image/logo.png" alt="Jese image">
+          </td>
+          <ng-template #textRow>
+            <td class="px-6 py-4">
+              {{item[column.key]}}
+            </td>
+          </ng-template>
+        </ng-container>
+      </tr>
+      </tbody>
+    </table>
+  </form>
+
+</ng-container>
+
+<!--<table #table class="w-100 border" mat-table [dataSource]="data['items']" matSort (matSortChange)="handleSort($event)" *ngIf="layout === 'list';else grid">-->
+<!--  <ng-container *ngFor="let column of columns" [matColumnDef]="column.key" >-->
+<!--    <ng-container [ngSwitch]="column.key">-->
+<!--      <ng-container *ngSwitchCase="'no'">-->
+<!--        <th mat-header-cell *matHeaderCellDef>No</th>-->
+<!--        <td mat-cell *matCellDef="let element;let i=index;">{{data['current_page'] * data['size'] + i + 1}}</td>-->
+<!--      </ng-container>-->
+<!--      <ng-container *ngSwitchDefault>-->
+<!--        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{column.value}}</th>-->
+<!--        <td mat-cell *matCellDef="let element">{{element[column.key]}}</td>-->
+<!--      </ng-container>-->
+<!--      <ng-container *ngSwitchCase="'action'">-->
+<!--        <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>-->
+<!--        <td mat-cell *matCellDef="let element" class="text-center">-->
+<!--          <button mat-icon-button color="primary" aria-label="Example icon button with a open in new tab icon" *ngIf="enableEdit" (click)="handleEdit(element)">-->
+<!--            <mat-icon>edit</mat-icon>-->
+<!--          </button>-->
+<!--          <button mat-icon-button color="warn" aria-label="Example icon button with a open in new tab icon" *ngIf="enableDelete" (click)="handleDelete(element)" >-->
+<!--            <mat-icon>delete</mat-icon>-->
+<!--          </button>-->
+<!--          <button mat-icon-button color="primary" aria-label="Example icon button with a open in new tab icon" *ngIf="enableComplete" (click)="handleComplete(element)" >-->
+<!--            <mat-icon>check</mat-icon>-->
+<!--          </button>-->
+<!--          <button mat-icon-button color="warn" aria-label="Example icon button with a open in new tab icon" *ngIf="enableCancel" (click)="handleCancel(element)" >-->
+<!--            <mat-icon>cancel</mat-icon>-->
+<!--          </button>-->
+<!--        </td>-->
+<!--      </ng-container>-->
+<!--    </ng-container>-->
+<!--  </ng-container>-->
+<!--  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--  <ng-container *ngIf="data">-->
+<!--    <tr class="mat-row" *matNoDataRow>-->
+<!--      <td class="mat-cell" [attr.colspan]="columns.length">-->
+<!--        No data found-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--  </ng-container>-->
+<!--</table>-->
+<ng-template #grid>
+  <div class="row p-5" *ngIf="data['items'];else loading;">
+    <div class="row shadow bg-white rounded p-3 m-3" *ngIf="data['items'].length === 0">
+      <p>No product is found</p>
+    </div>
+    <div class="row justify-content-center mb-3" *ngFor="let data of data['items'];let i = index;">
+      <div class="col-md-12 col-xl-10">
+        <div class="card shadow-0 border rounded-3">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-12 col-lg-3 col-xl-3 mb-4 mb-lg-0">
+                <div class="bg-image hover-zoom ripple rounded ripple-surface">
+                  <img src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/new/img(5).webp"
+                       class="w-100"/>
+                  <a href="#!">
+                    <div class="hover-overlay">
+                      <div class="mask" style="background-color: rgba(253, 253, 253, 0.15);"></div>
+                    </div>
+                  </a>
+                </div>
+              </div>
+              <div class="col-md-6 col-lg-6 col-xl-6">
+                <h3>{{data.name}}</h3>
+                <!--                    <div class="d-flex flex-row">-->
+                <!--                      <div class="text-danger mb-1 me-2">-->
+                <!--                        <i class="fa fa-star"></i>-->
+                <!--                        <i class="fa fa-star"></i>-->
+                <!--                        <i class="fa fa-star"></i>-->
+                <!--                        <i class="fa fa-star"></i>-->
+                <!--                      </div>-->
+                <!--                      <span>145</span>-->
+                <!--                    </div>-->
+                <!--                    <div class="mt-1 mb-0 text-muted small">-->
+                <!--                      <span>100% cotton</span>-->
+                <!--                      <span class="text-primary"> • </span>-->
+                <!--                      <span>Light weight</span>-->
+                <!--                      <span class="text-primary"> • </span>-->
+                <!--                      <span>Best finish<br /></span>-->
+                <!--                    </div>-->
+                <!--                    <div class="mb-2 text-muted small">-->
+                <!--                      <span>Unique design</span>-->
+                <!--                      <span class="text-primary"> • </span>-->
+                <!--                      <span>For women</span>-->
+                <!--                      <span class="text-primary"> • </span>-->
+                <!--                      <span>Casual<br /></span>-->
+                <!--                    </div>-->
+                <h5>Description</h5>
+                <p class="text-truncate mb-4 mb-md-0">
+                  {{data.description}}
+                </p>
+              </div>
+              <div class="col-md-6 col-lg-3 col-xl-3 border-sm-start-none border-start">
+                <div class="d-flex flex-row align-items-center mb-1">
+                  <h4 class="mb-1 me-1">{{data.price | currency : 'MYR'}}</h4>
+                  <!--                                <span class="text-danger"><s>$25.99</s></span>-->
+                </div>
+                <!--                    <h6 class="text-success">Free shipping</h6>-->
+                <div class="d-flex flex-column mt-4 gap-3">
+                  <!--                      <button mat-flat-button  color="primary" type="button" [routerLink]="['/product-details',data.id]" (click)="viewProduct(data.id)">View Details</button>-->
+                  <!--                      <button  mat-stroked-button color="primary" type="button">-->
+                  <!--                        Add to wishlist-->
+                  <!--                      </button>-->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #loading>
+
+</ng-template>

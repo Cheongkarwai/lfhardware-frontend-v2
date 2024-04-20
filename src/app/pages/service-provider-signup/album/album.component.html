@@ -1,0 +1,63 @@
+
+  <form class="row g-4" [formGroup]="albumForm" (ngSubmit)="complete()">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <div class="row">
+        <div class="col-md-3 col-lg-3 col-sm-12">
+          <label [tuiLabel]="label">
+          </label>
+          <ng-template #label>
+      <span>
+        Albums & Photos (Optional)
+      </span>
+            <tui-tooltip
+              content="Upload front and back of your IC/Driving License/Passport"
+              describeId="uniqueId"
+              direction="top-right"
+            ></tui-tooltip>
+          </ng-template>
+        </div>
+        <div class="col-md-9 col-lg-9 col-sm-12">
+          <div class="row g-2">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+              <tui-input
+                formControlName="name"
+                tuiTextfieldSize="m"
+                [tuiTextfieldCleaner]="true"
+              >
+                Enter album name
+                <input
+                  tuiTextfield
+                  type="text"
+                />
+              </tui-input>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12">
+              <tui-textarea
+                class="tui-space_top-4"
+                [expandable]="true"
+                tuiTextfieldSize="m"
+                formControlName="description"
+              >
+                Enter album description
+              </tui-textarea>
+            </div>
+            <div class="col-md-12 col-lg-12 col-sm-12 pt-3">
+              <app-multiple-file-upload [multiple]="true" [control]="photosFormControl"></app-multiple-file-upload>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-12 col-sm-12">
+      <div class="d-flex justify-content-between">
+        <button class="btn btn-outline-primary" type="button" [routerLink]="'../'+routes[currentIndex-1].path" (click)="setActiveIndex(currentIndex-1)">
+          Back
+        </button>
+        <button class="btn btn-primary" type="submit" [disabled]="isSubmitting">
+          Complete
+        </button>
+      </div>
+    </div>
+  </form>
+
+

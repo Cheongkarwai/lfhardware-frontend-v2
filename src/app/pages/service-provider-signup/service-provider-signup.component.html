@@ -1,0 +1,60 @@
+
+<ng-container *ngIf="{value: formSubmitted$ | async} as submitState">
+  <ng-container *ngIf="!submitState.value;else submitted">
+    <div class="border row justify-content-center g-3 py-5 bg-light">
+      <div class="col-md-12 col-lg-12 col-sm-12 text-center">
+        <h3 class="subtitle">Create Business Profile</h3>
+      </div>
+      <div class="col-md-12 col-lg-12 col-sm-12 d-flex flex-column align-items-center">
+        <div>
+          <tui-stepper class="stepper" [activeItemIndex]="activeIndex">
+            <ng-container *ngFor="let stepper of steppers;let i = index;">
+              <button *ngIf="(activeIndex >= i);else disabledStepper"
+                      [routerLink]="stepper.path"
+                      (click)="switchIndex(i)"
+                      [stepState]="stepsState[i]"
+                      tuiStep
+              >
+                {{stepper.data.title}}
+              </button>
+              <ng-template #disabledStepper>
+                <button
+                  disabled
+                  tuiStep></button>
+              </ng-template>
+            </ng-container>
+            <!--        <button tuiStep>Simple step</button>-->
+            <!--        <button-->
+            <!--          stepState="error"-->
+            <!--          tuiStep-->
+            <!--        >-->
+            <!--          Error step-->
+            <!--        </button>-->
+            <!--        <button-->
+            <!--          disabled-->
+            <!--          tuiStep-->
+            <!--        >-->
+            <!--          Disabled step-->
+            <!--        </button>-->
+            <!--        <button-->
+            <!--          icon="tuiIconClockLarge"-->
+            <!--          tuiStep-->
+            <!--        >-->
+            <!--          Step with an icon-->
+            <!--        </button>-->
+          </tui-stepper>
+        </div>
+      </div>
+    </div>
+    <div class="row min-vh-100 justify-content-center py-5">
+      <div class="col-md-7 col-lg-7 col-sm-7">
+        <router-outlet />
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #submitted>
+    <div style="min-height:600px;">
+      <app-success-page title="Your request has been submitted." description="Your request will be reviewed by our authority AS SOON AS POSSIBLE"></app-success-page>
+    </div>
+  </ng-template>
+</ng-container>

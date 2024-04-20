@@ -1,0 +1,31 @@
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+<div class="container-fluid" *ngIf="transaction$ | async as transaction;else loading">
+  <div class=" ">
+    <hr/>
+    <span class="px-2"> Transaction #{{id}}</span>
+    <hr/>
+  </div>
+  <div class="row g-4 px-2">
+    <div class="col-md-2 col-lg-2 col-sm-12">
+      Charge Amount
+    </div>
+    <div class="col-md-10 col-lg-10 col-sm-12">
+      <small>{{transaction.charge_amount}}</small>
+    </div>
+    <div class="col-md-2 col-lg-2 col-sm-12">
+      Currency
+    </div>
+    <div class="col-md-10 col-lg-10 col-sm-12">
+      <small>{{transaction.currency}}</small>
+    </div>
+    <div class="col-md-2 col-lg-2 col-sm-12">
+      Payment Method
+    </div>
+    <div class="col-md-10 col-lg-10 col-sm-12">
+      <small>{{transaction.payment_method}}</small>
+    </div>
+
+  </div>
+  </div>

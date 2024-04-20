@@ -1,0 +1,127 @@
+<div class="row">
+  <div class="col-md-6 col-lg-6 col-sm-12 pb-2">
+    <h2 class="text-gray">Add Appointment</h2>
+  </div>
+</div>
+<div class="row g-2">
+  <div class="col-md-12 col-lg-6 col-sm-12">
+    <div class="card overflow-hidden shadow-sm border">
+      <div class="card-body">
+        <full-calendar #calendar [options]="calendarOption" [events]="events$ | async"></full-calendar>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-12 col-lg-6 col-sm-12">
+    <div class="row g-4">
+      <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="card shadow-sm border" style="min-height:26em;">
+          <div class="card-body">
+            <h3 class="text-gray">Appointments</h3>
+            <div class="d-flex flex-column justify-content-center gap-4 py-5">
+              <div class="text-center">
+                <fa-icon [icon]="faNotAvailable" size="6x" class="text-danger"></fa-icon>
+              </div>
+              <div class="text-center">
+                <h5>No appointment is available</h5>
+              </div>
+            </div>
+<!--            <div class="card shadow-sm-border border-success">-->
+<!--              <div class="card-body">-->
+<!--                <tui-tag-->
+<!--                  class="tag bg-success"-->
+<!--                  [hoverable]="true"-->
+<!--                  value="Success"-->
+<!--                ></tui-tag>-->
+<!--                <span class="ps-2 text-gray">Patient ID : 1231231232</span>-->
+<!--              </div>-->
+<!--            </div>-->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="card overflow-hidden shadow-sm border">
+          <div class="card-body">
+            <form class="row g-4" [formGroup]="addAppointmentForm">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <tui-combo-box
+                  [tuiTextfieldLabelOutside]="true" tuiTextfieldSize="m">
+                  Select doctor
+
+                  <tui-data-list-wrapper
+                    *tuiDataList
+                    [items]="items"
+                  ></tui-data-list-wrapper>
+                </tui-combo-box>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <tui-combo-box
+                  [tuiTextfieldLabelOutside]="true" tuiTextfieldSize="m" formControlName="test">
+                  Select type of patient
+
+                  <tui-data-list-wrapper
+                    *tuiDataList
+                    [items]="items"
+                  ></tui-data-list-wrapper>
+                </tui-combo-box>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <tui-input
+                  tuiHintContent="Enter a username"
+                  formControlName="testValue"
+                  tuiTextfieldSize="m"
+                  [tuiTextfieldCleaner]="true"
+                >
+                  Username
+                  <input
+                    tuiTextfield
+                    type="text"
+                  />
+                </tui-input>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <tui-input
+                  tuiHintContent="Enter a phone number. Example +601XXXXXXXX"
+                  formControlName="testValue"
+                  tuiTextfieldSize="m"
+                  [tuiTextfieldCleaner]="true"
+                  tuiTextfieldIconLeft="tuiIconPhone"
+                >
+                  Phone number
+                  <input
+                    tuiTextfield
+                    type="tel"
+                  />
+                </tui-input>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <tui-input
+                  tuiHintContent="Enter an email address. Example example@gmail.com"
+                  formControlName="testValue"
+                  tuiTextfieldSize="m"
+                  [tuiTextfieldCleaner]="true"
+                  tuiTextfieldIconLeft="tuiIconMail"
+                >
+                  Email address
+                  <input
+                    tuiTextfield
+                    type="email"
+                  />
+                </tui-input>
+              </div>
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <tui-input-date-time formControlName="testValue" tuiTextfieldSize="m">
+                  Choose date and time
+                  <input
+                    placeholder="OCT 26 1985 01:22"
+                    tuiTextfield
+                  />
+                </tui-input-date-time>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

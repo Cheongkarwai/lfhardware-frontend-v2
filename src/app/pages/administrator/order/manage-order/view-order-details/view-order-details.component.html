@@ -1,0 +1,56 @@
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+<div class="grid grid-cols-1 " *ngIf="orderDetails$ | async as order;else loading">
+  <div class=" ">
+    <hr/>
+    <span class="px-2"> Order #000{{order.id}}</span>
+    <small>{{order.delivery_status ? order.delivery_status: 'N/A'}}</small>
+    <hr/>
+  </div>
+  <div>
+    <label>
+      Shipping Fees
+    </label>
+    <div >
+      <small>{{order.shipping_fees ? (order.shipping_fees | currency : 'MYR' ) : 'N/A'}}</small>
+    </div>
+    <label>
+     Subtotal
+    </label>
+    <div class="col-md-10 col-lg-10 col-sm-12">
+      <small>{{order.subtotal ? ( order.subtotal | currency : 'MYR' )  : 'N/A'}}</small>
+    </div>
+    <div class="col-md-2 col-lg-2 col-sm-12">
+      Total
+    </div>
+    <div class="col-md-10 col-lg-10 col-sm-12">
+      <small>{{order.total ? order.total : 'N/A'}}</small>
+    </div>
+    <div class="col-md-2 col-lg-2 col-sm-12">
+     Recipient First Name
+    </div>
+    <div class="col-md-10 col-lg-10 col-sm-12">
+      <small>{{order.shipping_details.recipient.first_name ? order.shipping_details.recipient.first_name : 'N/A'}}</small>
+    </div>
+    <div class="col-md-2 col-lg-2 col-sm-12">
+      Recipient Last Name
+    </div>
+    <div class="col-md-10 col-lg-10 col-sm-12">
+      <small>{{order.shipping_details.recipient.last_name ? order.shipping_details.recipient.last_name : 'N/A'}}</small>
+    </div>
+    <div class="col-md-2 col-lg-2 col-sm-12">
+      Recipient Email Address
+    </div>
+    <div class="col-md-10 col-lg-10 col-sm-12">
+      <small>{{order.shipping_details.recipient.email_address ? order.shipping_details.recipient.email_address : 'N/A'}}</small>
+    </div>
+    <div class="col-md-2 col-lg-2 col-sm-12">
+      Recipient Phone Number
+    </div>
+    <div class="col-md-10 col-lg-10 col-sm-12">
+      <small>{{order.shipping_details.recipient.phone_number ? order.shipping_details.recipient.phone_number : 'N/A'}}</small>
+    </div>
+  </div>
+</div>
+
