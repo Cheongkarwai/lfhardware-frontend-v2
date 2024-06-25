@@ -1,0 +1,11 @@
+
+<div>
+
+</div>
+<div *ngIf="services$ | async as services">
+  <app-dropdown [control]="selectServiceControl" [items]="services" title="Select a service"></app-dropdown>
+</div>
+
+<div *ngIf="appointmentForm$ | async as appointmentForm" class="bg-white">
+  <survey [model]="appointmentForm" ></survey>
+</div>

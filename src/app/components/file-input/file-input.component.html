@@ -1,0 +1,7 @@
+<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" [for]="label">{{label}}</label>
+<input  (change)='onInputChange($event)'  [ngClass]="control.touched && control.errors ? 'ring-1 ring-rose-600' : ''" class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5" [id]="label" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" accept=".png, .jpg, .jpeg" id="default_size" type="file">
+<span
+  *ngIf="control.hasError('required') && control.touched"
+  class="text-rose-600 text-sm">
+                        *{{label}} is required
+                      </span>

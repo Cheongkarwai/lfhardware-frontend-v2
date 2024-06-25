@@ -17,8 +17,8 @@ export interface Recipient{
 }
 
 export interface Address{
-  address_line_1:string;
-  address_line_2:string;
+  line_1:string;
+  line_2:string;
   state:string;
   city:string;
   zipcode:string;

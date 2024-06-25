@@ -56,12 +56,11 @@ export class EditUserComponent implements OnDestroy{
     });
 
     this.usernameControl.valueChanges.pipe(pairwise(),takeUntil(this.destroy$)).subscribe(([prev,res])=>{
-      console.log(prev);
       this.usernameControl.addAsyncValidators(Validator.createUsernameValidator(this.userService));
     })
 
     const username = this.context.data as any;
-    this.formObservables$ = forkJoin([this.userService.findAllRoles(), this.cityService.findAll(), this.stateService.findAll()]);
+    this.formObservables$ = forkJoin([this.userService.findAllCurrentUserRoles(), this.cityService.findAll(), this.stateService.findAll()]);
     this.user$ = this.userService.findUserAccountByUsername(username).pipe(map(user=>{
       this.editUserForm.patchValue(user);
       return user;
@@ -121,8 +120,6 @@ export class EditUserComponent implements OnDestroy{
   }
 
   compareState(a:State, b:string){
-    console.log(a);
-    console.log(b);
     return a.name === b;
   }
 

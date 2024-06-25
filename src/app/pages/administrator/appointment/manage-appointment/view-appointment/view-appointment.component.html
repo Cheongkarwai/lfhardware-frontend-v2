@@ -1,0 +1,117 @@
+<div id="readProductModal" tabindex="-1" aria-hidden="true"
+     class="overflow-y-auto overflow-x-hidden top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full"
+     *ngIf="appointmentInfo$ | async as appointmentInfo">
+  <div class="relative p-4 w-full max-w-3xl h-full md:h-auto">
+    <!-- Modal content -->
+    <div class="relative p-4 bg-white rounded-lg dark:bg-gray-800 sm:p-5">
+      <!-- Modal header -->
+      <div class="flex justify-between mb-4 rounded-t sm:mb-5">
+        <div class="text-lg text-gray-900 md:text-xl dark:text-white">
+          <h3 class="font-semibold">
+            Appointment #{{data.appointment.id}}
+          </h3>
+
+          <p class="font-bold">
+            Estimated price: {{data.appointment.estimated_price | currency : ' MYR'}}
+          </p>
+        </div>
+        <div>
+          <button type="button"
+                  class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 inline-flex dark:hover:bg-gray-600 dark:hover:text-white"
+                  data-modal-toggle="readProductModal" (click)="close()">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+      </div>
+      <div class="items-start gap-8 md:flex lg:gap-12">
+        <div class="mb-4 flow-root w-full md:mb-0">
+          <div class="divide-y divide-gray-200 dark:divide-gray-700">
+            <dl class="pb-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Payment Status</dt>
+              <dd *ngIf="data.appointment.is_paid; else notPaid;">
+                <app-badge text="Paid" [status]="'completed'"></app-badge>
+              </dd>
+              <ng-template #notPaid>
+                <dd>
+                  <app-badge text="Not Paid" [status]="'incomplete'"></app-badge>
+                </dd>
+              </ng-template>
+            </dl>
+            <dl class="py-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Job Status</dt>
+              <dd>
+                <app-badge [text]="appointmentInfo[2].status === 'COMPLETED' ? 'Completed' : appointmentInfo[2].status === 'CANCELLED' ? 'Cancelled' : appointmentInfo[2].status === 'PENDING' ? 'Pending' :
+                appointmentInfo[2].status === 'WORK_IN_PROGRESS' ? 'Work in progress' : appointmentInfo[2].status === 'CONFIRMED' ? 'Confirmed' : appointmentInfo[2].status === 'REVIEW' ? 'Review By Admin' :
+          appointmentInfo[2].status === 'WORK_COMPLETED' ? 'Work is completed' : ''"
+                           [status]="appointmentInfo[2].status === 'COMPLETED' ? 'completed' : appointmentInfo[2].status === 'CANCELLED' ? 'cancelled' : appointmentInfo[2].status === 'PENDING' ? 'pending' :
+                appointmentInfo[2].status === 'WORK_IN_PROGRESS' || appointmentInfo[2].status === 'CONFIRMED' || appointmentInfo[2].status === 'REVIEW' || appointmentInfo[2].status === 'WORK_COMPLETED' ? 'normal' : ''"></app-badge>
+              </dd>
+              <ng-template #notPaid>
+                <dd>
+                  <app-badge text="Not Paid" [status]="'incomplete'"></app-badge>
+                </dd>
+              </ng-template>
+            </dl>
+            <dl class="py-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Service Requested</dt>
+              <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">
+                {{appointmentInfo[0].name}}
+              </dd>
+            </dl>
+            <dl class="py-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Customer Name</dt>
+              <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{appointmentInfo[1]?.first_name + ' ' + appointmentInfo[1].last_name}}</dd>
+            </dl>
+            <dl class="py-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Customer Email Address</dt>
+              <dd
+                class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{appointmentInfo[1]?.email_address}}</dd>
+            </dl>
+            <dl class="pt-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Customer Address</dt>
+              <dd class="text-gray-500 dark:text-gray-400">
+                {{appointmentInfo[1].address.line_1}},
+                {{appointmentInfo[1].address.line_2}},
+                {{appointmentInfo[1].address.city}},
+                {{appointmentInfo[1].address.state}},
+                {{appointmentInfo[1].address.zipcode}}
+              </dd>
+            </dl>
+            <dl class="py-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Service Provider Name</dt>
+              <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{appointmentInfo[3]?.name}}</dd>
+            </dl>
+            <dl class="py-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Service Provider Phone Number</dt>
+              <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{appointmentInfo[3]?.contact_info?.phone_number}}</dd>
+            </dl>
+            <dl class="py-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Service Provider Whatsapp</dt>
+              <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{appointmentInfo[3]?.contact_info?.whatsapp}}</dd>
+            </dl>
+            <dl class="py-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Service Provider Email Address</dt>
+              <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{appointmentInfo[3]?.contact_info?.email_address}}</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="relative ms-3 w-full" >
+          <app-appointment-progress-bar [appointment]="appointmentInfo[2]" (handleViewScreenshot)="viewScreenshots($event)"></app-appointment-progress-bar>
+         <ng-container *ngIf="appointmentInfo[2].status === 'WORK_COMPLETED'">
+           <app-button text="Rejected" (click)="updateStatus('REJECTED')"></app-button>
+           <app-button text="Approve" (click)="updateStatus('REVIEW')"></app-button>
+         </ng-container>
+          <ng-container *ngIf="appointmentInfo[2].status === 'REVIEW'">
+            <app-button text="Release Payment" (click)="updateStatus('COMPLETED')"></app-button>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

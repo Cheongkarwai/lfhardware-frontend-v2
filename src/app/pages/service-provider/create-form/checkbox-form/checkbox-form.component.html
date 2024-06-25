@@ -1,1 +1,98 @@
-<p>checkbox-form works!</p>
+<form class="grid gap-6 mb-6 md:grid-cols-2 md:col-span-2" [formGroup]="checkboxProperties">
+  <div class="col-span-2">
+    <div class="flex gap-3">
+      <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Name
+      </label>
+    </div>
+    <input type="text" name="name" id="name"
+           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+           [ngClass]="nameControl.touched && nameControl.errors ? 'ring-1 ring-rose-600' : ''"
+           formControlName="name">
+    <span *ngIf="(nameControl.hasError('required')) && nameControl.touched" class="text-rose-600 text-sm">
+                                *Name is required
+                              </span>
+  </div>
+  <div class="col-span-2">
+    <div class="flex gap-3">
+      <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Title
+      </label>
+    </div>
+    <input type="text" name="title" id="title"
+           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+           [ngClass]="titleControl.touched && titleControl.errors ? 'ring-1 ring-rose-600' : ''"
+           formControlName="title">
+    <span *ngIf="(titleControl.hasError('required')) && titleControl.touched" class="text-rose-600 text-sm">
+                                *Title is required
+                              </span>
+  </div>
+  <div class="col-span-2" formArrayName="choices">
+    <div class="flex gap-3">
+      <label for="title" class="block mb-2 text-sm font-medium text-gray-900">Choices
+      </label>
+    </div>
+    <div class="grid grid-cols-5 gap-3" >
+      <ng-container [formGroupName]="i" *ngFor="let control of choiceFormArray.controls; let i = index;">
+        <div class="col-span-2">
+          <input type="text" name="title" id="title" placeholder="title"
+                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                 [ngClass]="control.get('title')?.touched && control.get('title')?.errors ? 'ring-1 ring-rose-600' : ''"
+                 formControlName="title">
+          <span *ngIf="(control.get('title')?.hasError('required')) && control.get('title')?.touched" class="text-rose-600 text-sm">
+                                *Title is required
+                              </span>
+        </div>
+        <div class="col-span-2">
+          <input type="text" name="value" id="value" placeholder="value"
+                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                 [ngClass]="control.get('value')?.touched && control.get('value')?.errors ? 'ring-1 ring-rose-600' : ''"
+                 formControlName="value">
+          <span *ngIf="(control.get('value')?.hasError('required')) && control.get('value')?.touched" class="text-rose-600 text-sm">
+                                *Value is required
+                              </span>
+        </div>
+        <div class="col-span-1 items-center py-2">
+          <button (click)="removeChoice(i)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12h14" />
+            </svg>
+
+          </button>
+        </div>
+      </ng-container>
+      <span *ngIf="(choiceFormArray?.hasError('required')) && choiceFormArray?.touched" class="text-rose-600 text-sm col-span-5">
+                                *Please add in atleast one choice
+                              </span>
+      <div class="col-span-5">
+        <button (click)="addChoice()">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+          </svg>
+
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-2">
+    <div class="flex gap-3">
+      <label for="isRequired" class="block mb-2 text-sm font-medium text-gray-900">Required
+      </label>
+    </div>
+    <label class="inline-flex items-center cursor-pointer">
+      <input name="isRequired" id="isRequired" type="checkbox" value="" class="sr-only peer" formControlName="isRequired">
+      <div
+        class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+      <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"></span>
+    </label>
+  </div>
+  <div class="col-span-2" *ngIf="isRequiredControl.getRawValue()">
+    <div class="flex gap-3">
+      <label for="requiredErrorText" class="block mb-2 text-sm font-medium text-gray-900">Required Error Text
+      </label>
+    </div>
+    <input type="text" name="requiredErrorText" id="requiredErrorText"
+           class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5  dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+           [ngClass]="requiredErrorTextControl.touched && requiredErrorTextControl.errors ? 'ring-1 ring-rose-600' : ''"
+           formControlName="requiredErrorText">
+  </div>
+  <app-button (click)="addControl()" text="Add control"></app-button>
+</form>

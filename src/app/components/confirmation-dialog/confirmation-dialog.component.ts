@@ -1,40 +1,41 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Component, EventEmitter, Inject, Input, OnDestroy, Output} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {AlertService} from "../../core/service/alert.service";
 import {DialogSubscriptionService} from "../../core/dialog/dialog.service";
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-confirmation-dialog',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, MatDialogModule],
   templateUrl: './confirmation-dialog.component.html',
   styleUrl: './confirmation-dialog.component.scss'
 })
-export class ConfirmationDialogComponent {
+export class ConfirmationDialogComponent implements OnDestroy {
 
-  @Output() confirm = new EventEmitter<boolean>();
+ // @Output() confirm = new EventEmitter<boolean>();
 
-  constructor(private dialogService: DialogSubscriptionService) {
+  constructor( public dialogRef: MatDialogRef<ConfirmationDialogComponent>,
+               @Inject(MAT_DIALOG_DATA) public data: {title: string, text: string, icon: string}, ) {
   }
 
   close(){
-    this.dialogService.closeConfirmationDialog();
+    this.dialogRef.close();
   }
 
-  handleConfirm($event: MouseEvent) {
-    this.confirm.emit(true);
-    this.dialogService.closeConfirmationDialog();
+  ngOnDestroy(){
+
   }
 
   get title(){
-    return this.dialogService.confirmationDialog.title;
+    return this.data.title;
   }
 
   get text(){
-    return  this.dialogService.confirmationDialog.text;
+    return  this.data.text;
   }
 
-  get isVisible(){
-    return this.dialogService.isConfirmationDialogVisible;
+  get icon(){
+    return this.data.icon;
   }
 }

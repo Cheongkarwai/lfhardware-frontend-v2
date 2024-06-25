@@ -1,216 +1,31 @@
-
-  <!--  <div class="col-md-3 col-lg-3 col-sm-3">-->
-  <!--    <tui-combo-box-->
-  <!--      [tuiTextfieldLabelOutside]="true" tuiTextfieldSize="m">-->
-  <!--      Sort By-->
-
-  <!--      <tui-data-list-wrapper-->
-  <!--        *tuiDataList>-->
-  <!--        &lt;!&ndash;    [items]="items"&ndash;&gt;-->
-  <!--      </tui-data-list-wrapper>-->
-  <!--    </tui-combo-box>-->
-  <!--  </div>-->
-  <!--  <div class="col-md-1 col-lg-1 col-sm-3">-->
-  <!--    <tui-combo-box-->
-  <!--      [tuiTextfieldLabelOutside]="true" tuiTextfieldSize="m" [(ngModel)]="sortBy.order">-->
-  <!--      Order-->
-
-  <!--      <tui-data-list-wrapper-->
-  <!--        *tuiDataList [items]="orderDirections">-->
-  <!--      </tui-data-list-wrapper>-->
-  <!--    </tui-combo-box>-->
-  <!--  </div>-->
-  <!--  <div class="col-md-8 col-lg-8 col-sm-6">-->
-  <!--    <div class="tui-space_bottom-4">Filter By</div>-->
-
-  <!--    <div class="">-->
-  <!--      <button-->
-  <!--        size="m"-->
-  <!--        tuiButton-->
-  <!--        type="button"-->
-  <!--        class="item tui-space_right-1">-->
-  <!--&lt;!&ndash;        [appearance]="buttonAppearance$ | async"&ndash;&gt;-->
-  <!--&lt;!&ndash;        (click)="toggleAll()"&ndash;&gt;-->
-
-  <!--        All-->
-  <!--      </button>-->
-
-  <!--      <tui-filter-->
-  <!--        class="d-inline" [items]="items">-->
-  <!--&lt;!&ndash;        [items]="items"&ndash;&gt;-->
-  <!--&lt;!&ndash;        [ngModel]="model$ | async"&ndash;&gt;-->
-  <!--&lt;!&ndash;        (ngModelChange)="onModelChange($event)"&ndash;&gt;-->
-  <!--      ></tui-filter>-->
-  <!--    </div>-->
-  <!--  </div>-->
-
 <ng-container *ngIf="layout === 'list';else grid">
-<!--  <table class="tui-table">-->
-<!--    <thead>-->
-<!--    <tr class="tui-table__tr">-->
-<!--      <ng-container *ngFor="let column of columns;let first = first;let last = last;">-->
-<!--        <th class="tui-table__th .tui-table__td_text_overflow" *ngIf="!last">{{column.value}}</th>-->
-<!--        <th class="tui-table__th .tui-table__td_text_overflow text-center" *ngIf="last">{{column.value}}</th>-->
-<!--      </ng-container>-->
-<!--    </tr>-->
-<!--    </thead>-->
-<!--    <ng-template #noContent>-->
-<!--      <tr class="tui-table__tr tui-table__tr_border_none">-->
-<!--        <td class="tui-table__td" [colSpan]="columns.length">-->
-<!--          <div class="d-flex flex-column justify-content-center gap-4 py-5">-->
-<!--            <div class="text-center">-->
-<!--              <fa-icon [icon]="faNotAvailable" size="6x" class="text-danger"></fa-icon>-->
-<!--            </div>-->
-<!--            <div class="text-center">-->
-<!--              <h5>No record found</h5>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </td>-->
-<!--      </tr>-->
-<!--    </ng-template>-->
-<!--    <tbody *ngIf="data.items?.length > 0;else noContent">-->
-<!--    <tr class="tui-table__tr tui-table__tr_border_none"  #dropdown="tuiDropdown"-->
-<!--        tuiDropdownContext  [tuiDropdown]="contextMenu" *ngFor="let item of data['items'];let i = index;">-->
-<!--      <ng-template #contextMenu>-->
-<!--        <tui-data-list-->
-<!--          role="menu"-->
-<!--          tuiDataListDropdownManager-->
-<!--          class="context-menu"-->
-<!--        >-->
-<!--          <button-->
-<!--            *ngFor="let menuItem of menuItems"-->
-<!--            tuiOption-->
-<!--            (click)="handleContextMenu(menuItem.title, item);dropdown.toggle(false)"-->
-<!--          >-->
-<!--            {{ menuItem.title }}-->
-<!--            <tui-svg-->
-<!--              class="icon"-->
-<!--              [src]="menuItem['iconName']"-->
-<!--            ></tui-svg>-->
-<!--          </button>-->
-<!--        </tui-data-list>-->
-<!--      </ng-template>-->
-<!--      &lt;!&ndash;      <td class="tui-table__td tui-table__td_first"></td>&ndash;&gt;-->
-<!--      <ng-container *ngFor="let column of columns;let last = last;let first = first;">-->
-<!--        <ng-container [ngSwitch]="column.key">-->
-<!--          <td class="tui-table__td" *ngSwitchCase="'no'" [tuiHighlight]="search"-->
-<!--              [tuiHighlightColor]="yellow">{{i + 1}}</td>-->
-<!--          <td class="tui-table__td tui-table__td" [tuiHighlight]="search" [tuiHighlightColor]="yellow" *ngSwitchDefault>{{item[column.key]}}</td>-->
-<!--          <td class="tui-table__td tui-table__td" *ngSwitchCase="'status'">-->
-<!--            <tui-tag-->
-<!--              status="custom"-->
-<!--              class="tag bg-success text-white"-->
-<!--              [hoverable]="true"-->
-<!--              [value]="'Success'"-->
-<!--            ></tui-tag>-->
-<!--          </td>-->
-<!--          <td class="tui-table__td text-center" *ngSwitchCase="'action'">-->
-<!--            <button-->
-<!--              appearance="flat"-->
-<!--              icon="tuiIconInfo"-->
-<!--              shape="rounded"-->
-<!--              size="s"-->
-<!--              title="Info"-->
-<!--              tuiIconButton-->
-<!--              type="button"-->
-<!--              class="info"-->
-<!--              *ngIf="enableInfo" (click)="handleInfo(item)"-->
-<!--            ></button>-->
-<!--            <button-->
-<!--              appearance="flat"-->
-<!--              icon="tuiIconEdit3"-->
-<!--              shape="rounded"-->
-<!--              size="s"-->
-<!--              title="Edit"-->
-<!--              tuiIconButton-->
-<!--              type="button"-->
-<!--              class="edit"-->
-<!--              *ngIf="enableEdit" (click)="handleEdit(item)"-->
-<!--            ></button>-->
-<!--            <button-->
-<!--              appearance="flat"-->
-<!--              icon="tuiIconTrash"-->
-<!--              shape="rounded"-->
-<!--              size="s"-->
-<!--              title="Delete"-->
-<!--              tuiIconButton-->
-<!--              type="button"-->
-<!--              class="remove"-->
-<!--              *ngIf="enableDelete" (click)="handleDelete(item)"-->
-<!--            ></button>-->
-<!--            <button-->
-<!--              appearance="flat"-->
-<!--              icon="tuiIconCheck"-->
-<!--              shape="rounded"-->
-<!--              size="s"-->
-<!--              title="Complete"-->
-<!--              tuiIconButton-->
-<!--              type="button"-->
-<!--              class="edit"-->
-<!--              *ngIf="enableComplete" (click)="handleComplete(item)"-->
-<!--            ></button>-->
-<!--            <button-->
-<!--              appearance="flat"-->
-<!--              icon="tuiIconSlash"-->
-<!--              shape="rounded"-->
-<!--              size="s"-->
-<!--              title="Cancel"-->
-<!--              tuiIconButton-->
-<!--              type="button"-->
-<!--              class="cancel"-->
-<!--              *ngIf="enableCancel"-->
-<!--              (click)="handleCancel(item)"-->
-<!--            ></button>-->
-<!--          </td>-->
-<!--        </ng-container>-->
-
-<!--      </ng-container>-->
-<!--      &lt;!&ndash;      <td class="tui-table__td tui-table__td_first">How to cook RxJS in an Angular app</td>&ndash;&gt;-->
-<!--      &lt;!&ndash;      <td class="tui-table__td">Roman Sedov</td>&ndash;&gt;-->
-<!--      &lt;!&ndash;      <td class="tui-table__td">20.06.2020</td>&ndash;&gt;-->
-<!--      &lt;!&ndash;      <td class="tui-table__td tui-table__td_last">angular.institute</td>&ndash;&gt;-->
-<!--    </tr>-->
-<!--    </tbody>-->
-<!--  </table>-->
-<!--    <div class="flex items-center justify-between flex-column flex-wrap md:flex-row md:space-y-0 pb-4 bg-white">-->
-<!--      <div>-->
-<!--        &lt;!&ndash; Dropdown menu &ndash;&gt;-->
-<!--        <div id="dropdownAction" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44">-->
-<!--          <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">-->
-<!--            <li>-->
-<!--              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Reward</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Promote</a>-->
-<!--            </li>-->
-<!--            <li>-->
-<!--              <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Activate account</a>-->
-<!--            </li>-->
-<!--          </ul>-->
-<!--          <div class="py-1">-->
-<!--            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete User</a>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-  <form [formGroup]="tableForm" class="overflow-x-auto">
+  <app-table-header [totalElements]="data['total_elements']" [filters]="filters"
+                    [searchControl]="searchControl" [actions]="actions" (handleAction)="getActionIndex($event)"></app-table-header>
+  <form [formGroup]="tableForm" class="overflow-x-auto min-h-96">
     <table class="w-full text-sm text-left rtl:text-right text-gray-500">
       <thead class="text-xs text-gray-700 uppercase bg-gray-50">
       <tr>
 
         <th scope="col" class="p-4" *ngIf="multiSelect">
           <div class="flex items-center">
-            <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-1 cursor-pointer" (click)="checkAll()">
+            <input id="checkbox-all-search" [formControl]="selectAllCheckbox" type="checkbox"
+                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-1 cursor-pointer"
+                   (click)="checkAll()">
             <label for="checkbox-all-search" class="sr-only">checkbox</label>
           </div>
         </th>
         <td class="px-6 py-7" *ngFor="let column of columns;">
           {{column.value}}
         </td>
+        <td class="px-6 py-7">Action</td>
       </tr>
       </thead>
       <tbody formArrayName="checkboxes">
-      <tr class="bg-white hover:bg-gray-50" tuiDropdownContext  [tuiDropdown]="contextMenu" *ngFor="let item of data['items'];let i = index;" #dropdown="tuiDropdown">
+      <tr *ngIf="data['items'].length === 0">
+        <td [colSpan]="columns.length">Record not found</td>
+      </tr>
+      <tr class="bg-white hover:bg-gray-50" tuiDropdownContext [tuiDropdown]="contextMenu"
+          *ngFor="let item of data['items'];let i = index;" #dropdown="tuiDropdown">
         <ng-template #contextMenu>
           <tui-data-list
             role="menu"
@@ -232,20 +47,89 @@
         </ng-template>
         <td class="w-4 p-4" *ngIf="multiSelect">
           <div class="flex items-center">
-            <input id="checkbox-table-search-1" [formControlName]="i"  type="checkbox" class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+            <input id="checkbox-table-search-1" [formControlName]="i" type="checkbox"
+                   class="cursor-pointer w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
             <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
           </div>
         </td>
-        <ng-container  *ngFor="let column of columns;">
-          <td scope="row" class="flex items-center px-4 py-4 text-gray-900 whitespace-nowrap" *ngIf="column.key === 'image';else textRow;">
+        <ng-container *ngFor="let column of columns;let i = index;">
+          <td scope="row" class="flex items-center px-4 py-4 text-gray-900 whitespace-nowrap"
+              *ngIf="column.key === 'image';else notImage;">
             <img class="w-10 h-10 rounded-full" src="./assets/image/logo.png" alt="Jese image">
           </td>
-          <ng-template #textRow>
-            <td class="px-6 py-4">
-              {{item[column.key]}}
-            </td>
+
+          <ng-template #notImage>
+            <ng-container *ngIf="column.key === 'is_paid';else text;">
+              <td *ngIf="item[column.key];else failed;" class="px-6 py-4">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                     stroke="currentColor" class="size-6 text-green-500">
+                  <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                </svg>
+              </td>
+              <ng-template #failed>
+                <td class="px-6 py-4">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                       stroke="currentColor" class="size-6 text-red-500">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                          d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                  </svg>
+                </td>
+              </ng-template>
+            </ng-container>
+            <ng-template #text>
+              <td class="px-6 py-4">
+                {{item[column.key]}}
+              </td>
+            </ng-template>
           </ng-template>
         </ng-container>
+        <td>
+          <button data-tooltip-target="view-tooltip" type="button" class="me-2" *ngIf="enableInfo" (click)="openInfoDialog(item)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z"/>
+            </svg>
+          </button>
+          <div id="view-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            View
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+          <button data-tooltip-target="edit-tooltip" type="button" class="me-2" *ngIf="enableEdit" (click)="openEditDialog(item)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+            </svg>
+
+          </button>
+          <div id="edit-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            View
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+
+          <button data-tooltip-target="cancel-tooltip" type="button" class="me-2" *ngIf="enableCancel" (click)="handleCancel(item)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636"/>
+            </svg>
+          </button>
+          <div id="cancel-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Cancel
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+          <button data-tooltip-target="complete-tooltip" type="button" class="me-2" *ngIf="enableComplete" (click)="handleComplete(item)">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                 stroke="currentColor" class="w-6 h-6">
+              <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12"/>
+            </svg>
+          </button>
+          <div id="complete-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Complete
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -253,46 +137,6 @@
 
 </ng-container>
 
-<!--<table #table class="w-100 border" mat-table [dataSource]="data['items']" matSort (matSortChange)="handleSort($event)" *ngIf="layout === 'list';else grid">-->
-<!--  <ng-container *ngFor="let column of columns" [matColumnDef]="column.key" >-->
-<!--    <ng-container [ngSwitch]="column.key">-->
-<!--      <ng-container *ngSwitchCase="'no'">-->
-<!--        <th mat-header-cell *matHeaderCellDef>No</th>-->
-<!--        <td mat-cell *matCellDef="let element;let i=index;">{{data['current_page'] * data['size'] + i + 1}}</td>-->
-<!--      </ng-container>-->
-<!--      <ng-container *ngSwitchDefault>-->
-<!--        <th mat-header-cell mat-sort-header *matHeaderCellDef>{{column.value}}</th>-->
-<!--        <td mat-cell *matCellDef="let element">{{element[column.key]}}</td>-->
-<!--      </ng-container>-->
-<!--      <ng-container *ngSwitchCase="'action'">-->
-<!--        <th mat-header-cell *matHeaderCellDef class="text-center">Action</th>-->
-<!--        <td mat-cell *matCellDef="let element" class="text-center">-->
-<!--          <button mat-icon-button color="primary" aria-label="Example icon button with a open in new tab icon" *ngIf="enableEdit" (click)="handleEdit(element)">-->
-<!--            <mat-icon>edit</mat-icon>-->
-<!--          </button>-->
-<!--          <button mat-icon-button color="warn" aria-label="Example icon button with a open in new tab icon" *ngIf="enableDelete" (click)="handleDelete(element)" >-->
-<!--            <mat-icon>delete</mat-icon>-->
-<!--          </button>-->
-<!--          <button mat-icon-button color="primary" aria-label="Example icon button with a open in new tab icon" *ngIf="enableComplete" (click)="handleComplete(element)" >-->
-<!--            <mat-icon>check</mat-icon>-->
-<!--          </button>-->
-<!--          <button mat-icon-button color="warn" aria-label="Example icon button with a open in new tab icon" *ngIf="enableCancel" (click)="handleCancel(element)" >-->
-<!--            <mat-icon>cancel</mat-icon>-->
-<!--          </button>-->
-<!--        </td>-->
-<!--      </ng-container>-->
-<!--    </ng-container>-->
-<!--  </ng-container>-->
-<!--  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
-<!--  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
-<!--  <ng-container *ngIf="data">-->
-<!--    <tr class="mat-row" *matNoDataRow>-->
-<!--      <td class="mat-cell" [attr.colspan]="columns.length">-->
-<!--        No data found-->
-<!--      </td>-->
-<!--    </tr>-->
-<!--  </ng-container>-->
-<!--</table>-->
 <ng-template #grid>
   <div class="row p-5" *ngIf="data['items'];else loading;">
     <div class="row shadow bg-white rounded p-3 m-3" *ngIf="data['items'].length === 0">
@@ -316,29 +160,6 @@
               </div>
               <div class="col-md-6 col-lg-6 col-xl-6">
                 <h3>{{data.name}}</h3>
-                <!--                    <div class="d-flex flex-row">-->
-                <!--                      <div class="text-danger mb-1 me-2">-->
-                <!--                        <i class="fa fa-star"></i>-->
-                <!--                        <i class="fa fa-star"></i>-->
-                <!--                        <i class="fa fa-star"></i>-->
-                <!--                        <i class="fa fa-star"></i>-->
-                <!--                      </div>-->
-                <!--                      <span>145</span>-->
-                <!--                    </div>-->
-                <!--                    <div class="mt-1 mb-0 text-muted small">-->
-                <!--                      <span>100% cotton</span>-->
-                <!--                      <span class="text-primary"> • </span>-->
-                <!--                      <span>Light weight</span>-->
-                <!--                      <span class="text-primary"> • </span>-->
-                <!--                      <span>Best finish<br /></span>-->
-                <!--                    </div>-->
-                <!--                    <div class="mb-2 text-muted small">-->
-                <!--                      <span>Unique design</span>-->
-                <!--                      <span class="text-primary"> • </span>-->
-                <!--                      <span>For women</span>-->
-                <!--                      <span class="text-primary"> • </span>-->
-                <!--                      <span>Casual<br /></span>-->
-                <!--                    </div>-->
                 <h5>Description</h5>
                 <p class="text-truncate mb-4 mb-md-0">
                   {{data.description}}
@@ -357,7 +178,7 @@
                   <!--                      </button>-->
                 </div>
               </div>
-            </div>
+            </div>A
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 <app-header (toggleMenu)="toggleMenu($event)"></app-header>
 <div class="d-flex w-100 p-0 m-0 min-vh-100">
-  <app-sidebar [hidden]="hidden"></app-sidebar>
-  <div class="container-fluid w-100 h-100 py-5 px-5">
+  <app-sidebar [navLinks]="navLinks" [hidden]="hidden"></app-sidebar>
+  <div class="w-full h-screen p-5">
     <router-outlet />
   </div>
 </div>

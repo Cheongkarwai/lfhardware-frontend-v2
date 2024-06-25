@@ -48,9 +48,15 @@ export class Validator{
 
   public static createProductNameValidator(productService: ProductService) : AsyncValidatorFn{
     return (control: AbstractControl) : Observable<any>=>{
-      console.log(control.value)
       return productService.findByName(control.value)
         .pipe(map(request=> request.status === 200 ? {productNameExists:true} : null),catchError(err=>of(null)));
+    }
+  }
+
+  public static createMustTrueValidator(): ValidatorFn{
+    return (control:AbstractControl) =>{
+      const value = control.getRawValue() as boolean;
+      return value ? null : { 'mustBeTrue':true};
     }
   }
 }

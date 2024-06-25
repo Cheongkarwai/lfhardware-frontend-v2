@@ -1,115 +1,33 @@
-<!--<nav class="navbar navbar-expand-lg bg-body-tertiary shadow-sm  navbar-default navbar-fixed-top">-->
-<!--  <div class="container-fluid">-->
-<!--    <img class="navbar-brand img-fluid" src="././assets/image/logo.png" alt="logo" width="50" height="50"/>-->
-<!--    <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbarScroll"-->
-<!--            aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation"-->
-<!--            (click)="isCollapsed = !isCollapsed">-->
-<!--      <span class="navbar-toggler-icon">-->
-
-<!--      </span>-->
-<!--    </button>-->
-<!--    <div class="collapse navbar-collapse justify-content-end" id="navbarScroll" [ngbCollapse]="isCollapsed">-->
-<!--      <ul class="navbar-nav align-items-center">-->
-<!--        <li class="nav-item px-2">-->
-<!--          <a class="nav-link active" aria-current="page" [routerLink]="['/buy']"><span-->
-<!--            class="nav-text">DIY with AI</span></a>-->
-<!--        </li>-->
-<!--        <li class="nav-item px-2">-->
-<!--          <a class="nav-link active" aria-current="page" [routerLink]="['directory']" (click)="closeNav()"><span-->
-<!--            class="nav-text">Services</span></a>-->
-<!--        </li>-->
-<!--        <li class="nav-item px-2">-->
-<!--          <a class="nav-link active" aria-current="page" [routerLink]="['product','view']"><span class="nav-text">Products</span></a>-->
-<!--        </li>-->
-<!--        <li class="nav-item px-2">-->
-<!--          <a class="nav-link active" aria-current="page" [routerLink]="['service-provider-signup']"><span-->
-<!--            class="nav-text">Join Us Now</span></a>-->
-<!--        </li>-->
-<!--        <li class="nav-item px-2">-->
-<!--          <tui-hosted-dropdown-->
-<!--            [tuiDropdownOffset]="10"-->
-<!--            [content]="dropdown">-->
-<!--            <tui-badged-content colorTop="var(&#45;&#45;tui-primary)" [contentTop]="1" size="s">-->
-<!--              <a class="nav-link active">-->
-<!--                <tui-svg src="tuiIconBellLarge" class="nav-text"></tui-svg>-->
-<!--                &lt;!&ndash;                <div ngbDropdownMenu>&ndash;&gt;-->
-<!--                &lt;!&ndash;                  <button ngbDropdownItem routerLink="/profile" (click)="closeNav()">Profile</button>&ndash;&gt;-->
-<!--                &lt;!&ndash;                  <button ngbDropdownItem routerLink="/order" (click)="closeNav()">Order</button>&ndash;&gt;-->
-<!--                &lt;!&ndash;                  <button ngbDropdownItem (click)="logout()">Logout</button>&ndash;&gt;-->
-<!--                &lt;!&ndash;                </div>&ndash;&gt;-->
-<!--              </a>-->
-<!--            </tui-badged-content>-->
-<!--          </tui-hosted-dropdown>-->
-<!--          <ng-template #dropdown>-->
-<!--            <div class="shadow-sm notification-container" style="width:350px;min-height:350px;overflow-y: auto;">-->
-<!--              <div class="p-3 notification" style="width:350px;">-->
-<!--                <h6 class="text-break text-black h6">Title</h6>-->
-<!--                <small class="text-break light-gray">This is a very good promotional</small>-->
-<!--              </div>-->
-<!--              <div class="p-3 notification" style="width:350px;">-->
-<!--                <h6 class="text-break h6">Title</h6>-->
-<!--                <small class="text-break light-gray">This is a very good promotional</small>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </ng-template>-->
-<!--        </li>-->
-<!--        <li class="nav-item px-2">-->
-<!--          <a class="nav-link active" aria-current="page" [routerLink]="['cart']"><span class="nav-text">-->
-<!--             <img src="./assets/image/service-provider/cart.png" width="30" height="30"/>-->
-<!--          </span></a>-->
-<!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--          <ng-container *ngIf="(isLoggedIn$ | async) as loggedIn;else notLogIn">-->
-<!--            <ng-container *ngIf="(user$ | async) ?? null as user;else notLogIn">-->
-
-<!--              <a class="nav-link active" aria-current="page" ngbDropdown display="dynamic" *ngIf="loggedIn && user">-->
-<!--                <tui-avatar-->
-<!--                  text="{{user?.['displayName']}}"-->
-<!--                  class="tui-space_top-1 cursor-pointer"-->
-<!--                  ngbDropdownToggle-->
-<!--                ></tui-avatar>-->
-<!--                &lt;!&ndash;                <div ngbDropdownMenu aria-labelledby="dropdownBasic2">&ndash;&gt;-->
-<!--                &lt;!&ndash;                  <button ngbDropdownItem routerLink="/profile" (click)="closeNav()">Profile</button>&ndash;&gt;-->
-<!--                &lt;!&ndash;                  <button ngbDropdownItem routerLink="/order" (click)="closeNav()">Order</button>&ndash;&gt;-->
-<!--                &lt;!&ndash;                  <button ngbDropdownItem (click)="logout()">Logout</button>&ndash;&gt;-->
-<!--                &lt;!&ndash;                </div>&ndash;&gt;-->
-<!--                <ng-template #dropdown>-->
-<!--                  <p>Dropdown content</p>-->
-<!--                </ng-template>-->
-<!--              </a>-->
-<!--            </ng-container>-->
-<!--          </ng-container>-->
-<!--          <ng-template #notLogIn>-->
-<!--            <a class="nav-link active btn btn-danger text-white rounded-5" aria-current="page"-->
-<!--               [routerLink]="['auth','login']"><span class="nav-text">Login</span></a>-->
-<!--          </ng-template>-->
-<!--        </li>-->
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link active" routerLink="/cart">-->
-<!--            &lt;!&ndash;            <div ngbDropdownMenu>&ndash;&gt;-->
-<!--            &lt;!&ndash;              <button ngbDropdownItem routerLink="/profile" (click)="closeNav()">Profile</button>&ndash;&gt;-->
-<!--            &lt;!&ndash;              <button ngbDropdownItem (click)="logout()">Logout</button>&ndash;&gt;-->
-<!--            &lt;!&ndash;            </div>&ndash;&gt;-->
-<!--          </a>-->
-<!--        </li>-->
-<!--      </ul>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</nav>-->
-<!--
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/aspect-ratio'),
-    ],
-  }
-  ```
--->
+<ng-container *ngIf="{user: user$ | async, error: userError$ | async} as data">
+  <ng-container *ngIf="data.user">
+    <ng-container *ngIf="{completedOnboarding: completedOnBoarding$ | async} as value">
+      <div id="marketing-banner" *ngIf="!value.completedOnboarding" tabindex="-1"
+           class="fixed z-50 flex flex-col md:flex-row justify-between w-[calc(100%-2rem)] p-4 -translate-x-1/2 bg-white border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600">
+        <div class="flex flex-col items-start mb-3 me-4 md:items-center md:flex-row md:mb-0">
+          <a href="https://flowbite.com/"
+             class="flex items-center mb-2 border-gray-200 md:pe-4 md:me-4 md:border-e md:mb-0 dark:border-gray-600">
+            <img src="./assets/image/logo.png" class="h-6 me-2" alt="Flowbite Logo">
+            <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">LF Hardware</span>
+          </a>
+          <span class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">Your account is almost ready..</span>
+        </div>
+        <div class="flex items-center flex-shrink-0">
+          <a [routerLink]="['user-onboarding','role-confirmation']"
+             class="px-5 py-2 me-2 text-xs font-medium text-white bg-rose-700 rounded-lg hover:bg-rose-800 focus:ring-4 focus:ring-rose-300 dark:bg-rose-600 dark:hover:bg-rose-700 focus:outline-none dark:focus:ring-rose-800">Complete
+            now</a>
+          <!--          <button data-dismiss-target="#marketing-banner" type="button"-->
+          <!--                  class="flex-shrink-0 inline-flex justify-center w-7 h-7 items-center text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 dark:hover:bg-gray-600 dark:hover:text-white">-->
+          <!--            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">-->
+          <!--              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+          <!--                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>-->
+          <!--            </svg>-->
+          <!--            <span class="sr-only">Close banner</span>-->
+          <!--          </button>-->
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>
 <div class="bg-white">
   <!--
     Mobile menu
@@ -154,30 +72,31 @@
 
         <!-- Links -->
         <div class="mt-2">
-<!--          <div class="border-b border-gray-200">-->
-<!--            <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">-->
-<!--              &lt;!&ndash; Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" &ndash;&gt;-->
-<!--              <button id="tabs-1-tab-1"-->
-<!--                      class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium"-->
-<!--                      aria-controls="tabs-1-panel-1" role="tab" type="button" (click)="showMobileMenuTab('WOMEN')">Women-->
-<!--              </button>-->
-<!--              &lt;!&ndash; Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" &ndash;&gt;-->
-<!--              <button id="tabs-1-tab-2"-->
-<!--                      class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium"-->
-<!--                      aria-controls="tabs-1-panel-2" role="tab" type="button" (click)="showMobileMenuTab('MEN')">Men-->
-<!--              </button>-->
-<!--            </div>-->
-<!--          </div>-->
+          <!--          <div class="border-b border-gray-200">-->
+          <!--            <div class="-mb-px flex space-x-8 px-4" aria-orientation="horizontal" role="tablist">-->
+          <!--              &lt;!&ndash; Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" &ndash;&gt;-->
+          <!--              <button id="tabs-1-tab-1"-->
+          <!--                      class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium"-->
+          <!--                      aria-controls="tabs-1-panel-1" role="tab" type="button" (click)="showMobileMenuTab('WOMEN')">Women-->
+          <!--              </button>-->
+          <!--              &lt;!&ndash; Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-900" &ndash;&gt;-->
+          <!--              <button id="tabs-1-tab-2"-->
+          <!--                      class="border-transparent text-gray-900 flex-1 whitespace-nowrap border-b-2 px-1 py-4 text-base font-medium"-->
+          <!--                      aria-controls="tabs-1-panel-2" role="tab" type="button" (click)="showMobileMenuTab('MEN')">Men-->
+          <!--              </button>-->
+          <!--            </div>-->
+          <!--          </div>-->
 
           <!-- 'Women' tab panel, show/hide based on tab state. -->
           <div id="tabs-1-panel-1" class="space-y-12 px-4 pb-6 pt-10" aria-labelledby="tabs-1-tab-1" role="tabpanel"
-               tabindex="0" >
-<!--               [hidden]="!isWomenMenuTabOpen">-->
+               tabindex="0">
+            <!--               [hidden]="!isWomenMenuTabOpen">-->
             <div class="grid grid-cols-1 items-start gap-x-6 gap-y-10">
               <div class="grid grid-cols-1 gap-x-6 gap-y-10">
                 <div>
                   <p id="mobile-featured-heading-0" class="font-medium text-gray-900">Categories</p>
-                  <ul role="list" aria-labelledby="mobile-featured-heading-0" class="mt-6 space-y-6" *ngIf="categories$ | async as categories">
+                  <ul role="list" aria-labelledby="mobile-featured-heading-0" class="mt-6 space-y-6"
+                      *ngIf="categories$ | async as categories">
                     <li class="flex" *ngFor="let category of categories;">
                       <a href="#" class="text-gray-500">{{category.name}}</a>
                     </li>
@@ -185,7 +104,8 @@
                 </div>
                 <div>
                   <p id="mobile-categories-heading" class="font-medium text-gray-900">Brands</p>
-                  <ul role="list" aria-labelledby="mobile-categories-heading" class="mt-6 space-y-6" *ngIf="brands$ | async as brands">
+                  <ul role="list" aria-labelledby="mobile-categories-heading" class="mt-6 space-y-6"
+                      *ngIf="brands$ | async as brands">
                     <li class="flex" *ngFor="let brand of brands;">
                       <a href="#" class="text-gray-500">{{brand.name}}</a>
                     </li>
@@ -195,132 +115,130 @@
             </div>
           </div>
           <!-- 'Men' tab panel, show/hide based on tab state. -->
-<!--          <div id="tabs-1-panel-2" class="space-y-12 px-4 pb-6 pt-10" aria-labelledby="tabs-1-tab-2" role="tabpanel"-->
-<!--               tabindex="0" [hidden]="!isMenMenuTabOpen">-->
-<!--            <div class="grid grid-cols-1 items-start gap-x-6 gap-y-10">-->
-<!--              <div class="grid grid-cols-1 gap-x-6 gap-y-10">-->
-<!--                <div>-->
-<!--                  <p id="mobile-featured-heading-1" class="font-medium text-gray-900">Category</p>-->
-<!--                  <ul role="list" aria-labelledby="mobile-featured-heading-1" class="mt-6 space-y-6" *ngIf="categories$ | async as categories">-->
-<!--                    <li class="flex" *ngFor="let category of categories">-->
-<!--                      <a href="#" class="text-gray-500">{{category.name}}</a>-->
-<!--                    </li>-->
-<!--                  </ul>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                  <p id="mobile-categories-heading" class="font-medium text-gray-900">Categories</p>-->
-<!--                  <ul role="list" aria-labelledby="mobile-categories-heading" class="mt-6 space-y-6">-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Artwork Tees</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Pants</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Accessories</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Boxers</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Basic Tees</a>-->
-<!--                    </li>-->
-<!--                  </ul>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <div class="grid grid-cols-1 gap-x-6 gap-y-10">-->
-<!--                <div>-->
-<!--                  <p id="mobile-collection-heading" class="font-medium text-gray-900">Collection</p>-->
-<!--                  <ul role="list" aria-labelledby="mobile-collection-heading" class="mt-6 space-y-6">-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Everything</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Core</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">New Arrivals</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Sale</a>-->
-<!--                    </li>-->
-<!--                  </ul>-->
-<!--                </div>-->
+          <!--          <div id="tabs-1-panel-2" class="space-y-12 px-4 pb-6 pt-10" aria-labelledby="tabs-1-tab-2" role="tabpanel"-->
+          <!--               tabindex="0" [hidden]="!isMenMenuTabOpen">-->
+          <!--            <div class="grid grid-cols-1 items-start gap-x-6 gap-y-10">-->
+          <!--              <div class="grid grid-cols-1 gap-x-6 gap-y-10">-->
+          <!--                <div>-->
+          <!--                  <p id="mobile-featured-heading-1" class="font-medium text-gray-900">Category</p>-->
+          <!--                  <ul role="list" aria-labelledby="mobile-featured-heading-1" class="mt-6 space-y-6" *ngIf="categories$ | async as categories">-->
+          <!--                    <li class="flex" *ngFor="let category of categories">-->
+          <!--                      <a href="#" class="text-gray-500">{{category.name}}</a>-->
+          <!--                    </li>-->
+          <!--                  </ul>-->
+          <!--                </div>-->
+          <!--                <div>-->
+          <!--                  <p id="mobile-categories-heading" class="font-medium text-gray-900">Categories</p>-->
+          <!--                  <ul role="list" aria-labelledby="mobile-categories-heading" class="mt-6 space-y-6">-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Artwork Tees</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Pants</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Accessories</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Boxers</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Basic Tees</a>-->
+          <!--                    </li>-->
+          <!--                  </ul>-->
+          <!--                </div>-->
+          <!--              </div>-->
+          <!--              <div class="grid grid-cols-1 gap-x-6 gap-y-10">-->
+          <!--                <div>-->
+          <!--                  <p id="mobile-collection-heading" class="font-medium text-gray-900">Collection</p>-->
+          <!--                  <ul role="list" aria-labelledby="mobile-collection-heading" class="mt-6 space-y-6">-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Everything</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Core</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">New Arrivals</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Sale</a>-->
+          <!--                    </li>-->
+          <!--                  </ul>-->
+          <!--                </div>-->
 
-<!--                <div>-->
-<!--                  <p id="mobile-brand-heading" class="font-medium text-gray-900">Brands</p>-->
-<!--                  <ul role="list" aria-labelledby="mobile-brand-heading" class="mt-6 space-y-6">-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Significant Other</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">My Way</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Counterfeit</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Re-Arranged</a>-->
-<!--                    </li>-->
-<!--                    <li class="flex">-->
-<!--                      <a href="#" class="text-gray-500">Full Nelson</a>-->
-<!--                    </li>-->
-<!--                  </ul>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-        </div>
-
-        <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-          <div class="flow-root">
-            <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Pro Directory</a>
-          </div>
-          <div class="flow-root">
-            <a [routerLink]="['order','view']" class="-m-2 block p-2 font-medium text-gray-900">Orders</a>
-          </div>
-<!--          <div class="flow-root">-->
-<!--            <a href="#" class="-m-2 block p-2 font-medium text-gray-900">Services</a>-->
-<!--          </div>-->
-        </div>
-
-        <ng-container *ngIf="user === null">
-          <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-            <div class="flow-root">
-              <a [routerLink]="['auth','signup']" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
-            </div>
-            <div class="flow-root">
-              <a [routerLink]="['auth','login']" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
-            </div>
-          </div>
-        </ng-container>
-
-        <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-          <!-- Currency selector -->
-          <!--          <form>-->
-          <!--            <div class="inline-block">-->
-          <!--              <label for="mobile-currency" class="sr-only">Currency</label>-->
-          <!--              <div-->
-          <!--                class="group relative -ml-2 rounded-md border-transparent focus-within:ring-2 focus-within:ring-white">-->
-          <!--                <select id="mobile-currency" name="currency"-->
-          <!--                        class="flex items-center rounded-md border-transparent bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-gray-700 focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-800">-->
-          <!--                  <option>CAD</option>-->
-          <!--                  <option>USD</option>-->
-          <!--                  <option>AUD</option>-->
-          <!--                  <option>EUR</option>-->
-          <!--                  <option>GBP</option>-->
-          <!--                </select>-->
-          <!--                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">-->
-          <!--                  <svg class="h-5 w-5 text-gray-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">-->
-          <!--                    <path fill-rule="evenodd"-->
-          <!--                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"-->
-          <!--                          clip-rule="evenodd"/>-->
-          <!--                  </svg>-->
+          <!--                <div>-->
+          <!--                  <p id="mobile-brand-heading" class="font-medium text-gray-900">Brands</p>-->
+          <!--                  <ul role="list" aria-labelledby="mobile-brand-heading" class="mt-6 space-y-6">-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Significant Other</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">My Way</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Counterfeit</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Re-Arranged</a>-->
+          <!--                    </li>-->
+          <!--                    <li class="flex">-->
+          <!--                      <a href="#" class="text-gray-500">Full Nelson</a>-->
+          <!--                    </li>-->
+          <!--                  </ul>-->
           <!--                </div>-->
           <!--              </div>-->
           <!--            </div>-->
-          <!--          </form>-->
+          <!--          </div>-->
         </div>
+
+        <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+          <div class="flow-root">
+            <a (click)="navigateToPage('/directory')" class="-m-2 block p-2 font-medium text-gray-900">Pro Directory</a>
+          </div>
+          <div class="flow-root">
+            <a (click)="navigateToPage('/product/view')" class="-m-2 block p-2 font-medium text-gray-900">Products</a>
+          </div>
+          <div class="flow-root">
+            <a (click)="navigateToPage('/order/view')" class="-m-2 block p-2 font-medium text-gray-900">Orders</a>
+          </div>
+          <div class="flow-root">
+            <a (click)="navigateToPage('/appointment/view')" class="-m-2 block p-2 font-medium text-gray-900">Appointment</a>
+          </div>
+          <ng-container *ngIf="{isAdministrator: isAdministrator$ | async} as value">
+            <div class="flow-root" *ngIf="value.isAdministrator">
+              <a (click)="navigateToPage('admin-management')" class="-m-2 block p-2 font-medium text-gray-900">Management</a>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="{isServiceProvider: isServiceProvider$ | async} as value">
+            <div class="flow-root" *ngIf="value.isServiceProvider">
+              <a (click)="navigateToPage('service-provider-management')"
+                 class="-m-2 block p-2 font-medium text-gray-900">Management</a>
+            </div>
+          </ng-container>
+        </div>
+
+        <ng-container *ngIf="{user: user$ | async, error: userError$ | async} as data">
+          <ng-container *ngIf="data.user; else loading;">
+            <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+              <div class="flow-root">
+                <a (click)="logout()" class="-m-2 block p-2 font-medium text-gray-900">Logout</a>
+              </div>
+            </div>
+          </ng-container>
+          <ng-template #loading>
+            <ng-container *ngIf="data.error">
+              <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+                <div class="flow-root">
+                  <a (click)="login()" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
+                </div>
+                <div class="flow-root">
+                  <a (click)="login()" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
+                </div>
+              </div>
+            </ng-container>
+          </ng-template>
+        </ng-container>
       </div>
     </div>
   </div>
@@ -330,47 +248,28 @@
       <!-- Top navigation -->
       <div class="bg-rose-600">
         <div class="mx-auto flex h-10 max-w-9xl items-center justify-between px-4 sm:px-6 lg:px-8">
-          <!-- Currency selector -->
-          <form class="hidden lg:block lg:flex-1">
-            <!--            <div class="flex">-->
-            <!--              <label for="desktop-currency" class="sr-only">Currency</label>-->
-            <!--              <div-->
-            <!--                class="group relative -ml-2 rounded-md border-transparent bg-gray-900 focus-within:ring-2 focus-within:ring-white">-->
-            <!--                <select id="desktop-currency" name="currency"-->
-            <!--                        class="flex items-center rounded-md border-transparent bg-gray-900 bg-none py-0.5 pl-2 pr-5 text-sm font-medium text-white focus:border-transparent focus:outline-none focus:ring-0 group-hover:text-gray-100">-->
-            <!--                  <option>CAD</option>-->
-            <!--                  <option>USD</option>-->
-            <!--                  <option>AUD</option>-->
-            <!--                  <option>EUR</option>-->
-            <!--                  <option>GBP</option>-->
-            <!--                </select>-->
-            <!--                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center">-->
-            <!--                  <svg class="h-5 w-5 text-gray-300" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">-->
-            <!--                    <path fill-rule="evenodd"-->
-            <!--                          d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"-->
-            <!--                          clip-rule="evenodd"/>-->
-            <!--                  </svg>-->
-            <!--                </div>-->
-            <!--              </div>-->
-            <!--            </div>-->
-          </form>
-
-          <p class="flex-1 text-center text-sm font-medium text-white lg:flex-none">Get free delivery on orders over
-            $100</p>
+          <span class="flex-1 text-center text-sm font-medium text-white lg:flex-none">Get free delivery on orders over
+            $100</span>
 
           <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-            <ng-container *ngIf="user == null; else isLoggedIn;">
-              <a [routerLink]="['auth','signup']"
-                 class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">Create an account</a>
-              <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
-              <a [routerLink]="['auth','login']"
-                 class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">Sign in</a>
+            <ng-container *ngIf="{user: user$ | async, error: userError$ | async} as data">
+              <ng-container *ngIf="data.user; else loading;">
+                  <span href="#"
+                        class="text-sm font-medium text-white hover:text-gray-100">{{data.user.profile.email_address}}</span>
+                <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
+                <a (click)="logout()"
+                   class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">Logout</a>
+              </ng-container>
+              <ng-template #loading>
+                <ng-container *ngIf="data.error">
+                  <a (click)="login()"
+                     class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">Create an account</a>
+                  <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
+                  <a (click)="login()"
+                     class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">Sign in</a>
+                </ng-container>
+              </ng-template>
             </ng-container>
-            <ng-template #isLoggedIn>
-              <span href="#" class="text-sm font-medium text-white hover:text-gray-100">{{user?.email}}</span>
-              <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
-              <a (click)="logout()" class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">Logout</a>
-            </ng-template>
           </div>
         </div>
       </div>
@@ -388,130 +287,130 @@
                 </a>
               </div>
 
-<!--              <div class="hidden h-full lg:flex">-->
-<!--                &lt;!&ndash; Mega menus &ndash;&gt;-->
-<!--                <div class="ml-8">-->
-<!--                  <div class="flex h-full justify-end space-x-8">-->
-<!--                    <div class="flex">-->
-<!--                      <div class="relative flex">-->
-<!--                        &lt;!&ndash; Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" &ndash;&gt;-->
-<!--                        <button type="button"-->
-<!--                                class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"-->
-<!--                                aria-expanded="false" (click)="showProductMegaMenu()">Products-->
-<!--                        </button>-->
-<!--                      </div>-->
+              <!--              <div class="hidden h-full lg:flex">-->
+              <!--                &lt;!&ndash; Mega menus &ndash;&gt;-->
+              <!--                <div class="ml-8">-->
+              <!--                  <div class="flex h-full justify-end space-x-8">-->
+              <!--                    <div class="flex">-->
+              <!--                      <div class="relative flex">-->
+              <!--                        &lt;!&ndash; Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" &ndash;&gt;-->
+              <!--                        <button type="button"-->
+              <!--                                class="border-transparent text-gray-700 hover:text-gray-800 relative z-10 -mb-px flex items-center border-b-2 pt-px text-sm font-medium transition-colors duration-200 ease-out"-->
+              <!--                                aria-expanded="false" (click)="showProductMegaMenu()">Products-->
+              <!--                        </button>-->
+              <!--                      </div>-->
 
-<!--                      &lt;!&ndash;-->
-<!--                        'Product' mega menu, show/hide based on flyout menu state.-->
+              <!--                      &lt;!&ndash;-->
+              <!--                        'Product' mega menu, show/hide based on flyout menu state.-->
 
-<!--                        Entering: "transition ease-out duration-200"-->
-<!--                          From: "opacity-0"-->
-<!--                          To: "opacity-100"-->
-<!--                        Leaving: "transition ease-in duration-150"-->
-<!--                          From: "opacity-100"-->
-<!--                          To: "opacity-0"-->
-<!--                      &ndash;&gt;-->
-<!--                      <div class="absolute z-40 inset-x-0 top-full text-gray-500 sm:text-sm"-->
-<!--                           [hidden]="!isProductMegaMenuOpen">-->
-<!--                        &lt;!&ndash; Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow &ndash;&gt;-->
-<!--                        <div class="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true"></div>-->
+              <!--                        Entering: "transition ease-out duration-200"-->
+              <!--                          From: "opacity-0"-->
+              <!--                          To: "opacity-100"-->
+              <!--                        Leaving: "transition ease-in duration-150"-->
+              <!--                          From: "opacity-100"-->
+              <!--                          To: "opacity-0"-->
+              <!--                      &ndash;&gt;-->
+              <!--                      <div class="absolute z-40 inset-x-0 top-full text-gray-500 sm:text-sm"-->
+              <!--                           [hidden]="!isProductMegaMenuOpen">-->
+              <!--                        &lt;!&ndash; Presentational element used to render the bottom shadow, if we put the shadow on the actual panel it pokes out the top, so we use this shorter element to hide the top of the shadow &ndash;&gt;-->
+              <!--                        <div class="absolute inset-0 top-1/2 bg-white shadow" aria-hidden="true"></div>-->
 
-<!--                        <div class="relative bg-white">-->
-<!--                          <div class="mx-auto max-w-9xl px-8">-->
-<!--                            <div class="grid grid-cols-2 items-start gap-x-8 gap-y-10 pb-12 pt-10">-->
-<!--                              <div class="grid grid-cols-2 gap-x-8 gap-y-10">-->
-<!--                                <div>-->
-<!--                                  <p id="desktop-featured-heading-1" class="font-medium text-gray-900">Featured</p>-->
-<!--                                  <ul role="list" aria-labelledby="desktop-featured-heading-1"-->
-<!--                                      class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Casual</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Boxers</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Outdoor</a>-->
-<!--                                    </li>-->
-<!--                                  </ul>-->
-<!--                                </div>-->
-<!--                                <div>-->
-<!--                                  <p id="desktop-categories-heading" class="font-medium text-gray-900">Categories</p>-->
-<!--                                  <ul role="list" aria-labelledby="desktop-categories-heading"-->
-<!--                                      class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Artwork Tees</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Pants</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Accessories</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Boxers</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Basic Tees</a>-->
-<!--                                    </li>-->
-<!--                                  </ul>-->
-<!--                                </div>-->
-<!--                              </div>-->
-<!--                              <div class="grid grid-cols-2 gap-x-8 gap-y-10">-->
-<!--                                <div>-->
-<!--                                  <p id="desktop-collection-heading" class="font-medium text-gray-900">Collection</p>-->
-<!--                                  <ul role="list" aria-labelledby="desktop-collection-heading"-->
-<!--                                      class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Everything</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Core</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">New Arrivals</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Sale</a>-->
-<!--                                    </li>-->
-<!--                                  </ul>-->
-<!--                                </div>-->
+              <!--                        <div class="relative bg-white">-->
+              <!--                          <div class="mx-auto max-w-9xl px-8">-->
+              <!--                            <div class="grid grid-cols-2 items-start gap-x-8 gap-y-10 pb-12 pt-10">-->
+              <!--                              <div class="grid grid-cols-2 gap-x-8 gap-y-10">-->
+              <!--                                <div>-->
+              <!--                                  <p id="desktop-featured-heading-1" class="font-medium text-gray-900">Featured</p>-->
+              <!--                                  <ul role="list" aria-labelledby="desktop-featured-heading-1"-->
+              <!--                                      class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Casual</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Boxers</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Outdoor</a>-->
+              <!--                                    </li>-->
+              <!--                                  </ul>-->
+              <!--                                </div>-->
+              <!--                                <div>-->
+              <!--                                  <p id="desktop-categories-heading" class="font-medium text-gray-900">Categories</p>-->
+              <!--                                  <ul role="list" aria-labelledby="desktop-categories-heading"-->
+              <!--                                      class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Artwork Tees</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Pants</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Accessories</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Boxers</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Basic Tees</a>-->
+              <!--                                    </li>-->
+              <!--                                  </ul>-->
+              <!--                                </div>-->
+              <!--                              </div>-->
+              <!--                              <div class="grid grid-cols-2 gap-x-8 gap-y-10">-->
+              <!--                                <div>-->
+              <!--                                  <p id="desktop-collection-heading" class="font-medium text-gray-900">Collection</p>-->
+              <!--                                  <ul role="list" aria-labelledby="desktop-collection-heading"-->
+              <!--                                      class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Everything</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Core</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">New Arrivals</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Sale</a>-->
+              <!--                                    </li>-->
+              <!--                                  </ul>-->
+              <!--                                </div>-->
 
-<!--                                <div>-->
-<!--                                  <p id="desktop-brand-heading" class="font-medium text-gray-900">Brands</p>-->
-<!--                                  <ul role="list" aria-labelledby="desktop-brand-heading"-->
-<!--                                      class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Significant Other</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">My Way</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Counterfeit</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Re-Arranged</a>-->
-<!--                                    </li>-->
-<!--                                    <li class="flex">-->
-<!--                                      <a href="#" class="hover:text-gray-800">Full Nelson</a>-->
-<!--                                    </li>-->
-<!--                                  </ul>-->
-<!--                                </div>-->
-<!--                              </div>-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
+              <!--                                <div>-->
+              <!--                                  <p id="desktop-brand-heading" class="font-medium text-gray-900">Brands</p>-->
+              <!--                                  <ul role="list" aria-labelledby="desktop-brand-heading"-->
+              <!--                                      class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Significant Other</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">My Way</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Counterfeit</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Re-Arranged</a>-->
+              <!--                                    </li>-->
+              <!--                                    <li class="flex">-->
+              <!--                                      <a href="#" class="hover:text-gray-800">Full Nelson</a>-->
+              <!--                                    </li>-->
+              <!--                                  </ul>-->
+              <!--                                </div>-->
+              <!--                              </div>-->
+              <!--                            </div>-->
+              <!--                          </div>-->
+              <!--                        </div>-->
+              <!--                      </div>-->
+              <!--                    </div>-->
 
-<!--                    <a href="#"-->
-<!--                       class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Services</a>-->
-<!--                    <a href="#"-->
-<!--                       class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Pro Directory</a>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
+              <!--                    <a href="#"-->
+              <!--                       class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Services</a>-->
+              <!--                    <a href="#"-->
+              <!--                       class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Pro Directory</a>-->
+              <!--                  </div>-->
+              <!--                </div>-->
+              <!--              </div>-->
 
               <!-- Mobile menu and search (lg-) -->
               <div class="flex flex-1 items-center lg:hidden">
@@ -549,8 +448,9 @@
                       <!-- Mega menus -->
                       <div class="ml-8">
                         <div class="flex h-full justify-end space-x-8">
-                          <a href="#"
-                             class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Pro Directory</a>
+                          <a [routerLink]="['directory']"
+                             class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800">Pro
+                            Directory</a>
                           <div class="flex">
                             <div class="relative flex">
                               <!-- Item active: "border-indigo-600 text-indigo-600", Item inactive: "border-transparent text-gray-700 hover:text-gray-800" -->
@@ -580,104 +480,130 @@
                                   <div class="grid grid-cols-2 items-start gap-x-8 gap-y-10 pb-12 pt-10">
                                     <div class="grid grid-cols-2 gap-x-8 gap-y-10">
                                       <div>
-                                        <p id="desktop-featured-heading-1" class="font-medium text-gray-900">Categories</p>
-                                        <ul role="list" aria-labelledby="desktop-featured-heading-1" *ngIf="categories$ | async as categories"
+                                        <p id="desktop-featured-heading-1" class="font-medium text-gray-900">
+                                          Categories</p>
+                                        <ul role="list" aria-labelledby="desktop-featured-heading-1"
+                                            *ngIf="categories$ | async as categories"
                                             class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">
                                           <li class="flex" *ngFor="let category of categories">
-                                            <a [routerLink]="['product','view']" class="hover:text-gray-800" (click)="addCategoryFilter(category)">{{category.name}}</a>
+                                            <a [routerLink]="['product','view']" class="hover:text-gray-800"
+                                               (click)="addCategoryFilter(category)">{{category.name}}</a>
                                           </li>
                                         </ul>
                                       </div>
                                       <div>
                                         <p id="desktop-categories-heading" class="font-medium text-gray-900">Brands</p>
                                         <ul role="list" aria-labelledby="desktop-categories-heading"
-                                            class="mt-6 space-y-6 sm:mt-4 sm:space-y-4" *ngIf="brands$ | async as brands">
+                                            class="mt-6 space-y-6 sm:mt-4 sm:space-y-4"
+                                            *ngIf="brands$ | async as brands">
                                           <li class="flex" *ngFor="let brand of brands;">
-                                            <a [routerLink]="['product','view']" class="hover:text-gray-800" (click)="addBrandFilter(brand)">{{brand.name}}</a>
+                                            <a [routerLink]="['product','view']" class="hover:text-gray-800"
+                                               (click)="addBrandFilter(brand)">{{brand.name}}</a>
                                           </li>
                                         </ul>
                                       </div>
                                     </div>
-<!--                                    <div class="grid grid-cols-2 gap-x-8 gap-y-10">-->
-<!--                                      <div>-->
-<!--                                        <p id="desktop-collection-heading" class="font-medium text-gray-900">Collection</p>-->
-<!--                                        <ul role="list" aria-labelledby="desktop-collection-heading"-->
-<!--                                            class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
-<!--                                          <li class="flex">-->
-<!--                                            <a href="#" class="hover:text-gray-800">Everything</a>-->
-<!--                                          </li>-->
-<!--                                          <li class="flex">-->
-<!--                                            <a href="#" class="hover:text-gray-800">Core</a>-->
-<!--                                          </li>-->
-<!--                                          <li class="flex">-->
-<!--                                            <a href="#" class="hover:text-gray-800">New Arrivals</a>-->
-<!--                                          </li>-->
-<!--                                          <li class="flex">-->
-<!--                                            <a href="#" class="hover:text-gray-800">Sale</a>-->
-<!--                                          </li>-->
-<!--                                        </ul>-->
-<!--                                      </div>-->
+                                    <!--                                    <div class="grid grid-cols-2 gap-x-8 gap-y-10">-->
+                                    <!--                                      <div>-->
+                                    <!--                                        <p id="desktop-collection-heading" class="font-medium text-gray-900">Collection</p>-->
+                                    <!--                                        <ul role="list" aria-labelledby="desktop-collection-heading"-->
+                                    <!--                                            class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
+                                    <!--                                          <li class="flex">-->
+                                    <!--                                            <a href="#" class="hover:text-gray-800">Everything</a>-->
+                                    <!--                                          </li>-->
+                                    <!--                                          <li class="flex">-->
+                                    <!--                                            <a href="#" class="hover:text-gray-800">Core</a>-->
+                                    <!--                                          </li>-->
+                                    <!--                                          <li class="flex">-->
+                                    <!--                                            <a href="#" class="hover:text-gray-800">New Arrivals</a>-->
+                                    <!--                                          </li>-->
+                                    <!--                                          <li class="flex">-->
+                                    <!--                                            <a href="#" class="hover:text-gray-800">Sale</a>-->
+                                    <!--                                          </li>-->
+                                    <!--                                        </ul>-->
+                                    <!--                                      </div>-->
 
-<!--                                      <div>-->
-<!--                                        <p id="desktop-brand-heading" class="font-medium text-gray-900">Brands</p>-->
-<!--                                        <ul role="list" aria-labelledby="desktop-brand-heading"-->
-<!--                                            class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
-<!--                                          <li class="flex">-->
-<!--                                            <a href="#" class="hover:text-gray-800">Significant Other</a>-->
-<!--                                          </li>-->
-<!--                                          <li class="flex">-->
-<!--                                            <a href="#" class="hover:text-gray-800">My Way</a>-->
-<!--                                          </li>-->
-<!--                                          <li class="flex">-->
-<!--                                            <a href="#" class="hover:text-gray-800">Counterfeit</a>-->
-<!--                                          </li>-->
-<!--                                          <li class="flex">-->
-<!--                                            <a href="#" class="hover:text-gray-800">Re-Arranged</a>-->
-<!--                                          </li>-->
-<!--                                          <li class="flex">-->
-<!--                                            <a href="#" class="hover:text-gray-800">Full Nelson</a>-->
-<!--                                          </li>-->
-<!--                                        </ul>-->
-<!--                                      </div>-->
-<!--                                    </div>-->
+                                    <!--                                      <div>-->
+                                    <!--                                        <p id="desktop-brand-heading" class="font-medium text-gray-900">Brands</p>-->
+                                    <!--                                        <ul role="list" aria-labelledby="desktop-brand-heading"-->
+                                    <!--                                            class="mt-6 space-y-6 sm:mt-4 sm:space-y-4">-->
+                                    <!--                                          <li class="flex">-->
+                                    <!--                                            <a href="#" class="hover:text-gray-800">Significant Other</a>-->
+                                    <!--                                          </li>-->
+                                    <!--                                          <li class="flex">-->
+                                    <!--                                            <a href="#" class="hover:text-gray-800">My Way</a>-->
+                                    <!--                                          </li>-->
+                                    <!--                                          <li class="flex">-->
+                                    <!--                                            <a href="#" class="hover:text-gray-800">Counterfeit</a>-->
+                                    <!--                                          </li>-->
+                                    <!--                                          <li class="flex">-->
+                                    <!--                                            <a href="#" class="hover:text-gray-800">Re-Arranged</a>-->
+                                    <!--                                          </li>-->
+                                    <!--                                          <li class="flex">-->
+                                    <!--                                            <a href="#" class="hover:text-gray-800">Full Nelson</a>-->
+                                    <!--                                          </li>-->
+                                    <!--                                        </ul>-->
+                                    <!--                                      </div>-->
+                                    <!--                                    </div>-->
                                   </div>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        <a href="#"
-                           class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800" [routerLink]="['order','view']">Orders</a>
-                        <a href="#"
-                           class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800" [routerLink]="['directory']">Services</a>
+                          <a href="#"
+                             class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                             [routerLink]="['order','view']">Orders</a>
+                          <!--                          <a href="#"-->
+                          <!--                             class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"-->
+                          <!--                             [routerLink]="['directory']">Services</a>-->
+                          <a href="#"
+                             class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                             [routerLink]="['appointment', 'view']">Appointment</a>
 
+                          <ng-container *ngIf="{isAdministrator: isAdministrator$ | async} as value">
+                            <a href="#" *ngIf="value.isAdministrator"
+                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                               [routerLink]="['admin-management']">Management</a>
+                          </ng-container>
+                          <ng-container *ngIf="{isServiceProvider: isServiceProvider$ | async} as value">
+                            <a href="#" *ngIf="value.isServiceProvider"
+                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                               [routerLink]="['service-provider-management']">Management</a>
+                          </ng-container>
                         </div>
+
                       </div>
                     </div>
                   </div>
                   <div class="flex space-x-8">
-                    <!--                    <div class="hidden lg:flex">-->
-                    <!--                      <a href="#" class="-m-2 p-2 text-gray-400 hover:text-gray-500">-->
-                    <!--                        <span class="sr-only">Search</span>-->
-                    <!--                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"-->
-                    <!--                             aria-hidden="true">-->
-                    <!--                          <path stroke-linecap="round" stroke-linejoin="round"-->
-                    <!--                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>-->
-                    <!--                        </svg>-->
-                    <!--                      </a>-->
-                    <!--                    </div>-->
-
-                    <div class="flex">
-                      <a [routerLink]="['profile']" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
-                        <span class="sr-only">Account</span>
+                    <div class="hidden lg:flex">
+                      <a (click)="openSearch()" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                        <span class="sr-only">Search</span>
                         <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                              aria-hidden="true">
                           <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                                d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"/>
                         </svg>
                       </a>
                     </div>
-                  </div>
+                    <ng-container *ngIf="{user: user$ | async, error: userError$ | async} as data">
+                      <div class="flex" *ngIf="data.user; else loading;">
+                        <a [routerLink]="['profile']" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
+                          <span class="sr-only">Account</span>
+                          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                               stroke="currentColor"
+                               aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"/>
+                          </svg>
+                        </a>
+                      </div>
+                    </ng-container>
+                    <ng-template #loading>
 
+                    </ng-template>
+                  </div>
+                  <app-notification></app-notification>
                   <span class="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true"></span>
 
                   <div class="flow-root">
@@ -692,6 +618,7 @@
                       <span class="sr-only">items in cart, view bag</span>
                     </a>
                   </div>
+
                 </div>
               </div>
             </div>

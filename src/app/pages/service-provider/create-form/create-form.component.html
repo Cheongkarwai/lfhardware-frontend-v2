@@ -1,146 +1,81 @@
-<div *ngIf="configuration$ | async" class="grid grid-cols-3 p-24">
-  <survey [model]="surveyModel" class="col-span-2"></survey>
-  <form class="col-span-1 d-flex justify-center items-center border-2 p-4">
-    <label for="small" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a form
-      control</label>
-    <select [formControl]="selectControl" id="small"
-            class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-      <option value="''">Select a form control</option>
-      <option value="RADIOBUTTON">Radio button</option>
-      <option value="INPUTTEXT">Input Text</option>
-      <option value="CHECKBOX">Checkbox</option>
-      <option value="DATE">Date Time Picker</option>
-    </select>
-    <ng-container [ngSwitch]="selectControl.getRawValue()">
-      <app-radio-button-form *ngSwitchCase="'RADIOBUTTON'"></app-radio-button-form>
-      <app-input-text-form *ngSwitchCase="'INPUTTEXT'"></app-input-text-form>
-      <app-checkbox-form *ngSwitchCase="'CHECKBOX'"></app-checkbox-form>
-      <app-date-form *ngSwitchCase="'DATE'"></app-date-form>
-    </ng-container>
-  </form>
+<div class="px-5">
+  <div class="flex justify-between py-10 flex-wrap">
+    <div class="flex flex-col gap-3">
+      <nav class="flex mb-5" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+          <li class="inline-flex items-center">
+            <a href="#"
+               class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+              <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+              </svg>
+              Home
+            </a>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"></path>
+              </svg>
+              <a href="#"
+                 class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Configuration</a>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"></path>
+              </svg>
+              <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500"
+                    aria-current="page">Create Appointment Form</span>
+            </div>
+          </li>
+        </ol>
+      </nav>
+      <div>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">Appointments Form</h1>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="configuration$ | async" class="grid grid-cols-3">
+    <div class="col-span-3" *ngIf="services$ | async as services">
+      <label for="small" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a service</label>
+      <select [formControl]="serviceControl"
+              class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-rose-500 focus:border-rose-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-rose-500 dark:focus:border-rose-500">
+        <option value="" [disabled]="true">Select a service</option>
+        <option *ngFor="let service of services" [ngValue]="service">{{service.name}}</option>
+      </select>
+    </div>
+    <survey [model]="surveyModel" class="col-span-2"></survey>
+    <form class="col-span-1 d-flex justify-center items-center border-2 p-4">
+      <label for="small" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a form
+        control</label>
+      <select [formControl]="selectControl" id="small"
+              class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-rose-500 focus:border-rose-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-rose-500 dark:focus:border-rose-500">
+        <option value="''">Select a form control</option>
+        <option value="RADIOBUTTON">Radio button</option>
+        <option value="INPUTTEXT">Input Text</option>
+        <option value="CHECKBOX">Checkbox</option>
+        <option value="DATE">Date Picker</option>
+        <option value="DATETIME">Date Time Picker</option>
+      </select>
+      <ng-container [ngSwitch]="selectControl.getRawValue()">
+        <app-radio-button-form *ngSwitchCase="'RADIOBUTTON'"></app-radio-button-form>
+        <app-input-text-form *ngSwitchCase="'INPUTTEXT'"></app-input-text-form>
+        <app-checkbox-form *ngSwitchCase="'CHECKBOX'"></app-checkbox-form>
+        <app-date-form *ngSwitchCase="'DATE'"></app-date-form>
+        <app-datetime-form *ngSwitchCase="'DATETIME'"></app-datetime-form>
+      </ng-container>
+      <div class="flex justify-end">
+        <app-button text="Save" (click)="saveForm()"></app-button>
+      </div>
+    </form>
+  </div>
 </div>
-<!--<div class="container-fluid">-->
-<!--  <div class="row g-3">-->
-<!--    <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--      Select Services-->
-<!--      <tui-combo-box class="w-100"-->
-<!--                     tuiTextfieldSize="m"-->
-<!--                     [formControl]="serviceControl"-->
-<!--                     [tuiTextfieldLabelOutside]="true"-->
-<!--      >-->
-<!--        Account-->
-
-<!--        <tui-data-list-wrapper-->
-<!--          *tuiDataList-->
-<!--          [items]="items"-->
-<!--        ></tui-data-list-wrapper>-->
-<!--      </tui-combo-box>-->
-<!--    </div>-->
-<!--    <div class="shadow-sm col-md-12 col-lg-12 col-sm-12 g-3 py-5 px-5" *ngFor="let layout of layouts; let i = index;">-->
-<!--      <div class="row pb-5">-->
-<!--        <div class="col-md-3 col-lg-3 col-sm-3">-->
-<!--          <tui-input [formControl]="formGroupArray[i].title" tuiTextfieldSize="m">-->
-<!--            Title-->
-<!--            <input-->
-<!--              tuiTextfield-->
-<!--              type="text"-->
-<!--            />-->
-<!--          </tui-input>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <form class="row g-3"  [formGroup]="formGroupArray[i].formGroup">-->
-<!--        <ng-container *ngFor="let control of layout.form_groups">-->
-<!--          <div [ngSwitch]="control.type" class="col-md-10 col-lg-10 col-sm-10">-->
-<!--            <tui-input *ngSwitchCase="'text'" [formControlName]="control.name" tuiTextfieldSize="m">-->
-<!--              {{control.label}}-->
-<!--              <input-->
-<!--                tuiTextfield-->
-<!--                type="text"-->
-<!--              />-->
-<!--            </tui-input>-->
-<!--            <tui-input *ngSwitchCase="'number'" [formControlName]="control.name" tuiTextfieldSize="m">-->
-<!--              {{control.label}}-->
-<!--              <input-->
-<!--                tuiTextfield-->
-<!--                type="number"-->
-<!--              />-->
-<!--            </tui-input>-->
-<!--          </div>-->
-<!--          <div class="col-md-2 col-lg-2 col-sm-2">-->
-
-<!--            <button  tuiIconButton-->
-<!--                     type="button"-->
-<!--                     class="tui-space_right-3 tui-space_bottom-3"-->
-<!--                     icon="tuiIconMinus"-->
-<!--                     size="m" (click)="removeControl(i, control.name)">Remove</button>-->
-<!--          </div>-->
-<!--        </ng-container>-->
-<!--      </form>-->
-<!--    </div>-->
-<!--    <button-->
-<!--      type="button"-->
-<!--      class="tui-space_right-3 tui-space_bottom-3"-->
-<!--      size="s"-->
-<!--      (click)="addFormGroup()"-->
-<!--    >Add new form</button>-->
-<!--    <div class="col-md-12 col-lg-12 col-sm-12 p-3 shadow-sm">-->
-
-<!--      <div class="row">-->
-<!--&lt;!&ndash;        <div class="col-md-2 col-lg-2 col-sm-2">&ndash;&gt;-->
-<!--&lt;!&ndash;          <tui-combo-box class="w-100"&ndash;&gt;-->
-<!--&lt;!&ndash;                         tuiTextfieldSize="s"&ndash;&gt;-->
-<!--&lt;!&ndash;                         [tuiTextfieldLabelOutside]="true"&ndash;&gt;-->
-<!--&lt;!&ndash;          >&ndash;&gt;-->
-<!--&lt;!&ndash;            Select form&ndash;&gt;-->
-
-<!--&lt;!&ndash;            <tui-data-list-wrapper&ndash;&gt;-->
-<!--&lt;!&ndash;              *tuiDataList&ndash;&gt;-->
-<!--&lt;!&ndash;              [items]="types"&ndash;&gt;-->
-<!--&lt;!&ndash;            ></tui-data-list-wrapper>&ndash;&gt;-->
-<!--&lt;!&ndash;          </tui-combo-box>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--        <form class="col-md-10 col-lg-10 col-sm-10" [formGroup]="createFormGroup">-->
-<!--          <div class="row g-3">-->
-<!--            <div class="col-md-2 col-lg-2 col-sm-2">-->
-<!--              <tui-combo-box class="w-100"-->
-<!--                             tuiTextfieldSize="s"-->
-<!--                             formControlName="type"-->
-<!--                             [tuiTextfieldLabelOutside]="true"-->
-<!--              >-->
-<!--                Select type of control-->
-
-<!--                <tui-data-list-wrapper-->
-<!--                  *tuiDataList-->
-<!--                  [items]="types"-->
-<!--                ></tui-data-list-wrapper>-->
-<!--              </tui-combo-box>-->
-<!--            </div>-->
-<!--            <div class="col-md-2 col-lg-2 col-sm-2">-->
-<!--              <tui-input tuiTextfieldSize="s" formControlName="label">-->
-<!--                Label name-->
-<!--                <input-->
-<!--                  tuiTextfield-->
-<!--                  type="text"-->
-<!--                />-->
-<!--              </tui-input>-->
-<!--            </div>-->
-
-<!--            <button-->
-<!--              tuiIconButton-->
-<!--              type="button"-->
-<!--              class="tui-space_right-3 tui-space_bottom-3"-->
-<!--              icon="tuiIconPlus"-->
-<!--              size="s"-->
-<!--              (click)="addControl()"-->
-<!--            ></button>-->
-<!--          </div>-->
-<!--        </form>-->
-<!--        <div class="col-md-2 col-lg-2 col-sm-2">-->
-<!--          <button class="float-end" (click)="save()">Save</button>-->
-<!--        </div>-->
-<!--      </div>-->
-
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-

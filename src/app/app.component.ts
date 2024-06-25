@@ -1,24 +1,18 @@
-import { TuiRootModule, TuiDialogModule, TuiAlertModule, TUI_SANITIZER } from "@taiga-ui/core";
-import { NgDompurifySanitizer } from "@tinkoff/ng-dompurify";
-import {AfterViewInit, Component, Inject, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, NavigationEnd, Route, Router, RouterOutlet} from '@angular/router';
+import {TuiAlertModule, TuiDialogModule, TuiRootModule} from "@taiga-ui/core";
+import {AfterViewInit, Component, OnInit} from '@angular/core';
+import {ActivatedRoute, NavigationEnd, Router, RouterOutlet} from '@angular/router';
 import {NavbarComponent} from "./fragment/navbar/navbar.component";
 import {SidebarComponent} from "./fragment/sidebar/sidebar.component";
 import {FooterComponent} from "./fragment/footer/footer.component";
-import {Auth} from "@angular/fire/auth";
 import {NgIf} from "@angular/common";
-import {injectStripe, StripeElementsDirective, StripePaymentElementComponent} from "ngx-stripe";
-import {StripeElementsOptions} from "@stripe/stripe-js";
-import {environment} from "../environments/environment.development";
-import {HttpClient} from "@angular/common/http";
-import {PaymentService} from "./core/payment/payment.service";
-import {NotificationService} from "./core/notification/notification.service";
+import {StripeElementsDirective, StripePaymentElementComponent} from "ngx-stripe";
 import {AlertDialogComponent} from "./components/alert-dialog/alert-dialog.component";
-import {AlertService} from "./core/service/alert.service";
 import {initFlowbite} from "flowbite";
 import {ToastComponent} from "./components/toast/toast.component";
-import {ToastService} from "./core/dialog/toast.service";
 import {AutocompleteSearchComponent} from "./components/autocomplete-search/autocomplete-search.component";
+import {UserIdleService} from "angular-user-idle";
+import {LoginService} from "./core/user/login.service";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-root',
@@ -27,61 +21,63 @@ import {AutocompleteSearchComponent} from "./components/autocomplete-search/auto
     StripeElementsDirective,
     StripePaymentElementComponent, AlertDialogComponent, ToastComponent, AutocompleteSearchComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.scss',
-    providers: [{provide: TUI_SANITIZER, useClass: NgDompurifySanitizer}]
+  styleUrl: './app.component.scss'
 })
 export class AppComponent implements AfterViewInit, OnInit {
   title = 'lf-frontend-v2';
 
-  private auth = inject(Auth);
-
-  isLoaded = false;
-
-  isFooterHidden = false;
-
   isAdmin = false;
+  isServiceProvider = false;
 
-  text:string = '';
-  status:string = '';
-  isShowing:boolean = false;
-
-  constructor(private activatedRoute: ActivatedRoute, private router: Router, private notificationService: NotificationService,
-              private alertService: AlertService, private toastService: ToastService) {
+  private isSessionExpiredDialogOpen = false;
 
 
-    this.router.events.subscribe(res=>{
-      if(res instanceof NavigationEnd){
-        if(res.url.includes('/admin')){
+  constructor(private activatedRoute: ActivatedRoute, private router: Router,
+              private userIdleService: UserIdleService, private loginService: LoginService,
+              private dialog: MatDialog) {
+
+
+    this.router.events.subscribe(res => {
+      if (res instanceof NavigationEnd) {
+        if (res.url.includes('/admin') || res.url.includes('/user-onboarding')) {
           this.isAdmin = true;
         }
-      }
-    })
-    this.auth.authStateReady().then(res=>{
-      this.isLoaded = true;
-      if(this.auth.currentUser != null){
+        if (res.url.includes('/user-onboarding/service-provider')) {
+          this.isServiceProvider = true;
+        }
 
       }
     })
   }
 
   ngOnInit() {
-    this.toastService.openRef.subscribe(res => {
-      console.log(res);
-      this.text = res.text;
-      this.status = res.status;
-      this.isShowing = res.show;
-    });
+
+    // this.userIdleService.startWatching();
+    //
+    // this.userIdleService.onIdleStatusChanged().subscribe(res => console.log('Idle status changed'))
+    //
+    // this.userIdleService.onTimerStart().subscribe(res => {
+    //   if (!this.isSessionExpiredDialogOpen) {
+    //       this.isSessionExpiredDialogOpen = true;
+    //       this.dialog.open(AlertDialogComponent, {
+    //         data: {
+    //           title: 'Login session is expired',
+    //           text: 'You have been inactive for 5 minutes. Auto-logout in 5 seconds..',
+    //           status: Status.ERROR
+    //         }
+    //       })
+    //   }
+    // })
+    //
+    // this.userIdleService.onTimeout().subscribe(res=>{
+    //   this.loginService.logout().subscribe(res => {
+    //     window.location.href = res.headers.get('Location') as string;
+    //   });
+    // })
+
   }
 
   ngAfterViewInit() {
     initFlowbite();
-  }
-
-  // get isFooterHidden(){
-  //
-  // }
-
-  get alertStatusVal(){
-    return this.alertService.statusVal;
   }
 }

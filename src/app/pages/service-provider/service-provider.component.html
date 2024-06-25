@@ -1,1 +1,8 @@
-<p>service-provider works!</p>
+<app-header (toggleMenu)="toggleMenu($event)"></app-header>
+<div class="d-flex w-100 p-0 m-0 min-vh-100">
+  <app-sidebar [navLinks]="navLinks" [hidden]="hidden"></app-sidebar>
+  <div class="w-full h-screen p-5">
+    <router-outlet />
+  </div>
+</div>
+

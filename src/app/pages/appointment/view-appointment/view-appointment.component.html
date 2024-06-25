@@ -1,0 +1,74 @@
+<header class="p-24 border-b border-gray-200">
+  <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+  <h1 class="text-4xl">Appointments</h1>
+  <p class="text-sm text-gray-400 pt-7">Find all your the appointments</p>
+</header>
+<!-- Filters -->
+<section aria-labelledby="filter-heading" class="items-center border-b border-gray-200">
+  <h2 id="filter-heading" class="sr-only">Filters</h2>
+  <div class="col-start-1 row-start-1 py-4">
+    <div class="mx-auto flex justify-end px-4 sm:px-6 lg:px-8">
+      <div class="relative inline-block">
+        <div class="flex items-center">
+          <app-filter-keyword [filterCategories]="filterCategories"></app-filter-keyword>
+          <div>
+   <span class="isolate inline-flex rounded-md shadow-sm">
+          <button data-tooltip-target="list-tooltip" type="button" (click)="changeLayout('list')" [ngClass]="layout === 'list' ? 'bg-gray-50 relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 focus:z-10' : 'relative inline-flex items-center rounded-l-md bg-white px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10'">
+            <span class="sr-only">List</span>
+           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-5">
+  <path stroke-linecap="round" stroke-linejoin="round"
+        d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75Z"/>
+</svg>
+
+          </button>
+     <div id="list-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+    List View
+    <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+              <button data-tooltip-target="calendar-tooltip" type="button" (click)="changeLayout('calendar')" [ngClass]="layout === 'calendar' ? 'bg-gray-50 relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 focus:z-10' : 'relative inline-flex items-center rounded-r-md bg-white px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-10'">
+            <span class="sr-only">Calendar</span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+               stroke="currentColor" class="size-5">
+  <path stroke-linecap="round" stroke-linejoin="round"
+        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z"/>
+</svg>
+
+          </button>
+     <div id="calendar-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+    Calendar View
+    <div class="tooltip-arrow" data-popper-arrow></div>
+</div>
+          </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="flex justify-end pe-12 pt-10">
+  <div>
+    <a
+      [routerLink]="['../','history']"
+      class="flex items-center justify-center rounded-md border border-gray-300 bg-white px-2.5 py-2 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+      </svg>
+
+      <span class="ms-3">Appointment History</span>
+      <span class="sr-only">WU88191111</span>
+    </a>
+  </div>
+</div>
+<ng-container *ngIf="layout === 'list';else calendar;">
+ <app-list-view>
+ </app-list-view>
+</ng-container>
+<ng-template #calendar>
+  <div class="p-10">
+    <app-calendar-view></app-calendar-view>
+  </div>
+</ng-template>
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>

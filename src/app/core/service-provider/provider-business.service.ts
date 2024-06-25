@@ -4,6 +4,7 @@ import {environment} from "../../../environments/environment.development";
 import {Service} from "./service.interface";
 import {ServiceCategory} from "./service-category.interface";
 import {BehaviorSubject, shareReplay} from "rxjs";
+import {ServiceDetails} from "./service-details.interface";
 
 @Injectable({
   providedIn:'root'
@@ -22,5 +23,10 @@ export class ProviderBusinessService{
 
   get serviceCategoriesObs(){
     return this.serviceCategories$.asObservable();
+  }
+
+
+  findDetailsById(id: number) {
+    return this.httpClient.get<ServiceDetails>(`${this.url}/${id}/details`);
   }
 }

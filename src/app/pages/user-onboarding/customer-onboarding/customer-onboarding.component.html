@@ -1,0 +1,83 @@
+<section class="py-8 bg-white dark:bg-gray-900 lg:py-0">
+  <div class="lg:flex">
+    <div class="flex items-center mx-auto md:w-[42rem] px-4 md:px-8 xl:px-0">
+      <div class="w-full">
+        <ol
+          class="flex items-center mb-6 text-sm font-medium text-center text-gray-500 dark:text-gray-400 lg:mb-12 sm:text-base">
+          <li [ngClass]="step === 'Update Account' ? 'text-rose-600' : 'text-gray-500 dark:text-gray-500'"
+              class="flex items-center sm:after:content-[''] after:w-12 after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">
+            <div
+              class="flex items-center sm:block after:content-['/'] sm:after:hidden after:mx-2 after:font-light after:text-gray-200 dark:after:text-gray-500">
+              <svg *ngIf="step === 'Update Account';else notUpdateAccount" class="w-4 h-4 mr-2 sm:mb-2 sm:w-6 sm:h-6 sm:mx-auto" fill="currentColor" viewBox="0 0 20 20"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clip-rule="evenodd"></path>
+              </svg>
+              <ng-template #notUpdateAccount>
+                <div class="mr-2 sm:mb-2 sm:mx-auto">1</div>
+              </ng-template>
+              Account <span class="hidden sm:inline-flex">Info</span>
+            </div>
+          </li>
+<!--          <li [ngClass]="step === 'Payment Details' ? 'text-rose-600' : 'text-gray-500 dark:text-gray-500'"-->
+<!--              class="flex items-center sm:after:content-[''] after:w-12 after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">-->
+<!--            <div-->
+<!--              class="flex items-center sm:block after:content-['/'] sm:after:hidden after:mx-2 after:font-light after:text-gray-200 dark:after:text-gray-500">-->
+<!--              <svg *ngIf="step === 'Payment Details';else notPaymentDetails;" class="w-4 h-4 mr-2 sm:mb-2 sm:w-6 sm:h-6 sm:mx-auto" fill="currentColor" viewBox="0 0 20 20"-->
+<!--                   xmlns="http://www.w3.org/2000/svg">-->
+<!--                <path fill-rule="evenodd"-->
+<!--                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"-->
+<!--                      clip-rule="evenodd"></path>-->
+<!--              </svg>-->
+<!--              <ng-template #notPaymentDetails>-->
+<!--                <div class="mr-2 sm:mb-2 sm:mx-auto">2</div>-->
+<!--              </ng-template>-->
+<!--              Payment <span class="hidden sm:inline-flex">Details</span>-->
+<!--            </div>-->
+<!--          </li>-->
+<!--          <li [ngClass]="step === 'Setup Account Verification' ? 'text-rose-600' : 'text-gray-500 dark:text-gray-500'"-->
+<!--              class="flex items-center sm:after:content-[''] after:w-12 after:h-1 after:border-b after:border-gray-200 after:border-1 after:hidden sm:after:inline-block after:mx-6 xl:after:mx-10 dark:after:border-gray-700">-->
+<!--            <div-->
+<!--              class="flex items-center sm:block after:content-['/'] sm:after:hidden after:mx-2 after:font-light after:text-gray-200 dark:after:text-gray-500">-->
+<!--              <svg *ngIf="step === 'Setup Account Verification';else notAccountVerification" class="w-4 h-4 mr-2 sm:mb-2 sm:w-6 sm:h-6 sm:mx-auto" fill="currentColor" viewBox="0 0 20 20"-->
+<!--                   xmlns="http://www.w3.org/2000/svg">-->
+<!--                <path fill-rule="evenodd"-->
+<!--                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"-->
+<!--                      clip-rule="evenodd"></path>-->
+<!--              </svg>-->
+<!--              <ng-template #notAccountVerification>-->
+<!--                <div class="mr-2 sm:mb-2 sm:mx-auto">2</div>-->
+<!--              </ng-template>-->
+<!--              Account <span class="hidden sm:inline-flex">Verification</span>-->
+<!--            </div>-->
+<!--          </li>-->
+          <li [ngClass]="step === 'Account Confirmation' ? 'text-rose-600' : 'text-gray-500 dark:text-gray-500'"
+              class="flex items-center sm:block">
+            <svg  class="w-4 h-4 mr-2 sm:mb-2 sm:w-6 sm:h-6 sm:mx-auto" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <ng-template #notAccountConfirmation>
+              <div class="mr-2 sm:mb-2 sm:mx-auto">2</div>
+            </ng-template>
+            <span>Confirmation</span>
+          </li>
+        </ol>
+        <!--        <ng-container [ngSwitch]="step">-->
+<!--        <app-role-confirmation (step)="changeStep($event)" *ngIf="step === 'Role Confirmation'"></app-role-confirmation>-->
+        <app-update-account-details (step)="changeStep($event)"
+                                    *ngIf="step === 'Update Account'"></app-update-account-details>
+<!--        <app-banking-details *ngIf="step === 'Payment Details'"></app-banking-details>-->
+<!--        <app-setup-account-verification (step)="changeStep($event)"-->
+<!--                                        *ngIf="step === 'Setup Account Verification'"></app-setup-account-verification>-->
+        <app-account-confirmation (step)="changeStep($event)"
+                                  *ngIf="step === 'Account Confirmation'"></app-account-confirmation>
+        <!--        </ng-container>-->
+      </div>
+    </div>
+  </div>
+</section>
+

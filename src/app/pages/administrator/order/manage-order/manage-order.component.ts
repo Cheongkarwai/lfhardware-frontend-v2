@@ -92,7 +92,6 @@ export class ManageOrderComponent {
 
     this.pageableOrder$ = combineLatest([this.orderService.refresh.pipe(startWith('')),this.paginationChange$.pipe(startWith(this.pageRequest)), this.search.valueChanges.pipe(startWith(''))])
       .pipe(switchMap(([refresh,pageRequest, search]) => {
-        console.log(pageRequest);
         if (search) {
           pageRequest.search.keyword = search;
         }
@@ -229,7 +228,9 @@ export class ManageOrderComponent {
         next:res=> {
           this.alertService.showAlert('Exported CSV Successfully', 'You may get the exported CSV from your folder', Status.SUCCESS);
         },
-        error:err=> console.log(err)
+        error:err=>{
+
+        }
       })
   }
 }

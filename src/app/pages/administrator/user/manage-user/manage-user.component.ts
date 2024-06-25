@@ -102,8 +102,8 @@ export class ManageUserComponent {
                   email_address: user.profile.email_address,
                   phone_number: user.profile.phone_number,
                   role: user.roles.map(role => role.name).join(', '),
-                  address_line_1: user.profile.address?.address_line_1,
-                  address_line_2: user.profile.address?.address_line_2,
+                  address_line_1: user.profile.address?.line_1,
+                  address_line_2: user.profile.address?.line_2,
                   state: user.profile.address?.state || '',
                   city: user.profile.address?.city || '',
                   zipcode: user.profile.address?.zipcode || ''
@@ -157,13 +157,13 @@ export class ManageUserComponent {
         break;
 
       case 'Delete':
-        this.dialogSubscriptionService.showConfirmationDialog({title: 'Delete User Account', text: 'Are you sure you want to delete this account? All of the data will be permanently removed. This action cannot be undone.'})
+        this.dialogSubscriptionService.showConfirmationDialog({title: 'Delete User Account', text: 'Are you sure you want to delete this account? All of the data will be permanently removed. This action cannot be undone.', icon:'error'})
         break;
     }
   }
   handleConfirmationDialogResult(result: boolean){
     if(result){
-      console.log(result);
+
     }
   }
 }

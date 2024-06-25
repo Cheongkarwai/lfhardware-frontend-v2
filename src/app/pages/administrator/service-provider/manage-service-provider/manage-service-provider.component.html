@@ -1,95 +1,63 @@
-<!--<div class="row">-->
-<!--  <div class="col-md-6 col-lg-6 col-sm-12 pb-2">-->
-<!--    <h2 class="text-gray">Manage Service Provider</h2>-->
-<!--  </div>-->
-<!--  <div class="col-md-4 col-lg-4 col-sm-12 pb-2">-->
-<!--    <tui-input-->
-<!--      tuiTextfieldIconLeft="tuiIconSearchLarge"-->
-<!--      tuiTextfieldSize="m"-->
-<!--    [formControl]="search">-->
-<!--      Search-->
-<!--    </tui-input>-->
-<!--  </div>-->
-<!--  <div class="col-md-2 col-lg-2 col-sm-12">-->
-<!--    <button class="float-end"-->
-<!--            appearance="primary"-->
-<!--            tuiButton-->
-<!--            type="button"-->
-<!--            class="tui-space_right-3 tui-space_bottom-3"-->
-<!--            routerLink="/admin/service-provider/add-service-provider"-->
-<!--            size="m"-->
-<!--    >-->
-<!--      Add service provider-->
-<!--    </button>-->
-<!--  </div>-->
-<!--</div>-->
-<!--<div class="row pt-5">-->
-<!--  <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--    <ul ngbNav [(activeId)]="activeId" class="nav-tabs border-bottom-0" (activeIdChange)="navChange($event)">-->
-<!--      <li [ngbNavItem]="link.fragment" *ngFor="let link of links">-->
-<!--        <a ngbNavLink routerLink="." [fragment]="link.fragment">{{ link.title }}</a>-->
-<!--    </li>-->
-<!--    </ul>-->
-<!--  </div>-->
-<!--  <ng-template #loading>-->
-<!--    <app-loading-spinner></app-loading-spinner>-->
-<!--  </ng-template>-->
-<!--  <div class="col-md-12 col-lg-12 col-sm-12" *ngIf="pageableProvider$ | async as providerPageable; else loading;">-->
-<!--    <div class="border rounded-3 shadow-sm p-3 table-responsive-md">-->
-<!--      <tui-table-pagination-->
-<!--        [total]="providerPageable.total_elements"-->
-<!--        [page]="pageRequest.page"-->
-<!--        [size]="pageRequest.page_size"-->
-<!--        (paginationChange)="changePagination($event)"-->
-<!--      ></tui-table-pagination>-->
-<!--      <app-table [columns]="columns" layout="list" [data]="providerPageable" [search]="searchValue" [menuItems]="menuItems" (contextMenu)="handleContextMenu($event)"></app-table>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-<!--<div class="row pt-5">-->
-<!--</div>-->
-<div class="flex justify-between py-10">
-  <div>
-    <h5 class="text-xl">Manage Service Provider</h5>
-  </div>
-  <div>
-    <div class="flex justify-around gap-4">
+
+  <div class="flex justify-between py-10 flex-wrap">
+    <div class="flex flex-col gap-3">
+      <nav class="flex mb-5" aria-label="Breadcrumb">
+        <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
+          <li class="inline-flex items-center">
+            <a href="#"
+               class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+              <svg class="w-5 h-5 mr-2.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+              </svg>
+              Home
+            </a>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"></path>
+              </svg>
+              <a href="#"
+                 class="ml-1 text-gray-700 hover:text-primary-600 md:ml-2 dark:text-gray-300 dark:hover:text-white">Service Providers</a>
+            </div>
+          </li>
+          <li>
+            <div class="flex items-center">
+              <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd"
+                      d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                      clip-rule="evenodd"></path>
+              </svg>
+              <span class="ml-1 text-gray-400 md:ml-2 dark:text-gray-500" aria-current="page">Manage Service Provider</span>
+            </div>
+          </li>
+        </ol>
+      </nav>
       <div>
-        <label for="table-search" class="sr-only">Search</label>
-        <div class="relative">
-          <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-            </svg>
-          </div>
-          <input [formControl]="search" type="text" id="table-search-users" class="block p-2 ps-12 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-rose-600 " placeholder="Search for users">
-        </div>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All service providers</h1>
       </div>
-      <app-button routerLink="/admin/service-provider/add-service-provider" text="Add service provider"></app-button>
     </div>
   </div>
-</div>
-<div
-  class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
-  <ul class="flex flex-wrap -mb-px">
-    <li class="me-2" *ngFor="let link of links">
-      <a (click)="navChange(link.fragment)" [ngClass]="activeId === link.fragment ? 'bg-rose-600 text-white' : '' "
-         class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:border-rose-600 hover:text-rose-300 cursor-pointer">{{link.title}}</a>
-    </li>
-  </ul>
-</div>
-<ng-template #loading>
-  <app-loading-spinner></app-loading-spinner>
-</ng-template>
-<div class="col-md-12 col-lg-12 col-sm-12" *ngIf="pageableProvider$ | async as providerPageable; else loading;">
-  <div class="border rounded-3 shadow-sm p-3 table-responsive-md">
-    <tui-table-pagination
-      [total]="providerPageable.total_elements"
-      [page]="pageRequest.page"
-      [size]="pageRequest.page_size"
-      (paginationChange)="changePagination($event)"
-    ></tui-table-pagination>
-    <app-table [columns]="columns" layout="list" [data]="providerPageable" [search]="searchValue" [menuItems]="menuItems"
-               (contextMenu)="handleContextMenu($event)"></app-table>
+  <ng-template #loading>
+    <app-loading-spinner></app-loading-spinner>
+  </ng-template>
+  <div class="col-md-12 col-lg-12 col-sm-12" *ngIf="pageableProvider$ | async as providerPageable; else loading;">
+    <div class="border rounded-[0.5rem]  shadow-sm p-3 table-responsive-md">
+      <app-table [columns]="columns" layout="list" [data]="providerPageable" [search]="searchValue"
+                 (view)="viewServiceProviderDetails($event)"
+                 [enableInfo]="true" [enableEdit]="true" [actions]="['New Service Provider']" (edit)="editServiceProviderDetails($event)" [filters]="filters" [searchControl]="searchControl"
+      (handleAction)="handleAction($event)"></app-table>
+      <tui-table-pagination
+        [total]="providerPageable.total_elements"
+        [page]="pageRequest.page"
+        [size]="pageRequest.page_size"
+        (paginationChange)="changePagination($event)"
+      ></tui-table-pagination>
+    </div>
   </div>
-</div>
+

@@ -111,8 +111,6 @@ export class AddAppointmentComponent {
   }
 
   handleDateSelect(event: DateSelectArg) {
-    console.log(event.start);
-    console.log(event.endStr);
     // const selectTemplate = this.dialog.open(this.addEventTemplate,{});
 
   }

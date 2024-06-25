@@ -1,0 +1,79 @@
+<section class="py-0 bg-white dark:bg-gray-900 lg:py-0">
+  <div class="lg:flex">
+    <div class="hidden w-full max-w-md p-12 lg:block bg-rose-600 max-h-full min-h-screen">
+      <div class="flex items-center space-x-4 pb-5">
+        <a href="#" class="flex items-center text-2xl font-semibold text-white">
+          <img class="w-8 h-8 mr-2" src="./assets/image/logo.png"/>
+          LF Hardware
+        </a>
+        <a routerLink="" class="inline-flex items-center text-sm font-medium  hover:text-white">
+          <svg class="w-6 h-6 mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+                  d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                  clip-rule="evenodd"></path>
+          </svg>
+          Go back
+        </a>
+      </div>
+      <div class="block p-8 text-white rounded-lg bg-rose-400">
+        <h3 class="mb-1 text-2xl font-semibold">Customer/Service Provider Onboarding</h3>
+        <!-- List -->
+        <ul role="list" class="space-y-4 text-left">
+          <li class="flex items-center space-x-3">
+            <!-- Icon -->
+            <svg class="flex-shrink-0 w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span>Able to provide services to customer in this platform</span>
+          </li>
+          <li class="flex items-center space-x-3">
+            <!-- Icon -->
+            <svg class="flex-shrink-0 w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span>No hidden fees</span>
+          </li>
+          <li class="flex items-center space-x-3">
+            <!-- Icon -->
+            <svg class="flex-shrink-0 w-5 h-5 text-green-300" fill="currentColor" viewBox="0 0 20 20"
+                 xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"></path>
+            </svg>
+            <span>Able to purchase items in this platform</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+<!--    <div class="flex items-center mx-auto md:w-[42rem] px-4 md:px-8 xl:px-0">-->
+<!--      <div class="w-full">-->
+<!--                <div class="flex items-center justify-center space-x-4">-->
+<!--      <router-outlet />-->
+<!--                </div>-->
+<!--      </div>-->
+<!--    </div>-->
+    <div class="flex items-center mx-auto md:w-[42rem] px-4 md:px-8 xl:px-0 py-10">
+      <div class="w-full">
+        <div class="flex items-center justify-center mb-8 space-x-4 lg:hidden">
+          <a href="#" class="flex items-center text-2xl font-semibold">
+            <img class="w-8 h-8 mr-2" src="./assets/image/logo.png" />
+            <span class="text-gray-900 dark:text-white">LF Hardware</span>
+          </a>
+        </div>
+        <router-outlet />
+<!--        <button-->
+<!--          class="w-full px-5 py-2.5 sm:py-3.5 text-sm font-medium text-center text-white rounded-lg bg-rose-600 hover:bg-rose-700 focus:ring-4 focus:outline-none focus:ring-rose-300 dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800" (click)="changeStep('Update Account')">-->
+<!--          Next: Account Info-->
+<!--        </button>-->
+
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,13 @@
+
+<ng-container *ngIf="control">
+  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{title}}</label>
+  <input type="text" name="full-name" id="full-name"
+         [ngClass]="control?.touched && control?.errors ? 'ring-1 ring-rose-600' : ''" class="border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5"
+         [placeholder]="placeholder" [formControl]="control">
+
+  <span
+    *ngIf="(control?.hasError('whitespace') || control?.hasError('required')) && control?.touched"
+    class="text-rose-600 text-sm">
+                        *{{title}} is required
+                      </span>
+</ng-container>

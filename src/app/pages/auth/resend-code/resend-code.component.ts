@@ -48,7 +48,6 @@ export class ResendCodeComponent implements OnInit{
   }
 
   sendCode() {
-    console.log(this.otpForm.invalid);
     if(!this.otpForm.invalid){
       this.isSent = true;
       this.otpForm.controls['otp'].enable();

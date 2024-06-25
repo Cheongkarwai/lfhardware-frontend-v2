@@ -20,7 +20,7 @@
   <div
     class="flex justify-content-center flex-col w-full px-14 sm:px-24 md:px-24 lg:px-24 py-12 gap-24 col-span-3 bg-gray-50">
     <div class="w-full">
-      <app-search-input></app-search-input>
+      <app-search-input [control]="searchControl"></app-search-input>
     </div>
     <div class="grid grid-cols-1 gap-7" *ngIf="(services$ | async) as services">
       <ng-container *ngIf="services.length === 0">

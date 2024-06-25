@@ -17,7 +17,6 @@ import {register} from "swiper/element/bundle";
 import {SwiperOptions} from "swiper/types";
 import {SwiperDirective} from "../../core/directive/swiper.directive";
 import {CountUpDirective} from "../../core/directive/count-up.directive";
-import {Auth} from "@angular/fire/auth";
 import {ButtonComponent} from "../../components/button/button.component";
 import {ToastComponent} from "../../components/toast/toast.component";
 import {SearchService} from "../../core/service-provider/search.service";
@@ -100,28 +99,28 @@ export class HomeComponent implements OnInit {
     rating: [],
     service_name: '',
     states: [],
-    status: '',
+    //status: '',
   }
 
-  private auth = inject(Auth);
-
-  searchItems$!  : Observable<{image: string, text:string}[]>;
-  constructor(private fb:FormBuilder, private searchService: SearchService, private serviceProviderService: ProviderService) {
+  searchItems$!  : Observable<{image: string, text:string, description:string}[]>;
+  constructor(private fb:FormBuilder, private searchService: SearchService,
+              private serviceProviderService: ProviderService) {
     this.searchControl = new FormControl<string>('');
   }
 
-  async ngOnInit() {
+  ngOnInit() {
 
     this.searchItems$ = this.searchControl.valueChanges.pipe(startWith(''),switchMap(search=>{
       if(search){
         this.pageRequest.search.keyword = search;
       }
-      return this.serviceProviderService.findAll(this.pageRequest)
+      return this.serviceProviderService.findAll(this.pageRequest, [], [], null, [])
         .pipe(map(serviceProvidersPage=>{
           return serviceProvidersPage.items.map(serviceProvider=> {
             return {
               image: '',
-              text:serviceProvider.name
+              text:serviceProvider.name,
+              description: ''
             };
           })
         }));

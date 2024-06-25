@@ -1,43 +1,38 @@
 import {Injectable} from "@angular/core";
 import {BehaviorSubject, map, ReplaySubject} from "rxjs";
+import {ToastComponent} from "../../components/toast/toast.component";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastService {
 
-  open$: BehaviorSubject<{ text: string, status: string, show: boolean }> = new BehaviorSubject<{
-    text: string,
-    status: string,
-    show: boolean
-  }>({text: '', status: '', show: false});
+  private dialogRef!: MatDialogRef<ToastComponent> ;
 
-
-  constructor() {
+  constructor(private dialog: MatDialog) {
   }
 
 
   open(text: string, status: string) {
-    this.open$.next({
-      text: text,
-      status: status,
-      show: true
+    const dialogRef  = this.dialog.open(ToastComponent , {
+      hasBackdrop: false,
+      data: {
+        text: text,
+        status: status
+      }
     });
 
-    setTimeout(()=>{
-      this.close();
-    },5000)
+    dialogRef.afterOpened().subscribe(res=>{
+      setTimeout(()=>{
+        dialogRef.close();
+      },2000)
+    });
+
   }
 
   close() {
-    this.open$.next({
-      text: '',
-      status: '',
-      show: false
-    });
+   this.dialogRef.close();
   }
 
-  get openRef() {
-    return this.open$.asObservable();
-  }
 }

@@ -24,7 +24,6 @@ export class BarChartComponent implements OnInit, OnChanges {
      data.forEach(e=>{
        this.data[e.month - 1] = e.count;
      });
-     console.log(this.data);
      this.addData(this.data);
   }
 

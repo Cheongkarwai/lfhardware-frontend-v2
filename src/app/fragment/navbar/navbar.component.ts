@@ -1,45 +1,49 @@
-import {Component, inject, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {Router, RouterModule} from "@angular/router";
 import {
   NgbCollapseModule,
   NgbDropdown,
-  NgbDropdownButtonItem, NgbDropdownItem,
+  NgbDropdownItem,
   NgbDropdownMenu,
   NgbDropdownToggle
 } from "@ng-bootstrap/ng-bootstrap";
-import {Auth, signOut, user, User as FirebaseUser} from "@angular/fire/auth";
 import {CommonModule} from "@angular/common";
 import {TuiAvatarModule, TuiBadgedContentModule} from "@taiga-ui/kit";
 import {TuiDropdownModule, TuiHostedDropdownModule, TuiSvgModule} from "@taiga-ui/core";
 import {LoginService} from "../../core/user/login.service";
-import {catchError, map, Observable, of, shareReplay} from "rxjs";
-import {error} from "@angular/compiler-cli/src/transformers/util";
+import {catchError, combineLatest, map, Observable, of, share, startWith, switchMap} from "rxjs";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {faCartShopping, faHeart} from "@fortawesome/free-solid-svg-icons";
-import {Cart} from "../../core/cart/cart.interface";
 import {CartService} from "../../core/cart/cart.service";
 import {Category} from "../../core/product/category.interface";
 import {Brand} from "../../core/product/brand.interface";
 import {ProductService} from "../../core/product/product.service";
-// import {NotificationToast} from "../../shared/notification/customized.alert";
-// import {UserService} from "../../core/user/user.service";
+import {UserAccount} from "../../core/user/user-account.interface";
+import {AccountService} from "../../core/user/account.service";
+import {initFlowbite} from "flowbite";
+import {Notification, NotificationService} from "../../core/notification/notification.service";
+import {CustomerService} from "../../core/customer/customer.service";
+import {ProviderService} from "../../core/service-provider/service-provider.service";
+import {NotificationComponent} from "../../components/notification/notification.component";
+import {SearchService} from "../../core/service-provider/search.service";
+import {UserService} from "../../core/user/user.service";
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  imports: [RouterModule, NgbCollapseModule, CommonModule, TuiAvatarModule, TuiDropdownModule, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem, FaIconComponent, TuiBadgedContentModule, TuiSvgModule, TuiHostedDropdownModule,
+  imports: [RouterModule, NgbCollapseModule, CommonModule, TuiAvatarModule, TuiDropdownModule, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, NgbDropdownItem, FaIconComponent, TuiBadgedContentModule, TuiSvgModule, TuiHostedDropdownModule, NotificationComponent,
   ],
   standalone: true
 })
-export class NavbarComponent implements OnInit {
-
-  protected readonly faCartShopping = faCartShopping;
+export class NavbarComponent implements OnInit, AfterViewInit {
 
   isCollapsed = true;
-  user$!:Observable<FirebaseUser | null>;
-  isLoggedIn$!: Observable<boolean>;
+  user$!: Observable<UserAccount>;
+  userError$!: Observable<UserAccount | null>;
+  notifications$!: Observable<Notification[]>;
+
+  isServiceProvider$!: Observable<boolean>;
+  isAdministrator$!: Observable<boolean>;
 
   isMobileMenuOpen = false;
 
@@ -49,72 +53,92 @@ export class NavbarComponent implements OnInit {
   isMenMenuTabOpen = true;
   isWomenMenuTabOpen = false;
 
-  private auth = inject(Auth);
+  user!: UserAccount | null;
+  completedOnBoarding$!: Observable<boolean>;
 
-  user!:FirebaseUser | null;
-
-  numberOfCartItems$: Observable<number>;
+  numberOfCartItems$!: Observable<number>;
   isProductMegaMenuOpen = false;
 
-  categories$:Observable<Category[]>;
-  brands$:Observable<Brand[]>;
+  categories$!: Observable<Category[]>;
+  brands$!: Observable<Brand[]>;
 
-  constructor(private router: Router,private loginService:LoginService, private cartService:CartService,
-              private productService: ProductService, private route:Router) {
-    this.numberOfCartItems$ = cartService.findCart().pipe(map(cart=>cart.items.length),catchError(err=> of(0)));
-    this.categories$ = this.productService.findAllProductCategories().pipe(map(categories=> categories.slice(0,4)),shareReplay(1));
-    this.brands$ = this.productService.findAllProductBrands().pipe(map(brands=>brands.slice(0,5)),shareReplay(1));
+  constructor(private router: Router,
+              private loginService: LoginService,
+              private cartService: CartService,
+              private productService: ProductService,
+              private route: Router,
+              private userService: UserService,
+              private accountService: AccountService,
+              private notificationService: NotificationService,
+              private customerService: CustomerService,
+              private providerService: ProviderService,
+              private searchService: SearchService) {
   }
 
   ngOnInit() {
-    this.auth.onAuthStateChanged({
-      next:user=>{
-        this.user = user;
-      },
-      error:err=> console.log(err),
-      complete: ()=> console.log('Auth state change completed')
-    });
+    //this.numberOfCartItems$ = this.cartService.findCart().pipe(map(cart=>cart.items.length),catchError(err=> of(0)));
+    //this.categories$ = this.productService.findAllProductCategories().pipe(map(categories=> categories.slice(0,4)),shareReplay(1));
+    //this.brands$ = this.productService.findAllProductBrands().pipe(map(brands=>brands.slice(0,5)),shareReplay(1));
+    this.getUser();
+    this.getRoles();
+    this.getNotifications();
+    this.completedOnBoarding$ = this.customerService.refreshObs$.pipe(startWith(''), switchMap(e=>{
+      return combineLatest([
+        this.customerService.findCurrentCustomer()
+        .pipe(map(customer => !customer)),
+        this.providerService.findCurrentServiceProvider().pipe(map(serviceProvider => {
+        return !(serviceProvider && serviceProvider.front_identity_card
+          && serviceProvider.back_identity_card
+          && serviceProvider.ssm &&
+          serviceProvider.stripe_account_id);
 
-    // this.isLoggedIn = this.user != null
-    //this.loginService.setTest();
-    // this.user$ = this.loginService.user;
-    // this.isLoggedIn$.subscribe(res=>console.log(res));
-    // this.isLoggedIn$ = this.loginService.isLoggedIn;
-
+      })), this.userService.findAllCurrentUserRoles()]).pipe(map(result => !(result[0] && result[1]) || result[2].map(role=> role.name).includes('administrator')));
+    }));
   }
 
-  closeNav(){
-    this.isCollapsed = !this.isCollapsed;
+  getUser(){
+    this.user$ = this.accountService.findCurrentlyLoggedInUser().pipe(share());
+    this.userError$ = this.user$.pipe(catchError(err => of(err)));
+
+  }
+  getNotifications(){
+    this.notifications$ = this.notificationService.findUserNotification();
+  }
+  getRoles(){
+    this.isServiceProvider$ = this.user$.pipe(map(user=> {
+      return user?.roles.map(role=> role.name)
+        .includes('service_provider');
+    }));
+    this.isAdministrator$ = this.user$.pipe(map(user=> {
+      return user?.roles.map(role=> role.name)
+        .includes('administrator');
+    }));
   }
 
-  // logout() {
-  //   NotificationToast.fire({
-  //     icon: 'success',
-  //     title: 'Logged out successfully'
-  //   }).then(result => {
-  //     if(result.isDismissed){
-  //       this.userService.logout();
-  //     }
-  //   });
-  // }
+  ngAfterViewInit() {
+    initFlowbite();
+  }
+
   logout() {
-    this.loginService.logout().then(res=>{
+    this.loginService.logout().subscribe(res => {
+      window.location.href = res.headers.get('Location') as string;
       this.router.navigate(['']).then(res => {
-        location.reload()
+        //location.reload()
       });
-    },error=>console.log(error));
+    }, error => {
+
+    });
   }
 
   protected readonly close = close;
-  protected readonly faHeart = faHeart;
 
   openMobileMenu() {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
 
-  showMegaMenu(name:string) {
+  showMegaMenu(name: string) {
 
-    switch (name){
+    switch (name) {
       case 'MEN':
         this.isMenMegaMenuOpen = true;
         this.isWomenMegaMenuOpen = false;
@@ -125,8 +149,8 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  showMobileMenuTab(name:string){
-    switch(name){
+  showMobileMenuTab(name: string) {
+    switch (name) {
       case 'MEN':
         this.isMenMenuTabOpen = true;
         this.isWomenMenuTabOpen = false;
@@ -143,15 +167,28 @@ export class NavbarComponent implements OnInit {
   }
 
 
-  addCategoryFilter(category:Category) {
+  addCategoryFilter(category: Category) {
     this.productService.setBrandFilter(null);
     this.isProductMegaMenuOpen = false;
     this.productService.setCategoryFilter(category);
   }
 
-  addBrandFilter(brand: Brand){
+  addBrandFilter(brand: Brand) {
     this.productService.setCategoryFilter(null);
     this.isProductMegaMenuOpen = false;
     this.productService.setBrandFilter(brand);
+  }
+
+  login() {
+    this.loginService.login();
+  }
+
+  openSearch() {
+    this.searchService.show();
+  }
+
+  navigateToPage(routeUrl: string) {
+    this.isMobileMenuOpen = false;
+    this.router.navigateByUrl(routeUrl);
   }
 }

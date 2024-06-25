@@ -1,0 +1,73 @@
+<div class="px-2 sm:px-12 py-8 bg-gray-100">
+
+  <div class="py-6">
+    <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+  </div>
+  <div class="px-2">
+    <div class="flex flex-col gap-3">
+      <div class="flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 13.5V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m12-3V3.75m0 9.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 3.75V16.5m-6-9V3.75m0 3.75a1.5 1.5 0 0 1 0 3m0-3a1.5 1.5 0 0 0 0 3m0 9.75V10.5" />
+        </svg>
+        <span class="text-2xl">Account Settings</span>
+      </div>
+      <p class="text-gray-500">Change your profile and account settings</p>
+    </div>
+    <div class="md:flex my-5 bg-white shadow-sm">
+      <ul class="flex-column text-sm font-medium text-gray-500 mb-4 md:mb-0 sm:w-60 w-full border-r-2">
+        <li>
+          <a (click)="switchTab('profile')" [ngClass]="selectedTab === 'profile' ? 'text-black' : ''" class="hover:text-black cursor-pointer inline-flex px-6 py-6 rounded-lg active w-full" aria-current="page">
+            <svg class="w-5 h-5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20" [ngClass]="selectedTab === 'profile' ? 'text-rose-600' : ''">
+              <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+            </svg>
+            Profile
+          </a>
+        </li>
+        <li>
+          <a (click)="switchTab('change-password')" [ngClass]="selectedTab === 'password' ? 'text-black' : ''" class="hover:text-black cursor-pointer inline-flex items-center px-6 py-6 rounded-lg  w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 me-2" [ngClass]="selectedTab === 'change-password' ? 'text-rose-600' : ''">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 1 0-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 0 0 2.25-2.25v-6.75a2.25 2.25 0 0 0-2.25-2.25H6.75a2.25 2.25 0 0 0-2.25 2.25v6.75a2.25 2.25 0 0 0 2.25 2.25Z" />
+            </svg>
+
+            Change Password
+          </a>
+        </li>
+        <li>
+          <a (click)="switchTab('security')" [ngClass]="selectedTab === 'security' ? 'text-black' : ''" class="hover:text-black cursor-pointer inline-flex items-center px-6 py-6 rounded-lg  w-full">
+            <svg class="h-5 w-5 me-2" fill="none"  [ngClass]="selectedTab === 'security' ? 'text-rose-600' : ''" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7.864 4.243A7.5 7.5 0 0119.5 10.5c0 2.92-.556 5.709-1.568 8.268M5.742 6.364A7.465 7.465 0 004.5 10.5a7.464 7.464 0 01-1.15 3.993m1.989 3.559A11.209 11.209 0 008.25 10.5a3.75 3.75 0 117.5 0c0 .527-.021 1.049-.064 1.565M12 10.5a14.94 14.94 0 01-3.6 9.75m6.633-4.596a18.666 18.666 0 01-2.485 5.33" />
+            </svg>
+
+
+            Security
+          </a>
+        </li>
+        <li>
+          <a (click)="logout()" class="hover:text-black cursor-pointer inline-flex items-center  px-6 py-6 rounded-lg w-full">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 me-2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15M12 9l-3 3m0 0 3 3m-3-3h12.75" />
+            </svg>
+            Logout
+          </a>
+        </li>
+      </ul>
+      <div class="py-16 px-3 sm:px-12 text-medium text-white-500 dark:text-gray-400 rounded-lg w-full">
+        <ng-container [ngSwitch]="selectedTab">
+          <ng-container *ngSwitchCase="'profile'">
+            <app-profile></app-profile>
+          </ng-container>
+          <ng-container *ngSwitchCase="'change-password'">
+            <app-change-password></app-change-password>
+          </ng-container>
+          <ng-container  *ngSwitchCase="'security'">
+            <app-security></app-security>
+          </ng-container>
+          <!--          <ng-container *ngSwitchCase="'manage-permission'"></ng-container>-->
+          <!--          <app-manage-permission></app-manage-permission>-->
+        </ng-container>
+      </div>
+
+    </div>
+  </div>
+
+</div>

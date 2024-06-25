@@ -20,9 +20,9 @@
         From: "opacity-100"
         To: "opacity-0"
     -->
-    <div class="fixed inset-0 bg-black bg-opacity-25"></div>
+<!--    <div class="fixed inset-0 bg-black bg-opacity-25" [ngClass]="open ? '' : 'opacity-0'"></div>-->
 
-    <div class="fixed inset-0 z-40 flex">
+    <div class="fixed inset-0 z-40 flex" [ngClass]="open ? '' : 'hidden'">
       <!--
         Off-canvas menu, show/hide based on off-canvas menu state.
 
@@ -36,9 +36,10 @@
       <div class="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
         <div class="flex items-center justify-between px-4">
           <h2 class="text-lg font-medium text-gray-900">Filters</h2>
-          <button type="button"
+          <button type="button" (click)="closeCanvasMenu()"
                   class="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400">
-            <span class="sr-only">Close menu</span>
+<!--            <span>Close menu</span>-->
+<!--            Hi-->
             <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
                  aria-hidden="true">
               <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
@@ -156,10 +157,7 @@
             <!-- Filter section, show/hide based on section state. -->
             <div class="pt-6" id="filter-section-2">
               <div class="space-y-6">
-                <label for="default-range"
-                       class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">$100</label>
-                <input id="default-range" type="range" value="50"
-                       class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+                <app-range-input [control]="maxPriceControl"></app-range-input>
               </div>
             </div>
           </div>
@@ -217,7 +215,7 @@
         </div>
 
         <!-- Mobile filter dialog toggle, controls the 'mobileFiltersOpen' state. -->
-        <button type="button" class="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden">
+        <button type="button" class="inline-block text-sm font-medium text-gray-700 hover:text-gray-900 sm:hidden" (click)="openCanvasMenu()">
           Filters
         </button>
 
@@ -225,12 +223,12 @@
           <div class="flow-root">
             <div class="-mx-4 flex items-center divide-x divide-gray-200">
               <div class="relative inline-block px-4 text-left">
-                <button type="button" (click)="toggleStateMenu()"
+                <button type="button" data-dropdown-toggle="state-dropdown"
                         class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
                         aria-expanded="false">
                   <span>States</span>
                   <span
-                    class="ml-1.5 rounded bg-gray-200 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-gray-700">1</span>
+                    class="ml-1.5 rounded bg-gray-200 px-1.5 py-0.5 text-xs font-semibold tabular-nums text-gray-700">{{getStateFilterCount()}}</span>
                   <svg class="-mr-1 ml-1 h-5 w-5 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
                        viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                     <path fill-rule="evenodd"
@@ -249,8 +247,8 @@
                     From: "transform opacity-100 scale-100"
                     To: "transform opacity-0 scale-95"
                 -->
-                <div *ngIf="isStateFilterMenuOpen"
-                     class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div  id="state-dropdown"
+                     class="absolute hidden right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <form class="space-y-4" *ngIf="states$ | async as states" [formGroup]="filterForm">
                     <ng-container formArrayName="states">
                       <div class="flex items-center"
@@ -267,7 +265,7 @@
                 </div>
               </div>
               <div class="relative inline-block px-4 text-left">
-                <button type="button" (click)="toggleRatingMenu()"
+                <button type="button" data-dropdown-toggle="rating-dropdown"
                         class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
                         aria-expanded="false">
                   <span>Rating</span>
@@ -289,8 +287,8 @@
                     From: "transform opacity-100 scale-100"
                     To: "transform opacity-0 scale-95"
                 -->
-                <div *ngIf="isRatingFilterMenuOpen"
-                     class="absolute w-52 right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div id="rating-dropdown"
+                     class="absolute hidden w-52 right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <form class="space-y-4" [formGroup]="filterForm">
                     <ng-container formArrayName="rating">
                       <ng-container *ngFor="let control of ratingFormArray.controls; let i = index;"
@@ -308,7 +306,7 @@
                 </div>
               </div>
               <div class="relative inline-block px-4 text-left">
-                <button type="button" (click)="togglePriceMenu()"
+                <button type="button" data-dropdown-toggle="price-dropdown"
                         class="group inline-flex justify-center text-sm font-medium text-gray-700 hover:text-gray-900"
                         aria-expanded="false">
                   <span>Price</span>
@@ -330,8 +328,8 @@
                     From: "transform opacity-100 scale-100"
                     To: "transform opacity-0 scale-95"
                 -->
-                <div *ngIf="isPriceFilterMenuOpen"
-                     class="absolute right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div id="price-dropdown"
+                     class="absolute hidden right-0 z-10 mt-2 origin-top-right rounded-md bg-white p-4 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none">
                   <form class="space-y-4">
                     <app-range-input [control]="maxPriceControl"></app-range-input>
                   </form>
@@ -355,10 +353,10 @@
 
         <div class="mt-2 sm:ml-4 sm:mt-0">
           <div class="-m-1 flex flex-wrap items-center">
-            <span
+            <span *ngFor="let filter of filters"
               class="m-1 inline-flex items-center rounded-full border border-gray-200 bg-white py-1.5 pl-3 pr-2 text-sm font-medium text-gray-900">
-              <span>Objects</span>
-              <button type="button"
+              <span>{{filter.title}}</span>
+              <button (click)="removeFilter(filter)" type="button"
                       class="ml-1 inline-flex h-4 w-4 flex-shrink-0 rounded-full p-1 text-gray-400 hover:bg-gray-200 hover:text-gray-500">
                 <span class="sr-only">Remove filter for Objects</span>
                 <svg class="h-2 w-2" stroke="currentColor" fill="none" viewBox="0 0 8 8">
@@ -378,8 +376,21 @@
   </ng-template>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 w-full"
        *ngIf="providerPageable$ | async as serviceProviderPageable; else loading;">
+    <ng-container *ngIf="serviceProviderPageable.items.length === 0">
+      <div class="py-6 col-span-1 sm:col-span-2 lg:col-span-3 xl:col-span-4 h-full flex justify-center items-center">
+        <div class="flex flex-col justify-center items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-16 h-16">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+          </svg>
+
+          <p class="text-lg pt-10 font-medium text-gray-900 mb-3 text-center">Service not found</p>
+          <p class="text-sm font-medium text-gray-500 mb-3 text-center">Looks like there is no matching service</p>
+          <app-button text="Reset filter" (click)="resetFilter()"></app-button>
+        </div>
+      </div>
+    </ng-container>
     <div class="relative mx-auto w-full" *ngFor="let serviceProvider of serviceProviderPageable.items">
-      <a [routerLink]="['/','service-provider-details', serviceProvider.id]"
+      <a [routerLink]="['/','service-provider', serviceProvider.id, 'details']"
          class="relative inline-block duration-300 ease-in-out transition-transform transform hover:-translate-y-2 w-full">
         <div class="shadow border-2 p-4 rounded-lg bg-white">
           <img class="flex justify-center relative rounded-lg overflow-hidden h-52 w-full"
@@ -396,7 +407,7 @@
 
           </div>
 
-          <div class="grid grid-cols-2 grid-rows-2 gap-4 mt-8">
+          <div class="grid grid-cols-1 grid-rows-2 gap-4 mt-8">
             <p class="inline-flex flex-col xl:flex-row xl:items-center text-gray-800">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                    stroke="currentColor" class="w-5 h-5">
@@ -409,10 +420,10 @@
 
             </p>
             <p class="inline-flex flex-col xl:flex-row xl:items-center text-gray-800">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-5 h-5">
-                <path
-                  d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"/>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
               </svg>
+
 
               <span class="mt-2 ms-2 xl:mt-0">
 			  {{serviceProvider.contact_info.phone_number || 'N/A'}}
@@ -434,11 +445,10 @@
           </div>
 
           <div class="grid grid-cols-3 mt-8">
-            <div class="flex justify-start col-span-2">
+            <div class="flex justify-start col-span-3">
               <div class="flex items-center">
                 <app-rating [rating]="serviceProvider.rating"></app-rating>
                 <p class="text-sm text-gray-700">
-                  {{serviceProvider.rating}}
                   <span class="sr-only"> out of 5 stars</span>
                 </p>
                 <div aria-hidden="true" class="ml-4 text-sm text-gray-300">·</div>
@@ -447,387 +457,9 @@
                 </div>
               </div>
             </div>
-            <div class="flex justify-end col-span-1">
-              <a>View More</a>
-            </div>
           </div>
         </div>
       </a>
     </div>
-
-
   </div>
-
 </main>
-
-<!--<div class="row justify-content-center">-->
-<!--  <div class="col-md-7 col-lg-7 col-sm-12">-->
-<!--&lt;!&ndash;    <div class="row pt-4">&ndash;&gt;-->
-<!--&lt;!&ndash;      <div class="col-md-12 col-lg-12 col-sm-12">&ndash;&gt;-->
-<!--&lt;!&ndash;        <div class="card border-0 p-4">&ndash;&gt;-->
-<!--&lt;!&ndash;          <div class="card-title text-center">&ndash;&gt;-->
-<!--&lt;!&ndash;            <h2>Our Pros</h2>&ndash;&gt;-->
-<!--&lt;!&ndash;            <h4>The best aircon installer in Malaysia</h4>&ndash;&gt;-->
-<!--&lt;!&ndash;          </div>&ndash;&gt;-->
-<!--&lt;!&ndash;          <div class="card-body">&ndash;&gt;-->
-<!--&lt;!&ndash;            <div class="row g-5">&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="col-md-3 col-lg-3 col-sm-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="row text-center">&ndash;&gt;-->
-<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p class="border">Hi</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                    &lt;!&ndash;                  <p>Verified Contractor</p>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                    &lt;!&ndash;                  <small>4 star rating or higher</small>&ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="col-md-3 col-lg-3 col-sm-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="row text-center border">&ndash;&gt;-->
-<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p class="border">Hi</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p>Verified</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="col-md-3 col-lg-3 col-sm-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="row text-center border">&ndash;&gt;-->
-<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p class="border">Hi</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p>Verified</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="col-md-3 col-lg-3 col-sm-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="row text-center border">&ndash;&gt;-->
-<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p class="border">Hi</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                  <div class="col-md-6 col-sm-6 col-lg-6">&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p>Verified</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;          </div>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
-
-<!--    <form class="row g-2 pt-5" [formGroup]="filterForm">-->
-<!--      <div class="col-md-6 col-lg-6 col-sm-6">-->
-<!--        <tui-input-->
-<!--          tuiTextfieldAppearance="outline"-->
-<!--          tuiTextfieldIconLeft="tuiIconSearchLarge"-->
-<!--          formControlName="search" tuiTextfieldSize="m"-->
-<!--        >-->
-<!--          Search Pro By Name-->
-<!--          <tui-data-list-wrapper-->
-<!--            *tuiDataList-->
-<!--            emptyContent="No results found"-->
-<!--            size="xs"-->
-<!--            [items]="serviceProvidersName$ | async"-->
-<!--          ></tui-data-list-wrapper>-->
-<!--        </tui-input>-->
-<!--      </div>-->
-<!--      <div class="col-md-4 col-lg-4 col-sm-4 d-flex gap-2">-->
-<!--        <div>-->
-<!--          <tui-hosted-dropdown-->
-<!--            [content]="dropdownContent"-->
-<!--          >-->
-<!--            <button-->
-<!--              iconRight="tuiIconChevronDown"-->
-<!--              tuiButton-->
-<!--              type="button"-->
-<!--              size="m"-->
-<!--              appearance="outline"-->
-<!--              (click)="onClick()">-->
-<!--              <small>Rating</small>-->
-<!--              <ng-template #dropdownContent>-->
-<!--                <div class="card border-0">-->
-<!--                  <div class="card-body">-->
-<!--                    <tui-rating-->
-<!--                      class="rating px-2"-->
-<!--                      formControlName="rating"-->
-<!--                      size="s"-->
-<!--                    ></tui-rating>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </ng-template>-->
-<!--            </button>-->
-<!--          </tui-hosted-dropdown>-->
-<!--        </div>-->
-<!--        <div class="w-100">-->
-<!--          <tui-hosted-dropdown-->
-<!--            [content]="priceRangeContent"-->
-<!--            class="w-100"-->
-<!--          >-->
-<!--            <button-->
-<!--              iconRight="tuiIconChevronDown"-->
-<!--              tuiButton-->
-<!--              type="button"-->
-<!--              size="m"-->
-<!--              appearance="outline"-->
-<!--              formControlName="price">-->
-<!--              <small>Price Range</small>-->
-<!--              <ng-template #priceRangeContent>-->
-<!--                <div class="card border-0">-->
-<!--                  <div class="card-body" style="min-width:30em;">-->
-<!--                    <div class="card-title">-->
-<!--                      Select a range-->
-<!--                    </div>-->
-<!--                    <div class="row g-2">-->
-<!--                      <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--                        <tui-input-number-->
-<!--                          tuiTextfieldSize="s"-->
-<!--                          tuiHintContent="Euro sign (numeric code 978) is commonly placed AFTER the amount. Use [postfix]."-->
-<!--                          [tuiTextfieldPrefix]="'MYR' | tuiCurrency"-->
-<!--                          formControlName="min_price"-->
-<!--                          decimal="always"-->
-<!--                        >-->
-<!--                          Start range-->
-
-<!--                        </tui-input-number>-->
-<!--                      </div>-->
-<!--                      <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--                        <tui-input-number-->
-<!--                          tuiTextfieldSize="s"-->
-<!--                          tuiHintContent="Euro sign (numeric code 978) is commonly placed AFTER the amount. Use [postfix]."-->
-<!--                          [tuiTextfieldPrefix]="'MYR' | tuiCurrency"-->
-<!--                          formControlName="max_price"-->
-<!--                          decimal="always"-->
-<!--                        >-->
-<!--                          End range-->
-<!--                        </tui-input-number>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </ng-template>-->
-<!--            </button>-->
-<!--          </tui-hosted-dropdown>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <div class="col-md-2 col-lg-2 col-sm-2 d-flex gap-2">-->
-<!--        <app-button text="Apply"></app-button>-->
-<!--&lt;!&ndash;        <div class="w-100 h-100">&ndash;&gt;-->
-<!--&lt;!&ndash;          <button&ndash;&gt;-->
-<!--&lt;!&ndash;            tuiButton&ndash;&gt;-->
-<!--&lt;!&ndash;            type="button"&ndash;&gt;-->
-<!--&lt;!&ndash;            class="tui-space_right-3 tui-space_bottom-3 w-100 h-100"&ndash;&gt;-->
-<!--&lt;!&ndash;            size="s"&ndash;&gt;-->
-<!--&lt;!&ndash;            (click)="applyFilter()"&ndash;&gt;-->
-<!--&lt;!&ndash;          >&ndash;&gt;-->
-<!--&lt;!&ndash;            Apply&ndash;&gt;-->
-<!--&lt;!&ndash;          </button>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--        <app-button text="Clear"></app-button>-->
-<!--&lt;!&ndash;        <div class="w-100 h-100">&ndash;&gt;-->
-<!--&lt;!&ndash;          <button&ndash;&gt;-->
-<!--&lt;!&ndash;            tuiButton&ndash;&gt;-->
-<!--&lt;!&ndash;            type="button"&ndash;&gt;-->
-<!--&lt;!&ndash;            class="tui-space_right-3 tui-space_bottom-3 w-100 h-100"&ndash;&gt;-->
-<!--&lt;!&ndash;            size="s"&ndash;&gt;-->
-<!--&lt;!&ndash;            (click)="clearFilter()"&ndash;&gt;-->
-<!--&lt;!&ndash;          >&ndash;&gt;-->
-<!--&lt;!&ndash;            Clear&ndash;&gt;-->
-<!--&lt;!&ndash;          </button>&ndash;&gt;-->
-<!--&lt;!&ndash;        </div>&ndash;&gt;-->
-<!--      </div>-->
-<!--      <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--        <span>Filter by state</span>-->
-<!--        <tui-filter *ngIf="states$ | async as states"-->
-<!--                    formControlName="states"-->
-<!--                    [content]="stateContent"-->
-<!--                    [items]="states"-->
-<!--                    size="s"-->
-
-<!--        ></tui-filter>-->
-<!--      </div>-->
-<!--      <ng-template-->
-<!--        #stateContent-->
-<!--        let-item-->
-<!--      >-->
-<!--        {{ item }}-->
-<!--      </ng-template>-->
-<!--    </form>-->
-<!--        <div class="row pt-4 pb-5">-->
-<!--          <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--            <div class="card shadow border-0 p-4">-->
-<!--              <div class="card-title text-center">-->
-<!--                <h2>Our Pros</h2>-->
-<!--                <h4>The best aircon installer in Malaysia</h4>-->
-<!--              </div>-->
-<!--              <div class="card-body">-->
-<!--                <div class="row g-5">-->
-<!--                  <div class="col-md-3 col-lg-3 col-sm-6">-->
-<!--                    <div class="row text-center">-->
-<!--                      <div class="col-md-2 col-sm-2 col-lg-2">-->
-<!--                        <img class="" src="./assets/image/service-provider/approve.png" />-->
-<!--                      </div>-->
-<!--                      <div class="col-md-6 col-sm-6 col-lg-6">-->
-<!--                        <p>Verified Contractor</p>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="col-md-3 col-lg-3 col-sm-6">-->
-<!--                    <div class="row text-center">-->
-<!--                      <div class="col-md-2 col-sm-2 col-lg-2">-->
-<!--                        <img class="" src="./assets/image/service-provider/arrows.png" />-->
-<!--                      </div>-->
-<!--                      <div class="col-md-6 col-sm-6 col-lg-6">-->
-<!--                        <p>Compare Quotes</p>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="col-md-3 col-lg-3 col-sm-6">-->
-<!--                    <div class="row text-center">-->
-<!--                      <div class="col-md-2 col-sm-2 col-lg-2">-->
-<!--                        <img class="" src="./assets/image/service-provider/protection.png" />-->
-<!--                      </div>-->
-<!--                      <div class="col-md-6 col-sm-6 col-lg-6">-->
-<!--                        <p>Project Guarantee</p>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="col-md-3 col-lg-3 col-sm-6">-->
-<!--                    <div class="row text-center">-->
-<!--                      <div class="col-md-2 col-sm-2 col-lg-2">-->
-<!--                        <img class="" src="./assets/image/service-provider/money.png" />-->
-<!--                      </div>-->
-<!--                      <div class="col-md-6 col-sm-6 col-lg-6">-->
-<!--                        <p>Payment Protection</p>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--    <ng-template #loading>-->
-<!--      <app-loading-spinner></app-loading-spinner>-->
-<!--    </ng-template>-->
-<!--    <div class="row g-3 pt-3 py-5" *ngIf="providerPageable$ | async as serviceProviderPageable; else loading;">-->
-<!--      <ng-template #notFound>-->
-<!--        <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--          <div class="card border-0" style="min-height:50rem;">-->
-<!--            <div class="card-body d-flex flex-column justify-content-center align-items-center">-->
-<!--              <div class="pb-3">-->
-<!--                &lt;!&ndash;                  <fa-icon [icon]="faMagnifyingGlass" size="9x"></fa-icon>&ndash;&gt;-->
-<!--                <img src="./assets/image/search.png">-->
-<!--              </div>-->
-<!--              <div class="text-center">-->
-<!--                <span class="h3 pb-5">Service Not Found</span>-->
-<!--              </div>-->
-<!--              <div class="text-center">-->
-<!--                <br/><span class="light-gray">Your search did not match any services.</span>-->
-<!--                <br/> <span class="light-gray">Please try again.</span></div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      </ng-template>-->
-<!--      <ng-container *ngIf="serviceProviderPageable.items.length > 0;else notFound;">-->
-<!--        <div class="col-md-12 col-lg-12 col-sm-12"-->
-<!--             *ngFor="let provider of serviceProviderPageable.items; let i = index;">-->
-<!--          <div class="card border-0">-->
-<!--            <div class="row p-0 m-0">-->
-<!--              <img class="card-title col-md-4 col-lg-4 col-sm-12 m-0" src="./assets/image/logo.png"/>-->
-<!--              <div class="col-md-8 col-lg-8 col-sm-12">-->
-<!--                <div class="card-body h-100">-->
-<!--                  <div class="row">-->
-<!--                    <div class="col-md-6 col-lg-6 col-sm-12">-->
-<!--                      <div class="row">-->
-<!--                        <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--                          <div class="d-flex gap-4">-->
-<!--                            <h3>{{provider.name}}-->
-<!--                            </h3>-->
-<!--                            <div>-->
-<!--                              <tui-tag-->
-<!--                                size="m"-->
-<!--                                [value]="provider.is_verified ? 'Verified' : 'Not Verified'"-->
-<!--                              ></tui-tag>-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="row">-->
-<!--                        <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--                          <tui-rating-->
-<!--                            class="rating px-2"-->
-<!--                            [readOnly]="true"-->
-<!--                            [formControl]="ratingFormArray.at(i)"-->
-<!--                            tuiTextfieldSize="s"-->
-<!--                          ></tui-rating>-->
-<!--                          <small class="rating">{{provider.rating | number : '1.2-2'}}</small>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                      <div class="row pt-5">-->
-<!--                        <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--                          <a class="cursor-pointer text-decoration-none base-text" [routerLink]="['/','service-provider-details','SP000'+provider.id]">Read more</a>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                    <div class="col-md-6 col-lg-6 col-sm-12">-->
-<!--                      <div class="row g-2">-->
-<!--                        <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--                          <app-button text="Request this vendor" [routerLink]="['get-quote']"></app-button>-->
-<!--                        </div>-->
-<!--                        <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--                          <div class="row">-->
-<!--                            <div class="col-md-6 col-lg-6 col-sm-12">-->
-<!--                              <button class="btn border w-100 h-100">Whatsapp</button>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-6 col-lg-6 col-sm-12">-->
-<!--                              <button class="btn border w-100 h-100">Call</button>-->
-<!--                            </div>-->
-<!--                          </div>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--&lt;!&ndash;                    <p>Phone Number&ndash;&gt;-->
-<!--&lt;!&ndash;                      : {{provider.contact_info.phone_number ? provider.contact_info.phone_number : 'N/A'}}</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <p>Email Address&ndash;&gt;-->
-<!--&lt;!&ndash;                      : {{provider.contact_info.email_address ? provider.contact_info.email_address : 'N/A'}}</p>&ndash;&gt;-->
-<!--&lt;!&ndash;                    <div class="d-flex gap-1 flex-wrap align-items-center pt-3">&ndash;&gt;-->
-<!--&lt;!&ndash;                      <button&ndash;&gt;-->
-<!--&lt;!&ndash;                        appearance="primary"&ndash;&gt;-->
-<!--&lt;!&ndash;                        tuiButton&ndash;&gt;-->
-<!--&lt;!&ndash;                        type="button"&ndash;&gt;-->
-<!--&lt;!&ndash;                        class="tui-space_right-3 tui-space_bottom-3"&ndash;&gt;-->
-<!--&lt;!&ndash;                        size="s"&ndash;&gt;-->
-<!--&lt;!&ndash;                      >&ndash;&gt;-->
-<!--&lt;!&ndash;                        Contact Now&ndash;&gt;-->
-<!--&lt;!&ndash;                      </button>&ndash;&gt;-->
-<!--&lt;!&ndash;                      <button&ndash;&gt;-->
-<!--&lt;!&ndash;                        appearance="primary"&ndash;&gt;-->
-<!--&lt;!&ndash;                        tuiButton&ndash;&gt;-->
-<!--&lt;!&ndash;                        type="button"&ndash;&gt;-->
-<!--&lt;!&ndash;                        class="tui-space_right-3 tui-space_bottom-3"&ndash;&gt;-->
-<!--&lt;!&ndash;                        size="s"&ndash;&gt;-->
-<!--&lt;!&ndash;                      >&ndash;&gt;-->
-<!--&lt;!&ndash;                        Get Quoted now&ndash;&gt;-->
-<!--&lt;!&ndash;                      </button>&ndash;&gt;-->
-<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-<!--          <hr />-->
-<!--        </div>-->
-<!--        <div class="col-md-12 col-lg-12 col-sm-12">-->
-<!--          <tui-pagination-->
-<!--            [index]="serviceProviderPageable.current_page"-->
-<!--            [length]="serviceProviderPageable.total_elements / serviceProviderPageable.size | mathCeil"-->
-<!--            (indexChange)="fetchPage($event)"-->
-<!--          ></tui-pagination>-->
-<!--        </div>-->
-<!--      </ng-container>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->

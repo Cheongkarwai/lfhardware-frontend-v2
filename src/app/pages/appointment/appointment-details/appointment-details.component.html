@@ -1,0 +1,147 @@
+<header class="p-24 border-b border-gray-200">
+  <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+  <h1 class="text-4xl">Appointment Details</h1>
+  <p class="text-sm text-gray-400 pt-7">View all your appointment details</p>
+</header>
+<ng-template #loading>
+  <app-loading-spinner></app-loading-spinner>
+</ng-template>
+<section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16"
+         *ngIf="appointment$ | async as appointment; else loading;">
+  <div class="mx-auto max-w-screen-2xl px-4 2xl:px-0">
+    <div class="mx-auto max-w-lg md:max-w-full">
+      <h2 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">Track your appointment
+        #{{appointment.id}} status</h2>
+      <p class="ps-3 pt-3 text-sm font-medium text-gray-500">Last update on
+        <time>{{appointment.status_last_update | date : 'short'}}</time>
+      </p>
+
+      <div class="mt-6 grid grid-cols-1 gap-6 sm:mt-8 sm:gap-8 md:grid-cols-2 lg:gap-2.5 xl:mt-12">
+<!--        <div>-->
+<!--          <ol class="relative ms-3 border-s border-dotted border-gray-200 dark:border-gray-700">-->
+<!--            <li class="mb-10 ms-6">-->
+<!--              <span-->
+<!--                class="ring-3 absolute -start-4 flex h-8 w-8 items-center justify-center rounded-full bg-white ring-white dark:bg-gray-900 dark:ring-gray-900">-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                     stroke="currentColor" [ngClass]="appointment.booking_datetime ? 'text-green-500' : 'text-gray-500'"-->
+<!--                     class="size-6">-->
+<!--  <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--        d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99"/>-->
+<!--</svg>-->
+
+<!--              </span>-->
+<!--              <h3 class="mb-0.5 flex items-center pt-1 text-base font-semibold text-gray-900 dark:text-white">Booking-->
+<!--                appointment</h3>-->
+<!--              <time-->
+<!--                class="mb-2 block text-base font-normal text-gray-500 dark:text-gray-400"> {{appointment.booking_datetime | date : 'short'}} </time>-->
+<!--            </li>-->
+<!--            <li class="mb-10 ms-6">-->
+<!--              <span-->
+<!--                class="ring-3 absolute -start-4 flex h-8 w-8 items-center justify-center rounded-full bg-white ring-white dark:bg-gray-900 dark:ring-gray-900">-->
+<!--                <svg [ngClass]="appointment.confirmation_datetime ? 'text-green-500' : 'text-gray-500'"-->
+<!--                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                     stroke="currentColor" class="size-6">-->
+<!--  <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--        d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>-->
+<!--</svg>-->
+
+<!--              </span>-->
+<!--              <h3 class="mb-0.5 flex items-center pt-1 text-base font-semibold text-gray-900 dark:text-white">-->
+<!--                Confirmation from Service Provider</h3>-->
+<!--              <time-->
+<!--                class="mb-2 block text-base font-normal text-gray-500 dark:text-gray-400"> {{appointment.confirmation_datetime | date : 'short'}} </time>-->
+<!--            </li>-->
+<!--            <li class="mb-10 ms-6">-->
+<!--              <span-->
+<!--                class="ring-3 absolute -start-4 flex h-8 w-8 items-center justify-center rounded-full bg-white ring-white dark:bg-gray-900 dark:ring-gray-900">-->
+<!--                <svg [ngClass]="appointment.job_started_datetime ? 'text-green-500' : 'text-gray-500'"-->
+<!--                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                     stroke="currentColor" class="size-6">-->
+<!--  <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--        d="M11.42 15.17 17.25 21A2.652 2.652 0 0 0 21 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 1 1-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 0 0 4.486-6.336l-3.276 3.277a3.004 3.004 0 0 1-2.25-2.25l3.276-3.276a4.5 4.5 0 0 0-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437 1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008Z"/>-->
+<!--</svg>-->
+<!--              </span>-->
+<!--              <h3 class="mb-0.5 flex items-center pt-1 text-base font-semibold text-gray-900 dark:text-white">Job in-->
+<!--                progress</h3>-->
+<!--              <time-->
+<!--                class="mb-2 block text-base font-normal text-gray-500 dark:text-gray-400"> {{appointment.job_started_datetime | date : 'short'}}-->
+<!--              </time>-->
+<!--            </li>-->
+<!--            <li class="mb-10 ms-6">-->
+<!--              <span-->
+<!--                class="ring-3 absolute -start-4 flex h-8 w-8 items-center justify-center rounded-full bg-white ring-white dark:bg-gray-900 dark:ring-gray-900">-->
+<!--                <svg [ngClass]="appointment.completion_datetime ? 'text-green-500' : 'text-gray-500'" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">-->
+<!--  <path stroke-linecap="round" stroke-linejoin="round" d="M10.125 2.25h-4.5c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125v-9M10.125 2.25h.375a9 9 0 0 1 9 9v.375M10.125 2.25A3.375 3.375 0 0 1 13.5 5.625v1.5c0 .621.504 1.125 1.125 1.125h1.5a3.375 3.375 0 0 1 3.375 3.375M9 15l2.25 2.25L15 12" />-->
+<!--</svg>-->
+
+<!--              </span>-->
+<!--              <h3 class="mb-0.5 flex items-center pt-1 text-base font-semibold text-gray-900 dark:text-white">Job-->
+<!--                completed</h3>-->
+<!--              <time-->
+<!--                class="mb-2 block text-base font-normal text-gray-500 dark:text-gray-400"> {{appointment.completion_datetime | date : 'short'}}-->
+<!--              </time>-->
+<!--              <button (click)="viewScreenshots(appointment.appointment_completion_images)" *ngIf="appointment.completion_datetime"-->
+<!--                 class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:text-primary-700 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">-->
+<!--                <svg class="-ms-0.5 me-1.5 size-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">-->
+<!--                  <path-->
+<!--                    fill-rule="evenodd"-->
+<!--                    d="M4.998 7.78C6.729 6.345 9.198 5 12 5c2.802 0 5.27 1.345 7.002 2.78a12.713 12.713 0 0 1 2.096 2.183c.253.344.465.682.618.997.14.286.284.658.284 1.04s-.145.754-.284 1.04a6.6 6.6 0 0 1-.618.997 12.712 12.712 0 0 1-2.096 2.183C17.271 17.655 14.802 19 12 19c-2.802 0-5.27-1.345-7.002-2.78a12.712 12.712 0 0 1-2.096-2.183 6.6 6.6 0 0 1-.618-.997C2.144 12.754 2 12.382 2 12s.145-.754.284-1.04c.153-.315.365-.653.618-.997A12.714 12.714 0 0 1 4.998 7.78ZM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"-->
+<!--                    clip-rule="evenodd"-->
+<!--                  />-->
+<!--                </svg>-->
+<!--                View screenshots-->
+<!--              </button>-->
+<!--            </li>-->
+<!--            <li class="mb-10 ms-6">-->
+<!--              <span-->
+<!--                class="ring-3 absolute -start-4 flex h-8 w-8 items-center justify-center rounded-full bg-white ring-white dark:bg-gray-900 dark:ring-gray-900">-->
+<!--                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"-->
+<!--                     stroke="currentColor" class="size-8">-->
+<!--  <path stroke-linecap="round" stroke-linejoin="round"-->
+<!--        d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75 2.25 2.25 0 0 0-.1-.664m-5.8 0A2.251 2.251 0 0 1 13.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0 1 18 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.375m-8.25-3 1.5 1.5 3-3.75"/>-->
+<!--</svg>-->
+
+<!--              </span>-->
+<!--              <h3 class="mb-0.5 flex items-center pt-1 text-base font-semibold text-gray-900 dark:text-white">Review By-->
+<!--                Admin</h3>-->
+<!--            </li>-->
+<!--          </ol>-->
+<!--        </div>-->
+        <app-appointment-progress-bar (handleViewScreenshot)="viewScreenshots($event)" [appointment]="appointment"></app-appointment-progress-bar>
+
+        <div class="space-y-4">
+          <!--          <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">-->
+          <!--            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Billing information</h4>-->
+          <!--            <dl class="space-y-1">-->
+          <!--              <dt class="font-medium text-gray-900 dark:text-white">Individual</dt>-->
+          <!--              <dd class="font-normal text-gray-500 dark:text-gray-400">Bonnie Green - +1 234 567 890, San Francisco, California, United States, 3454, Scott Street</dd>-->
+          <!--            </dl>-->
+          <!--          </div>-->
+
+          <div
+            class="space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Job Address</h4>
+            <dl class="space-y-1">
+              <dt class="font-medium text-gray-900 dark:text-white">Individual</dt>
+              <dd class="font-normal text-gray-500 dark:text-gray-400">Bonnie Green - +1 234 567 890, San Francisco,
+                California, United States, 3454, Scott Street
+              </dd>
+            </dl>
+          </div>
+
+          <!--          <div class="space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">-->
+          <!--            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">Payment method</h4>-->
+          <!--            <p class="font-medium text-gray-900 dark:text-white">Online with credit card</p>-->
+          <!--          </div>-->
+
+          <div
+            class="space-y-4 rounded-lg border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
+            <h4 class="text-lg font-semibold text-gray-900 dark:text-white">The amount paid</h4>
+            <p
+              class="text-lg font-bold text-gray-900 dark:text-white">{{appointment.estimated_price | currency : 'MYR '}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

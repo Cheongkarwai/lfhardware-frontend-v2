@@ -1,0 +1,150 @@
+<section class="flex items-center bg-gray-50 dark:bg-gray-900">
+  <div class="w-full">
+    <!-- Start coding here -->
+    <div class="relative bg-white dark:bg-gray-800 sm:rounded-lg">
+      <div
+        class="flex flex-col items-center justify-between py-4 mx-4 space-y-3 border-b md:flex-row md:space-y-0 md:space-x-4 dark:border-gray-700">
+        <div class="flex items-center w-full space-x-3">
+          <div class="font-medium text-gray-500 dark:text-gray-400">
+            {{totalElements}} results
+          </div>
+          <div data-tooltip-target="results-tooltip">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500 dark:text-gray-400" viewBox="0 0 20 20"
+                 fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd"
+                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
+                    clip-rule="evenodd"/>
+            </svg>
+            <span class="sr-only">More info</span>
+          </div>
+          <div id="results-tooltip" role="tooltip"
+               class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            Showing {{currentPage}}-{{totalPages}} of {{totalElements}} results
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+        </div>
+
+        <div class="flex flex-row items-center justify-end w-full space-x-3">
+<!--          <button type="button"-->
+<!--                  class="flex items-center justify-center w-full px-3 py-2 text-sm font-medium text-white rounded-lg md:w-auto bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:ring-rose-300 dark:bg-rose-600 dark:hover:bg-rose-700 focus:outline-none dark:focus:ring-rose-800">-->
+<!--            <svg class="h-3.5 w-3.5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"-->
+<!--                 aria-hidden="true">-->
+<!--              <path clip-rule="evenodd" fill-rule="evenodd"-->
+<!--                    d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"></path>-->
+<!--            </svg>-->
+<!--            Add new customer-->
+<!--          </button>-->
+
+          <div class="flex items-center justify-center p-4" *ngIf="filters.length > 0">
+            <button id="dropdownDefault" data-dropdown-toggle="dropdown"
+                    class="text-white bg-rose-700 hover:bg-rose-800 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-rose-600 dark:hover:bg-rose-700 dark:focus:ring-rose-800"
+                    type="button">
+              Filter by keywords
+              <svg class="w-4 h-4 ml-2" aria-hidden="true" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                   xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+              </svg>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdown" class="z-10 hidden px-3 pt-1 bg-white rounded-lg shadow w-80 dark:bg-gray-700">
+              <div class="flex items-center justify-between pt-2">
+                <h3 class="text-sm font-medium text-black">Filters</h3>
+                <div class="flex items-center space-x-3">
+<!--                  <a href="#"-->
+<!--                     class="flex items-center text-sm font-medium text-rose-600 dark:text-rose-500 hover:underline">-->
+<!--                    Save view-->
+<!--                  </a>-->
+                  <button (click)="clearAll()"
+                     class="flex items-center text-sm font-medium text-rose-600 dark:text-rose-500 hover:underline">
+                    Clear all
+                  </button>
+                </div>
+              </div>
+              <div class="pt-3 pb-2">
+                <label for="input-group-search" class="sr-only">Search</label>
+                <div class="relative">
+                  <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor"
+                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd"
+                            d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                            clip-rule="evenodd"></path>
+                    </svg>
+                  </div>
+                  <input type="text" id="input-group-search" [formControl]="searchControl"
+                         class="block w-full p-2 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-rose-500 focus:border-rose-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:focus:ring-rose-500 dark:focus:border-rose-500"
+                         placeholder="Search keywords..."/>
+                </div>
+              </div>
+              <div id="accordion-flush" data-accordion="collapse" data-active-classes="text-black dark:text-white"
+                   data-inactive-classes="text-gray-500 dark:text-gray-400">
+                <!-- Category -->
+                <div *ngFor="let filter of filters; let i = index;">
+                  <h2 id="category-heading">
+                    <button type="button"
+                            class="flex items-center justify-between w-full py-2 px-1.5 text-sm font-medium text-left text-gray-500 border-b border-gray-200 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700"
+                            data-accordion-target="#category-body" aria-expanded="true" aria-controls="category-body">
+                      <span>{{filter.title}}</span>
+                      <svg aria-hidden="true" data-accordion-icon class="w-5 h-5 rotate-180 shrink-0"
+                           fill="currentColor"
+                           viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z">
+                        </path>
+                      </svg>
+                    </button>
+                  </h2>
+                  <div id="category-body" class="hidden" aria-labelledby="category-heading">
+                    <div class="py-2 font-light border-gray-200 dark:border-gray-600">
+                      <ul class="space-y-2">
+                        <li class="flex items-center" *ngFor="let filterItem of filter.items; let j = index;">
+                          <input id="apple" type="checkbox" [value]="filterItem.value" [formControl]="getFormArrayControl(i,j)"
+                                 class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-rose-600 focus:ring-rose-500 dark:focus:ring-rose-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"/>
+
+                          <label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">
+                            {{filterItem.title}}
+                          </label>
+                        </li>
+
+<!--                        <a href="#"-->
+<!--                           class="flex items-center text-sm font-medium text-rose-600 dark:text-rose-500 hover:underline">-->
+<!--                          View all-->
+<!--                        </a>-->
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="flex flex-col-reverse items-start justify-between p-4 border-b md:flex-row md:items-center md:space-x-4 dark:border-gray-700">
+        <div class="mt-3 md:mt-0">
+          <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown"
+                  class="flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md:w-auto focus:outline-none hover:bg-gray-100 hover:text-rose-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  type="button">
+            <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"
+                 aria-hidden="true">
+              <path clip-rule="evenodd" fill-rule="evenodd"
+                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"></path>
+            </svg>
+            Actions
+          </button>
+          <div id="actionsDropdown"
+               class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+
+            <div class="py-1" *ngFor="let action of actions;let i = index;">
+              <a (click)="getActionIndex(i)"
+                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
+                {{action}}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

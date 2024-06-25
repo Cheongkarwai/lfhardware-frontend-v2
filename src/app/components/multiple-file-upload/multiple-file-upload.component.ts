@@ -53,7 +53,6 @@ export class MultipleFileUploadComponent implements OnInit,OnChanges, OnDestroy{
   destroy$ = new Subject<void>();
   ngOnInit() {
     this.control.valueChanges.pipe().subscribe(res=>{
-      console.log(res);
       if(res) {
         if(this.multiple){
           this.files = res;

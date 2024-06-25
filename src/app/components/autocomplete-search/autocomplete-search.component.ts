@@ -16,7 +16,7 @@ import {SearchService} from "../../core/service-provider/search.service";
 export class AutocompleteSearchComponent implements OnInit{
 
   @Input()
-  items : {image: string, text:string}[] = [];
+  items : {image: string, text:string, description: string}[] = [];
 
   @Input()
   control!: FormControl;
@@ -34,6 +34,8 @@ export class AutocompleteSearchComponent implements OnInit{
 
 
   close(event:MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
     this.searchService.close();
   }
 }

@@ -1,0 +1,12 @@
+<label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" [for]="title">{{title}}</label>
+<select [id]="title" [formControl]="control" [name]="title"
+        [ngClass]="control?.touched && control?.errors ? 'ring-1 ring-rose-600' : ''"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-rose-500 focus:border-rose-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-rose-500 dark:focus:border-rose-500">
+  <option value="" disabled selected>{{placeholder}}</option>
+  <option *ngFor="let item of items" [value]="item.value">{{item.title}}</option>
+</select>
+<span
+  *ngIf="control?.hasError('required') && control?.touched"
+  class="text-rose-600 text-sm">
+        *{{title}} is required
+        </span>

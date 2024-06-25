@@ -1,0 +1,13 @@
+<div class="grid grid-cols-1">
+  <div class="p-5 text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+    <ul class="flex flex-wrap -mb-px" *ngIf="services$ | async as services">
+      <li class="me-2" *ngFor="let service of services">
+        <a (click)="changeForm(service)" class="cursor-pointer inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" [ngClass]="selectedService.id === service.id ? '' +
+         'inline-block p-4 text-rose-600 border-b-2 border-rose-600 rounded-t-lg active dark:text-rose-500 dark:border-rose-500' : ''">{{service.name}}</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-span-1" *ngIf="bookingFormModel$ | async as model">
+    <survey [model]="model"></survey>
+  </div>
+</div>

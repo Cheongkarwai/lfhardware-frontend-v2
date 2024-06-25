@@ -1,13 +1,6 @@
-<ng-container *ngIf="isLoaded">
-  <tui-root>
-    <app-navbar *ngIf="!isAdmin"></app-navbar>
-    <div class="container-fluid" *ngIf="!isAdmin; else customer">
-      <router-outlet></router-outlet>
-    </div>
-    <ng-template #customer>
-      <router-outlet></router-outlet>
-    </ng-template>
-    <app-footer *ngIf="!isAdmin"></app-footer>
-  </tui-root>
-</ng-container>
-<app-toast [isShowing]="isShowing" [text]="text" [status]="status"></app-toast>
+
+
+<router-outlet></router-outlet>
+
+
+

@@ -55,8 +55,6 @@ export class DynamicFormComponent {
       //   formGroup: formGroup
       // });
     })
-    console.log(this.formGroup);
-    this.formGroup.valueChanges.subscribe(res=>console.log(res));
   };
 
   formGroupArray: { title: FormControl, formGroup: FormGroup }[] = [];
@@ -74,6 +72,6 @@ export class DynamicFormComponent {
   }
 
   submit() {
-    console.log("Hi");
+
   }
 }

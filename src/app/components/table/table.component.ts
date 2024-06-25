@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Inject, Input, OnInit, Output} from '@angular/core';
 import {MatTableModule} from "@angular/material/table";
 import {CommonModule} from "@angular/common";
 import {MatSortModule, Sort} from "@angular/material/sort";
@@ -24,6 +24,8 @@ import {AbstractControl, FormArray, FormBuilder, FormControl, FormsModule, React
 import {faCancel} from "@fortawesome/free-solid-svg-icons";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {TuiActiveZoneModule, TuiLetModule} from "@taiga-ui/cdk";
+import {initFlowbite} from "flowbite";
+import {Filter, TableHeaderComponent} from "../table-header/table-header.component";
 
 @Component({
   selector: 'app-table',
@@ -52,35 +54,39 @@ import {TuiActiveZoneModule, TuiLetModule} from "@taiga-ui/cdk";
     TuiLetModule,
     TuiDataListDropdownManagerModule,
     TuiDropdownModule,
-    TuiSvgModule
+    TuiSvgModule,
+    TableHeaderComponent
   ],
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.less']
 })
-export class TableComponent implements OnInit {
+export class TableComponent implements OnInit, AfterViewInit {
 
   faNotAvailable = faCancel;
 
-  @Input() data:any = {items:[]};
+  @Input() data: any = {items: []};
   // @ts-ignore
-  @Input() columns: any[] ;
-  @Input() filterItems = [{IT:'IT'}];
+  @Input() columns: any[];
+  @Input() filterItems = [{IT: 'IT'}];
   items = ['IT'];
-  orderDirections = ['ASC','DESC'];
-  sortBy={
-    order:'',
-    field:''
+  orderDirections = ['ASC', 'DESC'];
+  sortBy = {
+    order: '',
+    field: ''
   }
   @Input() enableDelete = false;
   @Input() enableEdit = false;
   @Input() enableCancel = false;
   @Input() enableComplete = false;
   @Input() enableInfo = false;
-  @Input() menuItems:any[] = [];
+  @Input() menuItems: any[] = [];
+  @Input() searchControl!: FormControl<string | null>;
 
   @Input() layout = 'grid';
   @Input() search!: string;
   @Input() multiSelect: boolean = false;
+  @Input() filters: Filter[] = [];
+  @Input() actions: string[] = [];
 
   displayedColumns: string[] = [];
 
@@ -91,9 +97,10 @@ export class TableComponent implements OnInit {
   @Output() cancel = new EventEmitter<any>();
   @Output() view = new EventEmitter<any>();
   @Output() contextMenu = new EventEmitter<any>();
+  @Output() handleAction = new EventEmitter<number>();
 
 
-  isSelected:boolean = false;
+  isSelected: boolean = false;
 
   tableForm = this.fb.group({
     checkboxes: new FormArray<FormControl<boolean | null>>([])
@@ -102,15 +109,19 @@ export class TableComponent implements OnInit {
   dropdownOpen = false;
 
 
-
-  constructor(@Inject(TuiDialogService) private readonly dialogs: TuiDialogService, private fb:FormBuilder) {
+  constructor(@Inject(TuiDialogService) private readonly dialogs: TuiDialogService, private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
+    initFlowbite();
     this.displayedColumns = this.columns.map(column => column.key);
-    if(this.multiSelect){
-      this.data.items.forEach((e:any)=> this.checkboxFormArray.push(new FormControl(this.isSelected)));
+    if (this.multiSelect) {
+      this.data.items.forEach((e: any) => this.checkboxFormArray.push(new FormControl(this.isSelected)));
     }
+  }
+
+  ngAfterViewInit() {
+    initFlowbite();
   }
 
   handleSort(event: Sort) {
@@ -128,20 +139,20 @@ export class TableComponent implements OnInit {
     this.sort.emit(event);
   }
 
-  handleEdit(event:any){
+  handleEdit(event: any) {
     this.edit.emit(event);
   }
 
-  handleDelete(event:any){
-    console.log(event);
+  handleDelete(event: any) {
     this.delete.emit(event);
   }
 
-  handleCancel(event:any){
-    this.cancel.emit(event);
+  handleCancel(data: any) {
+    this.cancel.emit(data);
   }
-  handleComplete(event:any){
-    this.complete.emit(event);
+
+  handleComplete(data: any) {
+    this.complete.emit(data);
   }
 
 
@@ -151,23 +162,43 @@ export class TableComponent implements OnInit {
 
   protected readonly faCancel = faCancel;
   yellow = '#f1e740';
+  selectAllCheckbox: FormControl = new FormControl<boolean>(false);
 
   handleInfo(event: any) {
     this.view.emit(event);
   }
 
-  handleContextMenu(title:string, item: any) {
-    this.contextMenu.emit({action: title, data : item});
+  handleContextMenu(title: string, item: any) {
+    this.contextMenu.emit({action: title, data: item});
   }
 
 
   checkAll() {
     this.isSelected = !this.isSelected;
     this.checkboxFormArray
-      .setValue(this.checkboxFormArray.value.map((value:boolean) => this.isSelected));
+      .setValue(this.checkboxFormArray.value.map((value: boolean) => this.isSelected));
   }
 
-  get checkboxFormArray(){
+  uncheckAll() {
+    this.selectAllCheckbox.setValue(false)
+    this.isSelected = false;
+    this.checkboxFormArray
+      .setValue(this.checkboxFormArray.value.map((value: boolean) => this.isSelected));
+  }
+
+  get checkboxFormArray() {
     return this.tableForm.controls['checkboxes'] as FormArray;
+  }
+
+  openInfoDialog(item: any) {
+    this.view.emit(item);
+  }
+
+  openEditDialog(item: any) {
+    this.edit.emit(item);
+  }
+
+  getActionIndex(index: number) {
+    this.handleAction.emit(index);
   }
 }

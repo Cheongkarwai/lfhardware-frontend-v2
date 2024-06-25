@@ -20,7 +20,5 @@ export class MapComponent implements OnInit{
 
 // search
     const results = await provider.search({ query: '1234'});
-
-    console.log(results);
   }
 }

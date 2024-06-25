@@ -39,7 +39,7 @@ export class RequestServiceFormComponent implements OnInit{
 
   $serviceProviderDetails:Observable<ServiceProviderDetails>;
 
-  $layout:Observable<FormConfiguration>;
+  $layout!:Observable<FormConfiguration>;
   service:FormControl;
 
 
@@ -47,9 +47,9 @@ export class RequestServiceFormComponent implements OnInit{
               private router:Router) {
     const id = activatedRoute.parent?.snapshot.params['id'] as string;
     activatedRoute.parent?.params.subscribe(res=>console.log(id.substring(5,id.length)));
-    this.$serviceProviderDetails = this.providerService.findById(Number(id.substring(4,id.length)));
+    this.$serviceProviderDetails = this.providerService.findById(id.substring(4,id.length));
     this.service = new FormControl();
-    this.$layout = this.providerService.findServiceProviderForm(70,1);
+    //this.$layout = this.providerService.findServiceProviderForm(70,1);
   }
   ngOnInit() {
     //this.$serviceProviderDetails = this.providerService.findById();

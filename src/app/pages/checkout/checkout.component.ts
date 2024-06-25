@@ -19,7 +19,7 @@ import {
   TuiTagModule
 } from "@taiga-ui/kit";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
-import {BehaviorSubject, from, map, Observable, of, Subject, Subscription, switchMap} from "rxjs";
+import {BehaviorSubject, map, Observable, of, Subject, Subscription} from "rxjs";
 import {Cart} from "../../core/cart/cart.interface";
 import {CartService} from "../../core/cart/cart.service";
 import {FormBuilder, FormControl, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -111,8 +111,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
       email_address: ['', [Validators.required, Validator.noWhitespaceValidator(), Validator.emailValidator()]],
     }),
     delivery_address: this.fb.group({
-      address_line_1: ['', [Validators.required, Validator.noWhitespaceValidator()]],
-      address_line_2: ['', [Validators.required, Validator.noWhitespaceValidator()]],
+      line_1: ['', [Validators.required, Validator.noWhitespaceValidator()]],
+      line_2: ['', [Validators.required, Validator.noWhitespaceValidator()]],
       city: ['', [Validators.required, Validator.noWhitespaceValidator()]],
       state: ['', [Validators.required, Validator.noWhitespaceValidator()]],
       zipcode: ['', [Validators.required, Validator.noWhitespaceValidator()]],
@@ -179,7 +179,7 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
 
   calculateShipmentRate(items:CartItem[]){
     this.checkoutForm.controls.delivery_address.valueChanges.subscribe(deliveryAddress=> {
-      if (deliveryAddress.address_line_1 != '' && deliveryAddress.address_line_2 != '' && deliveryAddress.zipcode != '' && deliveryAddress.state !='' && deliveryAddress.city != '') {
+      if (deliveryAddress.line_1 != '' && deliveryAddress.line_2 != '' && deliveryAddress.zipcode != '' && deliveryAddress.state !='' && deliveryAddress.city != '') {
         this.shipments$ = this.shipmentService.getAllAvailableShipment({
           length: null,
           width: null,
@@ -272,8 +272,8 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
                     shipping: {
                       name: recipient.first_name + " " + recipient.last_name,
                       address: {
-                        line1: deliveryAddress.address_line_1 as string,
-                        line2: deliveryAddress.address_line_2 as string,
+                        line1: deliveryAddress.line_1 as string,
+                        line2: deliveryAddress.line_2 as string,
                         state: deliveryAddress.state as string,
                         postal_code: deliveryAddress.zipcode as string
                       }
@@ -286,14 +286,18 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
                       this.alertService.showError(res.error.message as string);
                     }
                   },
-                  error: err => console.log(err)
+                  error: err => {
+
+                  }
                 })
               })
             },
             error: err => this.alertService.showError(`Something went wrong.`)
           });
         }
-      }, error: err => console.log(err)
+      }, error: err => {
+
+      }
     });
   }
 
@@ -314,11 +318,11 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   get addressLine1Control() {
-    return this.checkoutForm.controls.delivery_address.controls.address_line_1 as FormControl;
+    return this.checkoutForm.controls.delivery_address.controls.line_1 as FormControl;
   }
 
   get addressLine2Control() {
-    return this.checkoutForm.controls.delivery_address.controls.address_line_2 as FormControl;
+    return this.checkoutForm.controls.delivery_address.controls.line_2 as FormControl;
   }
 
   get cityControl() {
@@ -355,7 +359,9 @@ export class CheckoutComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   openSelectShippingDialog(content: PolymorpheusContent<TuiDialogContext>) {
-    this.shipments$.subscribe(res=>console.log(res));
+    this.shipments$.subscribe(res=>{
+
+    });
     this.selectShippingDialog = this.dialogs.open(content, {dismissible: false}).subscribe()
   }
 

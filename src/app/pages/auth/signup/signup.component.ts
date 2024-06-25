@@ -2,7 +2,6 @@ import {Component, inject, OnInit} from '@angular/core';
 import {Router, RouterLink} from "@angular/router";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {faGoogle} from "@fortawesome/free-brands-svg-icons";
-import {Auth} from "@angular/fire/auth";
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -35,7 +34,7 @@ import {Validator} from "../../../core/validator";
 export class SignupComponent implements OnInit{
   faGoogle = faGoogle;
 
-  auth:Auth = inject(Auth);
+
 
   signUpForm:FormGroup;
   constructor(private fb:FormBuilder,private router:Router,private alertService:AlertService,
@@ -66,7 +65,6 @@ export class SignupComponent implements OnInit{
   }
   signUp(){
     this.signUpForm.markAllAsTouched();
-    console.log(this.signUpForm);
     if(this.signUpForm.valid){
       this.userService.createNewAccount(this.signUpForm.getRawValue(), false)
         .subscribe({
@@ -76,7 +74,6 @@ export class SignupComponent implements OnInit{
             this.router.navigate(['auth','login'])
           },
           error:err=>{
-            console.log(err);
             this.alertService.showError(err.error.message)
           }
         });

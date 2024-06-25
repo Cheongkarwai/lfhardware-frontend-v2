@@ -1,10 +1,9 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit} from '@angular/core';
 import {initFlowbite} from "flowbite";
 import {ToastService} from "../../core/dialog/toast.service";
 import {CommonModule} from "@angular/common";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {animate, style, transition, trigger} from "@angular/animations";
-import {BrowserModule} from "@angular/platform-browser";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-toast',
@@ -38,15 +37,10 @@ import {BrowserModule} from "@angular/platform-browser";
 })
 export class ToastComponent implements AfterViewInit, OnInit {
 
-  @Input()
-  text: string = '';
-  @Input()
-  status: string = '';
-  @Input()
-  isShowing: boolean = false;
 
 
-  constructor(private toastService: ToastService) {
+  constructor(public dialogRef: MatDialogRef<ToastComponent>,
+              @Inject(MAT_DIALOG_DATA) public data: {text:string, status: string}) {
   }
 
   ngOnInit() {
@@ -58,6 +52,6 @@ export class ToastComponent implements AfterViewInit, OnInit {
   }
 
   closeModal() {
-    this.toastService.close();
+    this.dialogRef.close();
   }
 }

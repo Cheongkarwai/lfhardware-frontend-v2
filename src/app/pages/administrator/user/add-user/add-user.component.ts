@@ -62,7 +62,7 @@ export class AddUserComponent {
       })
     });
 
-    this.formObservables$ = forkJoin([this.userService.findAllRoles(), this.cityService.findAll(), this.stateService.findAll()]);
+    this.formObservables$ = forkJoin([this.userService.findAllCurrentUserRoles(), this.cityService.findAll(), this.stateService.findAll()]);
   }
 
   get usernameControl() {
@@ -118,34 +118,34 @@ export class AddUserComponent {
       const {username, password, profile} = this.addUserForm.getRawValue();
 
 
-      this.userService.createNewAccount({
-        username: username,
-        roles: [this.rolesControl.getRawValue()],
-        profile: {
-          address: {
-            address_line_1: profile.address.address_line_1,
-            address_line_2: profile.address.address_line_2,
-            city: this.cityControl.getRawValue().name,
-            state: this.stateControl.getRawValue().name,
-            zipcode: profile.address.zipcode,
-            country: this.countryControl.getRawValue().name
-          },
-          email_address: username,
-          phone_number: profile.phone_number
-
-        },
-        password: password,
-        disabled: false,
-        email_verified: false
-      }, false).subscribe({
-        next: res => {
-          this.userService.refresh();
-          this.alertService.showAlert('Created User Successfully', 'User is created successfully', Status.SUCCESS);
-          this.dialogSubscriptionService.dialog$.unsubscribe();
-
-        },
-        error: err => this.alertService.showAlert('Error', 'Something went wrong', Status.ERROR)
-      })
+      // this.userService.createNewAccount({
+      //   username: username,
+      //   roles: [this.rolesControl.getRawValue()],
+      //   profile: {
+      //     address: {
+      //       address_line_1: profile.address.address_line_1,
+      //       address_line_2: profile.address.address_line_2,
+      //       city: this.cityControl.getRawValue().name,
+      //       state: this.stateControl.getRawValue().name,
+      //       zipcode: profile.address.zipcode,
+      //       country: this.countryControl.getRawValue().name
+      //     },
+      //     email_address: username,
+      //     phone_number: profile.phone_number
+      //
+      //   },
+      //   password: password,
+      //   disabled: false,
+      //   email_verified: false
+      // }, false).subscribe({
+      //   next: res => {
+      //     this.userService.refresh();
+      //     this.alertService.showAlert('Created User Successfully', 'User is created successfully', Status.SUCCESS);
+      //     this.dialogSubscriptionService.dialog$.unsubscribe();
+      //
+      //   },
+      //   error: err => this.alertService.showAlert('Error', 'Something went wrong', Status.ERROR)
+      // })
     }
   }
 

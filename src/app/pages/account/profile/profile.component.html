@@ -1,0 +1,98 @@
+<main class="text-lg text-gray-900" *ngIf="(user$ | async) as user;">
+  <div class="flex flex-col gap-6">
+    <div class="flex items-center">
+                     <span class=" bg-gray-100 p-4 rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-9 h-9 text-rose-600">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+</svg>
+
+                  </span>
+    </div>
+    <h4>Profile Information</h4>
+    <p class="text-gray-500 text-sm">To change your profile information, please fill in the fields below</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pt-7">
+    <form class="grid gap-6 mb-6 md:grid-cols-2 md:col-span-2" [formGroup]="userProfileForm">
+      <div class="col-span-2 sm:col-span-1">
+        <div class="flex gap-3">
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Your username
+          </label>
+          <svg  data-tooltip-target="email-verify-tooltip" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" [ngClass]="user.email_verified ? 'text-green-400' : 'text-yellow-200'">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+          </svg>
+          <div id="email-verify-tooltip" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            {{user.email_verified ? 'Email is verified' : 'Email is not verified'}}
+            <div class="tooltip-arrow" data-popper-arrow></div>
+          </div>
+        </div>
+        <input type="email" name="email" id="email"
+               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5  dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+               [ngClass]="usernameControl.touched && usernameControl.errors ? 'ring-1 ring-rose-600' : ''"
+               formControlName="username">
+        <span *ngIf="(usernameControl.hasError('required')) && usernameControl.touched" class="text-rose-600 text-sm">
+                                *Email is required
+                              </span>
+        <span *ngIf="(usernameControl.hasError('usernameExists')) && usernameControl.touched"
+              class="text-rose-600 text-sm">
+                                *Email has been taken
+                              </span>
+        <span *ngIf="(usernameControl.hasError('pattern')) && usernameControl.touched" class="text-rose-600 text-sm">
+                                *Email is invalid
+                              </span>
+      </div>
+      <div formGroupName="profile" class="col-span-2 sm:col-span-1">
+        <app-phone-input #phoneInput [control]="phoneNumberControl" [prefixControl]="phonePrefixControl" placeholder="11########"></app-phone-input>
+        <span *ngIf="(phoneNumberControl.hasError('phoneNumberExists')) && phoneNumberControl.touched"
+              class="text-rose-600 text-sm">
+                                *Phone number has been taken
+                              </span>
+      </div>
+      <div formGroupName="profile" class="col-span-2">
+        <div  class="grid gap-6 mb-6 md:grid-cols-2" formGroupName="address">
+          <div class="col-span-2 sm:col-span-1">
+            <app-text-input [control]="addressLine1Control" placeholder="Address Line 1" title="Address line 1"></app-text-input>
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <app-text-input [control]="addressLine2Control" placeholder="Address Line 2" title="Address line 2"></app-text-input>
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <label for="city" class="block mb-2 text-sm font-medium text-gray-900 ">City</label>
+            <input type="text" name="city" id="city"
+                   class="bg-gray-50 border border-gray-300  sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                   [ngClass]="cityControl.touched && cityControl.errors ? 'ring-1 ring-rose-600' : ''"
+                   formControlName="city">
+            <span *ngIf="(cityControl.hasError('required')) && cityControl.touched"
+                  class="text-rose-600 text-sm">
+                                *City is required
+                              </span>
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <label for="state" class="block mb-2 text-sm font-medium text-gray-900">State</label>
+            <input type="text" name="state" id="state"
+                   class="bg-gray-50 border border-gray-300  sm:text-sm rounded-lg focus:ring-rose-600 focus:border-rose-600 block w-full p-2.5 dark:placeholder-gray-400 dark:focus:ring-rose-600 dark:focus:border-rose-600"
+                   [ngClass]="stateControl.touched && stateControl.errors ? 'ring-1 ring-rose-600' : ''"
+                   formControlName="state">
+            <span *ngIf="(stateControl.hasError('required')) && stateControl.touched"
+                  class="text-rose-600 text-sm">
+                                *State is required
+                              </span>
+          </div>
+          <div class="col-span-2 sm:col-span-1">
+            <app-zipcode-input [control]="zipcodeControl"></app-zipcode-input>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-2 flex items-center justify-between flex-col w-full">
+        <button
+          type="submit"
+          (click)="updateProfile()" class="w-full text-white bg-rose-600 hover:bg-rose-700 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        >Update Profile
+        </button>
+      </div>
+    </form>
+    <div class="flex flex-col gap-4 px-3 sm:px-12 items-center">
+      <button *ngIf="!user.email_verified" class="w-full text-white bg-rose-600 hover:bg-rose-700 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" (click)="verifyEmail(user)">Verify Email</button>
+      <!--              <button type="submit" class="w-full text-white bg-rose-600 hover:bg-rose-700 focus:ring-4 focus:outline-none focus:ring-rose-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Change Password</button>-->
+    </div>
+  </div>
+</main>

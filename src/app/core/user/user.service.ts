@@ -1,13 +1,13 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../../environments/environment.development";
 import {UserAccount} from "./user-account.interface";
-import {HttpClient, HttpParams, HttpResponse} from "@angular/common/http";
-import {BehaviorSubject, ReplaySubject, Subject} from "rxjs";
-import {User as FirebaseUser} from '@angular/fire/auth';
+import {HttpClient, HttpParams} from "@angular/common/http";
+import {BehaviorSubject, Subject} from "rxjs";
 import {Pageable} from "../page/pagination.interface";
 import {UserPageRequest} from "./user-page-request.interface";
 import {Role} from "./role.interface";
 import {UserProfile} from "./user.profile";
+import {Customer} from "../customer/customer.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -35,7 +35,7 @@ export class UserService {
   }
 
   findByUid(uid: string) {
-    return this.http.get(`${this.url}/${uid}`);
+    return this.http.get<Customer>(`${this.url}/${uid}`);
   }
 
   createNewAccount(account: UserAccount, socialLogin: boolean) {
@@ -71,8 +71,8 @@ export class UserService {
     return this.http.get(`${this.url}/phone-number/${phoneNumber}`, {observe: 'response'});
   }
 
-  findAllRoles() {
-    return this.http.get<Role[]>(`${this.url}/roles`);
+  findAllCurrentUserRoles() {
+    return this.http.get<Role[]>(`${this.url}/roles/me`);
   }
 
   refresh() {
@@ -107,4 +107,5 @@ export class UserService {
   updateUser(userProfile: UserProfile) {
     return this.http.put(`${this.url}/${userProfile.username}`, userProfile);
   }
+
 }

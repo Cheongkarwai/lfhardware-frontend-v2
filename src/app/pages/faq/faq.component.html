@@ -1,0 +1,39 @@
+<section class="bg-white dark:bg-gray-900">
+  <div class="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 ">
+    <h2
+      class="mb-6 lg:mb-8 text-3xl lg:text-4xl tracking-tight font-extrabold text-center text-gray-900 dark:text-white">
+      Frequently asked questions</h2>
+    <div class="mx-auto max-w-screen-md">
+      <ng-template #loading>
+        <app-loading-spinner></app-loading-spinner>
+      </ng-template>
+      <div id="accordion-flush" data-accordion="collapse" *ngIf="faqs$ | async as faqs; else loading;"
+           data-active-classes="bg-white dark:bg-gray-900 text-gray-900 dark:text-white"
+           data-inactive-classes="text-gray-500 dark:text-gray-400">
+        <ng-container *ngFor="let faq of faqs; let i = index;">
+          <h2 id="accordion-flush-heading-1">
+            <button type="button" (click)="toggleCollapse(i)"
+                    class="flex justify-between items-center py-5 w-full font-medium text-left text-gray-900 bg-white border-b border-gray-200 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
+                    aria-expanded="true"
+                    aria-controls="accordion-flush-body-1">
+              <span>{{faq.title}}</span>
+              <svg *ngIf="collapseHidden[i]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+              </svg>
+              <svg  *ngIf="!collapseHidden[i]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+              </svg>
+
+            </button>
+          </h2>
+          <div *ngIf="!collapseHidden[i]" aria-labelledby="accordion-flush-heading-1">
+            <div class="py-5 border-b border-gray-200 dark:border-gray-700">
+              <p class="mb-2 text-gray-500 dark:text-gray-400">{{faq.description}}</p>
+            </div>
+          </div>
+
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</section>

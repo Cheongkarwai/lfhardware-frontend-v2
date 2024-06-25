@@ -3,40 +3,32 @@ import {CommonModule} from '@angular/common';
 import {ActivatedRoute, RouterModule} from "@angular/router";
 import {NzBreadCrumbComponent, NzBreadCrumbItemComponent} from "ng-zorro-antd/breadcrumb";
 import {
-  TUI_ARROW,
   TuiBreadcrumbsModule,
   TuiComboBoxModule,
-  TuiDataListWrapperModule, TuiFilterByInputPipeModule,
+  TuiDataListWrapperModule,
+  TuiFilterByInputPipeModule,
   TuiFilterModule,
   TuiInputModule,
   TuiInputNumberModule,
   TuiInputRangeModule,
   TuiPaginationModule,
   TuiRatingModule,
-  TuiSelectModule, TuiStringifyPipeModule,
+  TuiSelectModule,
+  TuiStringifyPipeModule,
   TuiTagModule
 } from "@taiga-ui/kit";
 import {
   TuiButtonModule,
-  TuiDataListModule, TuiDropdownModule, TuiHostedDropdownModule,
+  TuiDataListModule,
+  TuiDropdownModule,
+  TuiHostedDropdownModule,
   TuiLinkModule,
   TuiSvgModule,
   TuiTextfieldControllerModule
 } from "@taiga-ui/core";
 import {FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {TuiPreventDefaultModule} from "@taiga-ui/cdk";
 import {NgbDropdown, NgbDropdownMenu, NgbDropdownToggle} from "@ng-bootstrap/ng-bootstrap";
-import {
-  BehaviorSubject,
-  combineLatestWith,
-  concat,
-  distinctUntilChanged,
-  map,
-  merge,
-  Observable, share, skip, startWith, Subject,
-  switchMap, zip
-} from "rxjs";
-import {TopRightDirective} from "../../core/directive/accessor";
+import {BehaviorSubject, combineLatest, map, Observable, share, startWith, Subject, switchMap} from "rxjs";
 import {TuiCurrencyPipeModule} from "@taiga-ui/addon-commerce";
 import * as Aos from "aos";
 import {BreadcrumbComponent} from "../../components/breadcrumb/breadcrumb.component";
@@ -47,16 +39,27 @@ import {ServiceProviderRequest} from "../../core/service-provider/service-provid
 import {Pageable} from "../../core/page/pagination.interface";
 import {ServiceProvider} from "../../core/service-provider/service-provider.interface";
 import {LoadingSpinnerComponent} from "../../components/loading-spinner/loading-spinner.component";
-import {combineLatest} from "rxjs";
 import {MathCeilPipe} from "../../core/pipe/math-ceil.pipe";
 import {ButtonComponent} from "../../components/button/button.component";
 import {RangeInputComponent} from "../../components/range-input/range-input.component";
 import {RatingComponent} from "../../components/rating/rating.component";
+import {initFlowbite} from "flowbite";
 
 @Component({
   selector: 'app-for-sale',
   standalone: true,
-  imports: [CommonModule, RouterModule, NzBreadCrumbItemComponent, NzBreadCrumbComponent, TuiBreadcrumbsModule, TuiLinkModule, TuiInputModule, FormsModule, TuiTextfieldControllerModule, TuiComboBoxModule, ReactiveFormsModule, TuiDataListWrapperModule, TuiFilterModule, TuiButtonModule, TuiRatingModule, TuiTagModule, TuiSvgModule, TuiDataListModule, TuiHostedDropdownModule, TuiSelectModule, TuiPreventDefaultModule, TuiInputRangeModule, NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, TuiDropdownModule, TuiInputNumberModule, TuiCurrencyPipeModule, BreadcrumbComponent, TuiPaginationModule, TuiFilterByInputPipeModule, TuiStringifyPipeModule, LoadingSpinnerComponent, MathCeilPipe, ButtonComponent, RangeInputComponent, RatingComponent,],
+  imports: [CommonModule, RouterModule,
+    NzBreadCrumbItemComponent, NzBreadCrumbComponent,
+    TuiBreadcrumbsModule, TuiLinkModule,
+    TuiInputModule, FormsModule, TuiTextfieldControllerModule,
+    TuiComboBoxModule, ReactiveFormsModule, TuiDataListWrapperModule,
+    TuiFilterModule, TuiButtonModule, TuiRatingModule, TuiTagModule,
+    TuiSvgModule, TuiDataListModule, TuiHostedDropdownModule,
+    TuiSelectModule, TuiInputRangeModule,
+    NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, TuiDropdownModule,
+    TuiInputNumberModule, TuiCurrencyPipeModule, BreadcrumbComponent,
+    TuiPaginationModule, TuiFilterByInputPipeModule, TuiStringifyPipeModule,
+    LoadingSpinnerComponent, MathCeilPipe, ButtonComponent, RangeInputComponent, RatingComponent,],
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.scss']
 })
@@ -106,7 +109,7 @@ export class ServicesComponent implements OnInit {
     min_price: 0,
     rating: [],
     states: [],
-    status: ''
+    // status: ''
   }
 
   providerPageable$!: Observable<Pageable<ServiceProvider>>;
@@ -120,7 +123,7 @@ export class ServicesComponent implements OnInit {
   pagination$: BehaviorSubject<ServiceProviderRequest> = new BehaviorSubject<ServiceProviderRequest>(this.pageRequest);
 
 
-  selectedService!: string;
+  filters:{title: string,category:string}[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder, private stateService: StateService, private providerService: ProviderService) {
     this.pageRequest.service_name = activatedRoute.snapshot.params['service'];
@@ -128,6 +131,7 @@ export class ServicesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    initFlowbite();
     Aos.init();
     for(let i = 0 ; i < 5; i++){
       this.addRatingControl(i,i+1);
@@ -136,31 +140,64 @@ export class ServicesComponent implements OnInit {
     this.findProvidersName();
     this.findAllProviders();
 
-    console.log(this.stateFormArray);
   }
 
   findAllStates() {
-    this.states$ = this.stateService.findAll().pipe(map(states => {
-      states.forEach(state => this.addStateControl(state));
-      return states;
-    }));
+      this.states$ = this.stateService.findAll().pipe(map(states => {
+        states.forEach(state => this.addStateControl(state));
+        return states;
+      }));
   }
 
   findProvidersName() {
-    this.serviceProvidersName$ = this.providerService.findAll(this.pagination$.value)
+    this.serviceProvidersName$ = this.providerService.findAll(this.pagination$.value, [], [] , null, [])
       .pipe(share(), map(pageable => pageable.items.map(provider => provider.name)));
   }
 
   findAllProviders() {
     //Display list of provider
     this.providerPageable$ = combineLatest([this.pagination$.pipe(startWith(this.pageRequest)),
-      this.handleFilter$.pipe(startWith(''))])
+      this.handleFilter$.pipe(startWith('')), this.filterForm.controls.states.valueChanges.pipe(startWith([])),
+      this.filterForm.controls.rating.valueChanges.pipe(startWith([])), this.filterForm.controls.max_price.valueChanges.pipe(startWith(0))])
       .pipe(
-        switchMap(([page, formChanges]) => this.providerService.findAll(page).pipe(map(pageableProviders => pageableProviders))));
+        switchMap(([page, formChanges, states, ratings, maxPrice]) => {
+          this.filters = []
+          if(states.length > 0){
+            // @ts-ignore
+            page.states = states.filter(state=> state.selected).map(control=> control.state.name);
+            const stateFilters = page.states.map(state=>{
+              return {
+                title: state,
+                category: 'state'
+              };
+            });
+            this.filters.push(...stateFilters);
+          }
+          if(ratings.length > 0){
+            // @ts-ignore
+            page.rating = ratings.filter(rating=> rating.selected).map(rating=> rating);
+            const ratingFilters = page.rating.map(rating=>{
+              // @ts-ignore
+              return {
+                title: rating.min + '-' + rating.max,
+                category: 'rating'
+              }
+            })
+            this.filters.push(...ratingFilters);
+          }
+          if(maxPrice){
+            page.max_price = maxPrice;
+            this.filters.push({
+              title: 'MYR '+maxPrice,
+              category: 'maxPrice'
+            });
+          }
+          return this.providerService.findAll(page, ['APPROVED'], [] , null, []).pipe(map(pageableProviders => pageableProviders))
+        }));
   }
 
-  onClick() {
-    this.open = !this.open;
+  closeCanvasMenu() {
+    this.open = false;
   }
 
   onModelChangeFilter($event: any) {
@@ -199,6 +236,7 @@ export class ServicesComponent implements OnInit {
     this.ratingFormArray.push(this.fb.group({
       min: min.toFixed(1),
       max: max.toFixed(1),
+      title: min + '-' + max,
       selected: false
     }));
   }
@@ -240,5 +278,42 @@ export class ServicesComponent implements OnInit {
     this.isRatingFilterMenuOpen = false;
     this.isStateFilterMenuOpen = false;
     this.isPriceFilterMenuOpen = !this.isPriceFilterMenuOpen;
+  }
+
+  resetFilter() {
+
+  }
+
+  removeFilter(filter:{category:string, title:string}) {
+    if(filter.category === 'state'){
+      for(let control of this.stateFormArray.controls){
+        const controlValue = control.getRawValue();
+       if(controlValue.state.name === filter.title){
+         controlValue.selected = false;
+         control.setValue(controlValue);
+         break;
+       }
+      }
+    }
+    if(filter.category === 'rating'){
+      for(let control of this.ratingFormArray.controls){
+        const controlValue = control.getRawValue();
+        if(controlValue.title === filter.title){
+          controlValue.selected = false;
+          control.setValue(controlValue);
+          break;
+        }
+      }
+    }
+
+  }
+
+  getStateFilterCount(){
+    return this.filters.filter(filter=> filter.category === 'state').length;
+  }
+
+
+  openCanvasMenu() {
+    this.open = true;
   }
 }
