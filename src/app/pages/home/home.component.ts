@@ -1,15 +1,9 @@
-import {Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit} from '@angular/core';
+import {Component, CUSTOM_ELEMENTS_SCHEMA, OnInit} from '@angular/core';
 import {CommonModule, NgOptimizedImage} from '@angular/common';
 import * as Aos from "aos";
 import {NgbCarouselModule} from "@ng-bootstrap/ng-bootstrap";
-import {
-  TuiCarouselModule,
-  TuiComboBoxModule,
-  TuiDataListWrapperModule,
-  TuiIslandModule,
-  TuiPaginationModule
-} from "@taiga-ui/kit";
-import {TuiButtonModule, TuiHostedDropdownModule, TuiTextfieldControllerModule} from "@taiga-ui/core";
+import {TuiPaginationModule} from "@taiga-ui/kit";
+import {TuiTextfieldControllerModule} from "@taiga-ui/core";
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from "@angular/forms";
 import {FaIconComponent} from "@fortawesome/angular-fontawesome";
 import {faCheck, faPaintRoller, faShield, faThumbsUp, faUsers} from "@fortawesome/free-solid-svg-icons";
@@ -24,14 +18,17 @@ import {AutocompleteSearchComponent} from "../../components/autocomplete-search/
 import {ProviderService} from "../../core/service-provider/service-provider.service";
 import {ServiceProviderRequest} from "../../core/service-provider/service-provider-request.interface";
 import {map, Observable, startWith, switchMap} from "rxjs";
+import {RouterModule} from "@angular/router";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NgbCarouselModule, TuiCarouselModule,
-    NgOptimizedImage, TuiDataListWrapperModule, TuiHostedDropdownModule,
-    TuiButtonModule, TuiComboBoxModule, ReactiveFormsModule, TuiIslandModule,
-    TuiTextfieldControllerModule, FaIconComponent, TuiPaginationModule, SwiperDirective, CountUpDirective, ButtonComponent, ToastComponent, AutocompleteSearchComponent],
+  imports: [CommonModule, NgbCarouselModule, RouterModule,
+    NgOptimizedImage,  ReactiveFormsModule,
+    TuiTextfieldControllerModule, FaIconComponent,
+    TuiPaginationModule, SwiperDirective,
+    CountUpDirective, ButtonComponent, ToastComponent,
+    AutocompleteSearchComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
