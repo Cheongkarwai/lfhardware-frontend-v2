@@ -22,8 +22,7 @@ import {
   TuiDataListModule,
   TuiDropdownModule,
   TuiHostedDropdownModule,
-  TuiLinkModule,
-  TuiSvgModule,
+
   TuiTextfieldControllerModule
 } from "@taiga-ui/core";
 import {FormArray, FormBuilder, FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -48,17 +47,11 @@ import {initFlowbite} from "flowbite";
 @Component({
   selector: 'app-for-sale',
   standalone: true,
-  imports: [CommonModule, RouterModule,
+  imports: [CommonModule, RouterModule, ReactiveFormsModule,
     NzBreadCrumbItemComponent, NzBreadCrumbComponent,
-    TuiBreadcrumbsModule, TuiLinkModule,
-    TuiInputModule, FormsModule, TuiTextfieldControllerModule,
-    TuiComboBoxModule, ReactiveFormsModule, TuiDataListWrapperModule,
-    TuiFilterModule, TuiButtonModule, TuiRatingModule, TuiTagModule,
-    TuiSvgModule, TuiDataListModule, TuiHostedDropdownModule,
-    TuiSelectModule, TuiInputRangeModule,
-    NgbDropdown, NgbDropdownToggle, NgbDropdownMenu, TuiDropdownModule,
-    TuiInputNumberModule, TuiCurrencyPipeModule, BreadcrumbComponent,
-    TuiPaginationModule, TuiFilterByInputPipeModule, TuiStringifyPipeModule,
+    NgbDropdown, NgbDropdownToggle, NgbDropdownMenu,
+    BreadcrumbComponent,
+    TuiPaginationModule,
     LoadingSpinnerComponent, MathCeilPipe, ButtonComponent, RangeInputComponent, RatingComponent,],
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.scss']
@@ -123,7 +116,7 @@ export class ServicesComponent implements OnInit {
   pagination$: BehaviorSubject<ServiceProviderRequest> = new BehaviorSubject<ServiceProviderRequest>(this.pageRequest);
 
 
-  filters:{title: string,category:string}[] = [];
+  filters: { title: string, category: string }[] = [];
 
   constructor(private activatedRoute: ActivatedRoute, private fb: FormBuilder, private stateService: StateService, private providerService: ProviderService) {
     this.pageRequest.service_name = activatedRoute.snapshot.params['service'];
@@ -133,8 +126,8 @@ export class ServicesComponent implements OnInit {
   ngOnInit(): void {
     initFlowbite();
     Aos.init();
-    for(let i = 0 ; i < 5; i++){
-      this.addRatingControl(i,i+1);
+    for (let i = 0; i < 5; i++) {
+      this.addRatingControl(i, i + 1);
     }
     this.findAllStates();
     this.findProvidersName();
@@ -143,14 +136,14 @@ export class ServicesComponent implements OnInit {
   }
 
   findAllStates() {
-      this.states$ = this.stateService.findAll().pipe(map(states => {
-        states.forEach(state => this.addStateControl(state));
-        return states;
-      }));
+    this.states$ = this.stateService.findAll().pipe(map(states => {
+      states.forEach(state => this.addStateControl(state));
+      return states;
+    }));
   }
 
   findProvidersName() {
-    this.serviceProvidersName$ = this.providerService.findAll(this.pagination$.value, [], [] , null, [])
+    this.serviceProvidersName$ = this.providerService.findAll(this.pagination$.value, [], [], null, [])
       .pipe(share(), map(pageable => pageable.items.map(provider => provider.name)));
   }
 
@@ -162,37 +155,40 @@ export class ServicesComponent implements OnInit {
       .pipe(
         switchMap(([page, formChanges, states, ratings, maxPrice]) => {
           this.filters = []
-          if(states.length > 0){
+          let stateFilters:string[] = [];
+          let ratingFilters : {min: number, max: number, title: string, selected: boolean} [] = [];
+          if (states.length > 0) {
             // @ts-ignore
-            page.states = states.filter(state=> state.selected).map(control=> control.state.name);
-            const stateFilters = page.states.map(state=>{
+            stateFilters = states.filter(state => state.selected).map(control => control.state.name);
+            const stateFilterControls = stateFilters.map(state => {
               return {
                 title: state,
                 category: 'state'
               };
             });
-            this.filters.push(...stateFilters);
+            this.filters.push(...stateFilterControls);
           }
-          if(ratings.length > 0){
+          if (ratings.length > 0) {
             // @ts-ignore
-            page.rating = ratings.filter(rating=> rating.selected).map(rating=> rating);
-            const ratingFilters = page.rating.map(rating=>{
+
+            ratingFilters = ratings.filter(rating => rating.selected).map(rating => rating);
+            const ratingFilterControls = ratingFilters.map(rating => {
               // @ts-ignore
               return {
-                title: rating.min + '-' + rating.max,
+                title: rating.min + '-' +rating.max,
                 category: 'rating'
               }
             })
-            this.filters.push(...ratingFilters);
+            this.filters.push(...ratingFilterControls);
           }
-          if(maxPrice){
+          if (maxPrice) {
             page.max_price = maxPrice;
             this.filters.push({
-              title: 'MYR '+maxPrice,
+              title: 'MYR ' + maxPrice,
               category: 'maxPrice'
             });
           }
-          return this.providerService.findAll(page, ['APPROVED'], [] , null, []).pipe(map(pageableProviders => pageableProviders))
+          return this.providerService.findAll(page, ['APPROVED'], ratingFilters.map(rating=> rating.min.toString()), null, stateFilters).pipe(map(pageableProviders => pageableProviders))
         }));
   }
 
@@ -260,19 +256,20 @@ export class ServicesComponent implements OnInit {
     this.isSortMenuOpen = !this.isSortMenuOpen;
   }
 
-  toggleStateMenu(){
+  toggleStateMenu() {
     this.isSortMenuOpen = false;
     this.isRatingFilterMenuOpen = false;
     this.isPriceFilterMenuOpen = false;
     this.isStateFilterMenuOpen = !this.isStateFilterMenuOpen;
   }
 
-  toggleRatingMenu(){
+  toggleRatingMenu() {
     this.isSortMenuOpen = false;
     this.isStateFilterMenuOpen = false;
     this.isPriceFilterMenuOpen = false;
     this.isRatingFilterMenuOpen = !this.isRatingFilterMenuOpen;
   }
+
   togglePriceMenu() {
     this.isSortMenuOpen = false;
     this.isRatingFilterMenuOpen = false;
@@ -284,21 +281,21 @@ export class ServicesComponent implements OnInit {
 
   }
 
-  removeFilter(filter:{category:string, title:string}) {
-    if(filter.category === 'state'){
-      for(let control of this.stateFormArray.controls){
+  removeFilter(filter: { category: string, title: string }) {
+    if (filter.category === 'state') {
+      for (let control of this.stateFormArray.controls) {
         const controlValue = control.getRawValue();
-       if(controlValue.state.name === filter.title){
-         controlValue.selected = false;
-         control.setValue(controlValue);
-         break;
-       }
+        if (controlValue.state.name === filter.title) {
+          controlValue.selected = false;
+          control.setValue(controlValue);
+          break;
+        }
       }
     }
-    if(filter.category === 'rating'){
-      for(let control of this.ratingFormArray.controls){
+    if (filter.category === 'rating') {
+      for (let control of this.ratingFormArray.controls) {
         const controlValue = control.getRawValue();
-        if(controlValue.title === filter.title){
+        if (controlValue.title === filter.title) {
           controlValue.selected = false;
           control.setValue(controlValue);
           break;
@@ -308,8 +305,8 @@ export class ServicesComponent implements OnInit {
 
   }
 
-  getStateFilterCount(){
-    return this.filters.filter(filter=> filter.category === 'state').length;
+  getStateFilterCount() {
+    return this.filters.filter(filter => filter.category === 'state').length;
   }
 
 
