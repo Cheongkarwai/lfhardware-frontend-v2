@@ -27,7 +27,7 @@
             </div>
           </li>
         </ol>
-        <app-basic-info (onChangeStep)="changeStep($event)" *ngIf="currentStep === 'Basic Information'"></app-basic-info>
+        <app-basic-info  *ngIf="currentStep === 'Basic Information'"></app-basic-info>
         <app-document-and-credentials *ngIf="currentStep === 'Documents'"></app-document-and-credentials>
         <app-banking-details *ngIf="currentStep === 'Payment Details'"></app-banking-details>
       </div>
