@@ -15,7 +15,7 @@ import {UserService} from "../../../core/user/user.service";
 })
 export class RoleConfirmationComponent implements OnInit {
 
-  role: FormControl<string | null> = new FormControl<string | null>('CUSTOMER');
+  role: FormControl<string | null> = new FormControl<string | null>('');
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute,
               private userService: UserService) {
@@ -25,7 +25,7 @@ export class RoleConfirmationComponent implements OnInit {
     initFlowbite();
     this.userService.findAllCurrentUserRoles().subscribe({
       next:roles=> {
-        const roleNames = roles.map(role=>role.name);
+        const roleNames:string[] = roles.map(role=>role.name);
         if(roleNames.includes('service_provider')){
           this.role.setValue('SERVICE PROVIDER');
         }else if(roleNames.includes("customer")){
@@ -52,6 +52,9 @@ export class RoleConfirmationComponent implements OnInit {
       case 'CUSTOMER':
         this.router.navigate(['user-onboarding/customer'])
         break;
+
+      default:
+
     }
   }
 }
