@@ -30,6 +30,7 @@ export class FileService {
     formData.append('front_identity_card', document.front_identity_card);
     formData.set('back_identity_card', document.back_identity_card);
     formData.set('ssm', document.ssm);
+    formData.set('business_profile_image', document.business_profile_image)
     return this.httpClient.post<Image[]>(`${this.url}/service-providers/documents/upload`, formData);
   }
 

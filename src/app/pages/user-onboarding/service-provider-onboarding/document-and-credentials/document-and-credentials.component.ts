@@ -73,6 +73,7 @@ export class DocumentAndCredentialsComponent implements OnInit {
   ) {
 
     this.documentAndCredentialsForm = this.fb.group({
+      business_profile_image: [null, Validators.required],
       front_identity_card: [null, Validators.required],
       back_identity_card: [null, Validators.required],
       ssm: [null, Validators.required]
@@ -82,6 +83,9 @@ export class DocumentAndCredentialsComponent implements OnInit {
   ngOnInit() {
   }
 
+  get businessProfileControl(){
+    return this.documentAndCredentialsForm.get('business_profile_image') as FormControl;
+  }
   get frontIdentificationCardControl() {
     return this.documentAndCredentialsForm.get('front_identity_card') as FormControl;
   }
