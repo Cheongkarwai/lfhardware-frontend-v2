@@ -108,4 +108,8 @@ export class UserService {
     return this.http.put(`${this.url}/${userProfile.username}`, userProfile);
   }
 
+  findLoggedInUsername(){
+    return this.http.get(`${this.url}/me/username`, {responseType: 'text'})
+  }
+
 }
