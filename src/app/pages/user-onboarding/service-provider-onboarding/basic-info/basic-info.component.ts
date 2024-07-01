@@ -20,6 +20,7 @@ import {AlertDialogComponent, Status} from "../../../../components/alert-dialog/
 import {TextInputComponent} from "../../../../components/text-input/text-input.component";
 import {DropdownComponent, DropdownItem} from "../../../../components/dropdown/dropdown.component";
 import {ProviderService} from "../../../../core/service-provider/service-provider.service";
+import {ZipcodeInputComponent} from "../../../../components/zipcode-input/zipcode-input.component";
 
 
 @Component({
@@ -32,7 +33,8 @@ import {ProviderService} from "../../../../core/service-provider/service-provide
     PhoneInputComponent,
     DropdownCheckboxComponent,
     TextInputComponent,
-    DropdownComponent
+    DropdownComponent,
+    ZipcodeInputComponent
   ],
   templateUrl: './basic-info.component.html',
   styleUrl: './basic-info.component.scss'
@@ -49,6 +51,9 @@ export class BasicInfoComponent implements OnInit {
   states$ = new Observable<{ title: string, value: any }[]>();
   countries$ = new Observable<string[]>();
   services$ = new Observable<{ title: string, value: any }[]>();
+
+  stateItems$!: Observable<DropdownItem[]>;
+  cityItems$!: Observable<DropdownItem[]>;
 
   services: Service[] = [];
 
@@ -74,6 +79,28 @@ export class BasicInfoComponent implements OnInit {
 
   }
 
+  findCity(){
+    this.cityItems$ = this.cityService.findAll().pipe(map(cities => {
+      return cities.map(city => {
+        return {
+          title: city.name,
+          value: city.name
+        };
+      });
+    }));
+  }
+
+  findState(){
+    this.stateItems$ = this.stateService.findAll().pipe(map(states => {
+      return states.map(state => {
+        return {
+          title: state.name,
+          value: state.name
+        };
+      });
+    }));
+  }
+
   ngOnInit() {
     initFlowbite();
 
@@ -94,6 +121,12 @@ export class BasicInfoComponent implements OnInit {
           zipcode: ['', Validators.required]
         }),
         website: ['', Validators.required]
+      }),
+      social_media: this.fb.group({
+        facebook: [''],
+        instagram: [''],
+        twitter: [''],
+        whatsapp: ['']
       }),
       service_details: this.fb.group({
         services: this.fb.array([]),
@@ -128,6 +161,8 @@ export class BasicInfoComponent implements OnInit {
 
       return services;
     }));
+    this.findCity();
+    this.findState();
 
     // this.services$ = this.providerBusinessService.findAllServices().pipe(map(serviceCategories=>{
     //   const services:Service[] = [];
@@ -165,17 +200,6 @@ export class BasicInfoComponent implements OnInit {
 
     // this.retainOldFormData();
   }
-
-  //
-  // retainOldFormData() {
-  //   if (this.serviceProviderSignupFormService.basicInfoFormData.value) {
-  //     this.basicInfoForm.patchValue(this.serviceProviderSignupFormService.basicInfoFormData.value);
-  //   }
-  // }
-  //
-  // setActiveIndex(index: number) {
-  //   this.serviceProviderSignupFormService.setCurrentIndex(index);
-  // }
 
   get businessPhoneNumberPrefixControl(){
     return this.businessDetailsGroup.get('phone_number_prefix') as FormControl;
@@ -246,6 +270,26 @@ export class BasicInfoComponent implements OnInit {
 
   get stateCoverageFormArray() {
     return this.serviceDetailsGroup.get('coverage')?.get('states') as FormArray;
+  }
+
+  get socialMediaGroup(){
+    return this.basicInfoForm.get('social_media') as FormGroup;
+  }
+
+  get facebookControl(){
+    return this.socialMediaGroup.get('facebook') as FormControl;
+  }
+
+  get instagramControl(){
+    return this.socialMediaGroup.get('whatsapp') as FormControl;
+  }
+
+  get twitterControl(){
+    return this.socialMediaGroup.get('twitter') as FormControl;
+  }
+
+  get whatsappControl(){
+    return this.socialMediaGroup.get('whatsapp') as FormControl;
   }
 
   addServiceControl(service: Service) {
