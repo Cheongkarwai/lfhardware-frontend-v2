@@ -17,6 +17,7 @@ import {Pageable, PageRequest} from "../../core/page/pagination.interface";
 import {MathCeilPipe} from "../../core/pipe/math-ceil.pipe";
 import {RangePipe} from "../../core/pipe/range.pipe";
 import {LoadMoreButtonComponent} from "../../components/load-more-button/load-more-button.component";
+import {ServiceProvider} from "../../core/service-provider/service-provider.interface";
 
 @Component({
   selector: 'app-service-provider-details',
@@ -102,20 +103,18 @@ export class ServiceProviderDetailsComponent implements OnInit, AfterViewInit {
   }
 
 
-  bookAppointment() {
+  bookAppointment(serviceProvider: ServiceProviderDetails) {
     this.appointmentService.save({
-      service_provider_id: 'd0c78932-1f95-4478-8363-f846f0e54f0e',
+      service_provider_id: serviceProvider.id,
       service_id: 1,
       estimated_price: 100000
       ,
       status: 'PENDING'
     }).subscribe({
-      next:res=>console.log(res)
+      next:link=>{
+        window.location.href = link;
+      }
     });
-    // this.checkoutService.createCheckoutSession()
-    //   .subscribe({
-    //     next:res=> console.log(res)
-    //   });
     this.router.navigate(['../service-request'], {relativeTo: this.activatedRoute})
   }
 
@@ -133,4 +132,5 @@ export class ServiceProviderDetailsComponent implements OnInit, AfterViewInit {
     this.reviewPageRequest.page++;
     this.handleReviewPagination.next(this.reviewPageRequest);
   }
+
 }
