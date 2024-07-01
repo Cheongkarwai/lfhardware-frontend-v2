@@ -40,6 +40,7 @@ export class NavbarComponent implements OnInit, AfterViewInit {
   isCollapsed = true;
   user$!: Observable<UserAccount>;
   userError$!: Observable<UserAccount | null>;
+  loggedInUsername$!: Observable<boolean>;
   notifications$!: Observable<Notification[]>;
 
   isServiceProvider$!: Observable<boolean>;
@@ -79,38 +80,64 @@ export class NavbarComponent implements OnInit, AfterViewInit {
     //this.numberOfCartItems$ = this.cartService.findCart().pipe(map(cart=>cart.items.length),catchError(err=> of(0)));
     //this.categories$ = this.productService.findAllProductCategories().pipe(map(categories=> categories.slice(0,4)),shareReplay(1));
     //this.brands$ = this.productService.findAllProductBrands().pipe(map(brands=>brands.slice(0,5)),shareReplay(1));
+    this.getLoggedInUsername();
     this.getUser();
     this.getRoles();
     this.getNotifications();
-    this.completedOnBoarding$ = this.customerService.refreshObs$.pipe(startWith(''), switchMap(e=>{
+    this.completedOnBoarding$ = this.customerService.refreshObs$.pipe(startWith(''), switchMap(e => {
       return combineLatest([
         this.customerService.findCurrentCustomer()
-        .pipe(map(customer => !customer)),
+          .pipe(map(customer => !customer)),
         this.providerService.findCurrentServiceProvider().pipe(map(serviceProvider => {
-        return !(serviceProvider && serviceProvider.front_identity_card
-          && serviceProvider.back_identity_card
-          && serviceProvider.ssm &&
-          serviceProvider.stripe_account_id);
+          return !(serviceProvider && serviceProvider?.front_identity_card
+            && serviceProvider?.back_identity_card
+            && serviceProvider?.ssm &&
+            serviceProvider?.stripe_account_id);
 
-      })), this.userService.findAllCurrentUserRoles()]).pipe(map(result => !(result[0] && result[1]) || result[2].map(role=> role.name).includes('administrator')));
+        })), this.userService.findAllCurrentUserRoles()]).pipe(map(result => !(result[0] && result[1]) || result[2].map(role => role.name).includes('administrator')));
     }));
   }
 
-  getUser(){
+  getLoggedInUsername() {
+    this.loggedInUsername$ = this.userService.findLoggedInUsername()
+      .pipe(map(user => {
+        if(user) {
+          return true;
+        }
+
+        return false;
+      }), share());
+  }
+
+  getUser() {
     this.user$ = this.accountService.findCurrentlyLoggedInUser().pipe(share());
     this.userError$ = this.user$.pipe(catchError(err => of(err)));
 
   }
-  getNotifications(){
-    this.notifications$ = this.notificationService.findUserNotification();
+
+  getNotifications() {
+    this.notifications$ = this.userError$.pipe(map(user => !user),
+      switchMap(isNotLoggedIn => {
+
+        console.log(isNotLoggedIn);
+        if (isNotLoggedIn) {
+
+          this.notificationService.findUserNotification();
+        }
+        return of();
+      }), catchError((err) => {
+        console.log(err);
+        return of(err);
+      }));
   }
-  getRoles(){
-    this.isServiceProvider$ = this.user$.pipe(map(user=> {
-      return user?.roles.map(role=> role.name)
+
+  getRoles() {
+    this.isServiceProvider$ = this.user$.pipe(map(user => {
+      return user?.roles.map(role => role.name)
         .includes('service_provider');
     }));
-    this.isAdministrator$ = this.user$.pipe(map(user=> {
-      return user?.roles.map(role=> role.name)
+    this.isAdministrator$ = this.user$.pipe(map(user => {
+      return user?.roles.map(role => role.name)
         .includes('administrator');
     }));
   }

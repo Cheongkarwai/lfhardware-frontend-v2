@@ -1,30 +1,34 @@
-<ng-container *ngIf="{user: user$ | async, error: userError$ | async} as data">
-  <ng-container *ngIf="data.user">
-    <ng-container *ngIf="{completedOnboarding: completedOnBoarding$ | async} as value">
-      <div id="marketing-banner" *ngIf="!value.completedOnboarding" tabindex="-1"
-           class="fixed z-50 flex flex-col md:flex-row justify-between w-[calc(100%-2rem)] p-4 -translate-x-1/2 bg-white border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600">
-        <div class="flex flex-col items-start mb-3 me-4 md:items-center md:flex-row md:mb-0">
-          <a href="https://flowbite.com/"
-             class="flex items-center mb-2 border-gray-200 md:pe-4 md:me-4 md:border-e md:mb-0 dark:border-gray-600">
-            <img src="./assets/image/logo.png" class="h-6 me-2" alt="Flowbite Logo">
-            <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">LF Hardware</span>
-          </a>
-          <span class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">Your account is almost ready..</span>
-        </div>
-        <div class="flex items-center flex-shrink-0">
-          <a [routerLink]="['user-onboarding','role-confirmation']"
-             class="px-5 py-2 me-2 text-xs font-medium text-white bg-rose-700 rounded-lg hover:bg-rose-800 focus:ring-4 focus:ring-rose-300 dark:bg-rose-600 dark:hover:bg-rose-700 focus:outline-none dark:focus:ring-rose-800">Complete
-            now</a>
-          <!--          <button data-dismiss-target="#marketing-banner" type="button"-->
-          <!--                  class="flex-shrink-0 inline-flex justify-center w-7 h-7 items-center text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 dark:hover:bg-gray-600 dark:hover:text-white">-->
-          <!--            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">-->
-          <!--              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
-          <!--                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>-->
-          <!--            </svg>-->
-          <!--            <span class="sr-only">Close banner</span>-->
-          <!--          </button>-->
-        </div>
-      </div>
+<ng-container *ngIf="{context : loggedInUsername$ | async } as loggedInUser">
+  <ng-container *ngIf="loggedInUser.context">
+    <ng-container *ngIf="{user: user$ | async, error: userError$ | async} as data">
+      <ng-container *ngIf="data.user">
+        <ng-container *ngIf="{completedOnboarding: completedOnBoarding$ | async} as value">
+          <div id="marketing-banner" *ngIf="!value.completedOnboarding" tabindex="-1"
+               class="fixed z-50 flex flex-col md:flex-row justify-between w-[calc(100%-2rem)] p-4 -translate-x-1/2 bg-white border border-gray-100 rounded-lg shadow-sm lg:max-w-7xl left-1/2 top-6 dark:bg-gray-700 dark:border-gray-600">
+            <div class="flex flex-col items-start mb-3 me-4 md:items-center md:flex-row md:mb-0">
+              <a href="https://flowbite.com/"
+                 class="flex items-center mb-2 border-gray-200 md:pe-4 md:me-4 md:border-e md:mb-0 dark:border-gray-600">
+                <img src="./assets/image/logo.png" class="h-6 me-2" alt="Flowbite Logo">
+                <span class="self-center text-lg font-semibold whitespace-nowrap dark:text-white">LF Hardware</span>
+              </a>
+              <span class="flex items-center text-sm font-normal text-gray-500 dark:text-gray-400">Your account is almost ready..</span>
+            </div>
+            <div class="flex items-center flex-shrink-0">
+              <a [routerLink]="['user-onboarding','role-confirmation']"
+                 class="px-5 py-2 me-2 text-xs font-medium text-white bg-rose-700 rounded-lg hover:bg-rose-800 focus:ring-4 focus:ring-rose-300 dark:bg-rose-600 dark:hover:bg-rose-700 focus:outline-none dark:focus:ring-rose-800">Complete
+                now</a>
+              <!--          <button data-dismiss-target="#marketing-banner" type="button"-->
+              <!--                  class="flex-shrink-0 inline-flex justify-center w-7 h-7 items-center text-gray-400 hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 dark:hover:bg-gray-600 dark:hover:text-white">-->
+              <!--            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">-->
+              <!--              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"-->
+              <!--                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>-->
+              <!--            </svg>-->
+              <!--            <span class="sr-only">Close banner</span>-->
+              <!--          </button>-->
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
     </ng-container>
   </ng-container>
 </ng-container>
@@ -205,21 +209,25 @@
           <div class="flow-root">
             <a (click)="navigateToPage('/appointment/view')" class="-m-2 block p-2 font-medium text-gray-900">Appointment</a>
           </div>
-          <ng-container *ngIf="{isAdministrator: isAdministrator$ | async} as value">
-            <div class="flow-root" *ngIf="value.isAdministrator">
-              <a (click)="navigateToPage('admin-management')" class="-m-2 block p-2 font-medium text-gray-900">Management</a>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="{isServiceProvider: isServiceProvider$ | async} as value">
-            <div class="flow-root" *ngIf="value.isServiceProvider">
-              <a (click)="navigateToPage('service-provider-management')"
-                 class="-m-2 block p-2 font-medium text-gray-900">Management</a>
-            </div>
+          <ng-container *ngIf="{context: loggedInUsername$ | async} as data">
+            <ng-container *ngIf="data.context">
+              <ng-container *ngIf="{isAdministrator: isAdministrator$ | async} as value">
+                <div class="flow-root" *ngIf="value.isAdministrator">
+                  <a (click)="navigateToPage('admin-management')" class="-m-2 block p-2 font-medium text-gray-900">Management</a>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="{isServiceProvider: isServiceProvider$ | async} as value">
+                <div class="flow-root" *ngIf="value.isServiceProvider">
+                  <a (click)="navigateToPage('service-provider-management')"
+                     class="-m-2 block p-2 font-medium text-gray-900">Management</a>
+                </div>
+              </ng-container>
+            </ng-container>
           </ng-container>
         </div>
 
-        <ng-container *ngIf="{user: user$ | async, error: userError$ | async} as data">
-          <ng-container *ngIf="data.user; else loading;">
+        <ng-container *ngIf="{context : loggedInUsername$ | async } as loggedInUser">
+          <ng-container *ngIf="loggedInUser.context; else loading;">
             <div class="space-y-6 border-t border-gray-200 px-4 py-6">
               <div class="flow-root">
                 <a (click)="logout()" class="-m-2 block p-2 font-medium text-gray-900">Logout</a>
@@ -227,16 +235,15 @@
             </div>
           </ng-container>
           <ng-template #loading>
-            <ng-container *ngIf="data.error">
-              <div class="space-y-6 border-t border-gray-200 px-4 py-6">
-                <div class="flow-root">
-                  <a (click)="login()" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
-                </div>
-                <div class="flow-root">
-                  <a (click)="login()" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
-                </div>
+            <div class="space-y-6 border-t border-gray-200 px-4 py-6">
+              <div class="flow-root">
+                <a (click)="login()" class="-m-2 block p-2 font-medium text-gray-900">Create an account</a>
               </div>
-            </ng-container>
+              <div class="flow-root">
+                <a (click)="login()" class="-m-2 block p-2 font-medium text-gray-900">Sign in</a>
+              </div>
+            </div>
+
           </ng-template>
         </ng-container>
       </div>
@@ -252,16 +259,21 @@
             $100</span>
 
           <div class="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-            <ng-container *ngIf="{user: user$ | async, error: userError$ | async} as data">
-              <ng-container *ngIf="data.user; else loading;">
+            <ng-container *ngIf="{context : loggedInUsername$ | async } as loggedInUser">
+              <ng-container *ngIf="loggedInUser.context; else loading;">
+                <ng-container *ngIf="{user: user$ | async, error: userError$ | async} as data">
+                  <ng-container *ngIf="data.user">
                   <span href="#"
                         class="text-sm font-medium text-white hover:text-gray-100">{{data.user.profile.email_address}}</span>
-                <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
-                <a (click)="logout()"
-                   class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">Logout</a>
+                    <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
+                    <a (click)="logout()"
+                       class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">Logout</a>
+                  </ng-container>
+                </ng-container>
+
               </ng-container>
               <ng-template #loading>
-                <ng-container *ngIf="data.error">
+                <ng-container>
                   <a (click)="login()"
                      class="cursor-pointer text-sm font-medium text-white hover:text-gray-100">Create an account</a>
                   <span class="h-6 w-px bg-gray-600" aria-hidden="true"></span>
@@ -560,15 +572,19 @@
                              class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
                              [routerLink]="['appointment', 'view']">Appointment</a>
 
-                          <ng-container *ngIf="{isAdministrator: isAdministrator$ | async} as value">
-                            <a href="#" *ngIf="value.isAdministrator"
-                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                               [routerLink]="['admin-management']">Management</a>
-                          </ng-container>
-                          <ng-container *ngIf="{isServiceProvider: isServiceProvider$ | async} as value">
-                            <a href="#" *ngIf="value.isServiceProvider"
-                               class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
-                               [routerLink]="['service-provider-management']">Management</a>
+                          <ng-container *ngIf="{context: loggedInUsername$ | async} as data">
+                            <ng-container *ngIf="data.context">
+                              <ng-container *ngIf="{isAdministrator: isAdministrator$ | async} as value">
+                                <a href="#" *ngIf="value.isAdministrator"
+                                   class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                   [routerLink]="['admin-management']">Management</a>
+                              </ng-container>
+                              <ng-container *ngIf="{isServiceProvider: isServiceProvider$ | async} as value">
+                                <a href="#" *ngIf="value.isServiceProvider"
+                                   class="flex items-center text-sm font-medium text-gray-700 hover:text-gray-800"
+                                   [routerLink]="['service-provider-management']">Management</a>
+                              </ng-container>
+                            </ng-container>
                           </ng-container>
                         </div>
 
@@ -586,8 +602,8 @@
                         </svg>
                       </a>
                     </div>
-                    <ng-container *ngIf="{user: user$ | async, error: userError$ | async} as data">
-                      <div class="flex" *ngIf="data.user; else loading;">
+                    <ng-container *ngIf="{context: loggedInUsername$ | async} as data">
+                      <div class="flex" *ngIf="data.context">
                         <a [routerLink]="['profile']" class="-m-2 p-2 text-gray-400 hover:text-gray-500">
                           <span class="sr-only">Account</span>
                           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -599,11 +615,12 @@
                         </a>
                       </div>
                     </ng-container>
-                    <ng-template #loading>
-
-                    </ng-template>
                   </div>
-                  <app-notification></app-notification>
+                  <ng-container *ngIf="{context: loggedInUsername$ | async} as data">
+                    <ng-container *ngIf="data.context">
+                      <app-notification></app-notification>
+                    </ng-container>
+                  </ng-container>
                   <span class="mx-4 h-6 w-px bg-gray-200 lg:mx-6" aria-hidden="true"></span>
 
                   <div class="flow-root">
