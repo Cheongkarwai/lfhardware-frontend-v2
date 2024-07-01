@@ -74,7 +74,7 @@
           <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
             <button type="button"
                     class="flex w-full items-center justify-center rounded-md border border-transparent bg-rose-600 px-8 py-3 text-base font-medium text-white hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-rose-500 focus:ring-offset-2 focus:ring-offset-gray-50"
-                    (click)="bookAppointment()">
+                    (click)="bookAppointment(serviceProvider)">
               Book now
             </button>
             <button type="button" data-modal-target="crypto-modal" data-modal-toggle="crypto-modal"
@@ -178,8 +178,8 @@
           <div class="mt-10 border-t border-gray-200 pt-10">
             <h3 class="text-sm font-medium text-gray-900">Follow us on</h3>
             <ul role="list" class="mt-4 flex items-center space-x-6">
-              <li>
-                <a [href]="serviceProvider.social_media?.facebook"
+              <li *ngIf="serviceProvider.social_media?.facebook">
+                <a [href]="serviceProvider.social_media?.facebook" target="_blank"
                    class="flex h-6 w-6 items-center justify-center text-gray-400 hover:text-gray-500">
                   <span class="sr-only">Follow on Facebook</span>
                   <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
@@ -189,8 +189,8 @@
                   </svg>
                 </a>
               </li>
-              <li>
-                <a [href]="serviceProvider.social_media?.instagram"
+              <li *ngIf="serviceProvider.social_media?.instagram">
+                <a [href]="serviceProvider.social_media?.instagram" target="_blank"
                    class="flex h-6 w-6 items-center justify-center text-gray-400 hover:text-gray-500">
                   <span class="sr-only">Follow on Instagram</span>
                   <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -200,13 +200,26 @@
                   </svg>
                 </a>
               </li>
-              <li>
-                <a [href]="serviceProvider.social_media?.tiktok"
+              <li *ngIf="serviceProvider.social_media?.twitter">
+                <a [href]="serviceProvider.social_media?.twitter" target="_blank"
                    class="flex h-6 w-6 items-center justify-center text-gray-400 hover:text-gray-500">
                   <span class="sr-only">Follow on X</span>
                   <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
                     <path
                       d="M11.4678 8.77491L17.2961 2H15.915L10.8543 7.88256L6.81232 2H2.15039L8.26263 10.8955L2.15039 18H3.53159L8.87581 11.7878L13.1444 18H17.8063L11.4675 8.77491H11.4678ZM9.57608 10.9738L8.95678 10.0881L4.02925 3.03974H6.15068L10.1273 8.72795L10.7466 9.61374L15.9156 17.0075H13.7942L9.57608 10.9742V10.9738Z"/>
+                  </svg>
+                </a>
+              </li>
+              <li *ngIf="serviceProvider.social_media?.whatsapp">
+
+                <a [href]="serviceProvider.social_media?.whatsapp" target="_blank"
+                   class="flex h-6 w-6 items-center justify-center text-gray-400 hover:text-gray-500">
+                  <span class="sr-only">Follow on Whatsapp</span>
+                  <svg class="h-5 w-5 fill-gray-400 hover:fill-gray-500" viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+
+                    <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                    <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z" />
+
                   </svg>
                 </a>
               </li>
@@ -221,26 +234,27 @@
 
               <div class="mt-6 flex flex-wrap gap-4 rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:gap-6 sm:p-6 lg:gap-8 lg:p-8">
                 <div class="flex-1 space-y-3">
-                  <p class="text-3xl font-bold leading-none text-gray-900 dark:text-white">5/5</p>
+                  <p class="text-3xl font-bold leading-none text-gray-900 dark:text-white">{{serviceProvider.reviews | averageRating}}/5</p>
                   <p class="text-base font-normal leading-none text-gray-500 dark:text-gray-400">Average rating</p>
 
                   <div class="space-y-1">
                     <div class="flex items-center">
-                      <svg class="ms-0.5 h-5 w-5 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                      </svg>
-                      <svg class="ms-0.5 h-5 w-5 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                      </svg>
-                      <svg class="ms-0.5 h-5 w-5 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                      </svg>
-                      <svg class="ms-0.5 h-5 w-5 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                      </svg>
-                      <svg class="ms-0.5 h-5 w-5 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                      </svg>
+                      <app-rating [rating]="serviceProvider.reviews | averageRating"></app-rating>
+<!--                      <svg class="ms-0.5 h-5 w-5 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">-->
+<!--                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />-->
+<!--                      </svg>-->
+<!--                      <svg class="ms-0.5 h-5 w-5 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">-->
+<!--                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />-->
+<!--                      </svg>-->
+<!--                      <svg class="ms-0.5 h-5 w-5 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">-->
+<!--                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />-->
+<!--                      </svg>-->
+<!--                      <svg class="ms-0.5 h-5 w-5 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">-->
+<!--                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />-->
+<!--                      </svg>-->
+<!--                      <svg class="ms-0.5 h-5 w-5 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">-->
+<!--                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />-->
+<!--                      </svg>-->
                     </div>
                     <p class="text-sm font-normal leading-none text-gray-500 dark:text-gray-400">({{serviceProviderReviewPageable.total_elements}} reviews)</p>
                   </div>
@@ -249,45 +263,25 @@
                 <div class="hidden min-h-full w-px shrink-0 bg-gray-200 dark:bg-gray-700 lg:block"></div>
 
                 <div class="flex-1 space-y-3">
-                  <p class="text-3xl font-bold leading-none text-gray-900 dark:text-white">100M+</p>
-                  <p class="text-base font-normal leading-none text-gray-500 dark:text-gray-400">Worldwide Clients</p>
+                  <p class="text-3xl font-bold leading-none text-gray-900 dark:text-white">{{serviceProvider.is_verified ? 'Verified' : 'Not Verified'}}</p>
+                  <p class="text-base font-normal leading-none text-gray-500 dark:text-gray-400">Verified Status</p>
                   <div class="flex items-center gap-4">
-                    <img class="h-6" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/ford.svg" alt="" />
-                    <img class="h-5" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa.svg" alt="" />
-                    <img class="h-8" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/bmw.svg" alt="" />
+                    <svg *ngIf="serviceProvider.is_verified;else notVerified;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12 text-green-600">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+                    </svg>
+                    <ng-template #notVerified>
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12 text-red-600">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 0 0 5.636 5.636m12.728 12.728A9 9 0 0 1 5.636 5.636m12.728 12.728L5.636 5.636" />
+                      </svg>
+                    </ng-template>
+
+<!--                    <img class="h-6" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/ford.svg" alt="" />-->
+<!--                    <img class="h-5" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/visa.svg" alt="" />-->
+<!--                    <img class="h-8" src="https://flowbite.s3.amazonaws.com/blocks/e-commerce/brand-logos/bmw.svg" alt="" />-->
                   </div>
                 </div>
 
-                <div class="hidden min-h-full w-px shrink-0 bg-gray-200 dark:bg-gray-700 lg:block"></div>
 
-                <div class="h-px w-full shrink-0 bg-gray-200 dark:bg-gray-700 lg:hidden"></div>
-
-                <div class="w-full max-w-md">
-                  <div class="mb-4 space-y-3">
-                    <p class="text-xl font-semibold leading-none text-gray-900 dark:text-white">Do you own or have you used the product?</p>
-                    <p class="text-base font-normal leading-none text-gray-500 dark:text-gray-400">Give your opinion by rating the product</p>
-                    <div class="flex items-center">
-                      <svg class="me-1 h-6 w-6 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                      </svg>
-                      <svg class="me-1 h-6 w-6 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                      </svg>
-                      <svg class="me-1 h-6 w-6 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                      </svg>
-                      <svg class="me-1 h-6 w-6 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                      </svg>
-                      <svg class="me-1 h-6 w-6 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
-                      </svg>
-                      <button type="button" class="ms-1.5 text-sm font-medium leading-none text-gray-900 dark:text-white hover:underline">Give a note</button>
-                    </div>
-                  </div>
-
-                  <a href="#add-review" class="inline-flex rounded-lg bg-primary-700 px-5 py-2 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Write a customer review</a>
-                </div>
               </div>
 
               <div class="mt-6 sm:flex sm:items-end sm:justify-between">
@@ -299,11 +293,11 @@
 
                     <select [formControl]="ratingFilterControl" id="reviews" class="block w-full rounded-lg border border-gray-300 bg-gray-50 py-2.5 pl-2.5 pr-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500">
                       <option value="" selected>All Reviews</option>
-                      <option value="5">5 stars</option>
-                      <option value="4">4 stars</option>
-                      <option value="3">3 stars</option>
-                      <option value="2">2 stars</option>
-                      <option value="1">1 star</option>
+                      <option value="5">4 - 5 stars</option>
+                      <option value="4">3 - 4 stars</option>
+                      <option value="3">2 - 3 stars</option>
+                      <option value="2">1 - 2 stars</option>
+                      <option value="1">0 - 1 star</option>
                     </select>
                   </div>
 
@@ -327,7 +321,9 @@
                 </div>
                 <article class="py-6" *ngFor="let serviceProviderReview of serviceProviderReviewPageable.items;">
                   <div class="mb-3 flex items-center">
-                    <img class="mr-4 h-10 w-10 rounded-lg" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/michael-gough.png" alt="" />
+                    <div class="relative w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
+                      <svg class="absolute w-12 h-12 text-gray-400 -left-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path></svg>
+                    </div>
                     <div class="font-medium dark:text-white">
                       <p></p>
                     </div>
@@ -350,12 +346,12 @@
                     <div class="mt-3 flex items-center">
 <!--                      <a href="#" class="rounded-lg border border-gray-200 bg-white px-2 py-1.5 text-xs font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Helpful (2)</a>-->
 
-                      <button type="button" data-modal-target="report-modal" data-modal-toggle="report-modal" class="ms-4 inline-flex items-center gap-1.5 text-sm font-medium text-gray-900 hover:underline dark:text-white">
-                        <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z" />
-                        </svg>
-                        Report
-                      </button>
+<!--                      <button type="button" data-modal-target="report-modal" data-modal-toggle="report-modal" class="ms-4 inline-flex items-center gap-1.5 text-sm font-medium text-gray-900 hover:underline dark:text-white">-->
+<!--                        <svg class="h-5 w-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">-->
+<!--                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 14v7M5 4.971v9.541c5.6-5.538 8.4 2.64 14-.086v-9.54C13.4 7.61 10.6-.568 5 4.97Z" />-->
+<!--                        </svg>-->
+<!--                        Report-->
+<!--                      </button>-->
                     </div>
                   </aside>
                 </article>
@@ -377,138 +373,8 @@
                   <button [disabled]="!serviceProviderReviewPageable.has_next_page" class="flex h-8 items-center justify-center rounded-e border-0 border-s border-gray-700 bg-gray-800 px-3 text-sm font-medium text-white hover:bg-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white disabled:bg-gray-200 disabled:border-0" (click)="nextPage($event)">Next</button>
                 </div>
               </div>
-
-              <div class="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 lg:p-6">
-                <h3 class="text-gray-900 dark:text-white text-lg font-semibold mb-4">Add a review</h3>
-                <form action="#" id="add-review">
-                  <div class="mb-4 grid grid-cols-2 gap-4">
-                    <div class="col-span-2">
-                      <div class="flex items-center">
-                        <svg class="h-6 w-6 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                        </svg>
-                        <svg class="ms-2 h-6 w-6 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                        </svg>
-                        <svg class="ms-2 h-6 w-6 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                        </svg>
-                        <svg class="ms-2 h-6 w-6 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                        </svg>
-                        <svg class="ms-2 h-6 w-6 text-gray-300 dark:text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
-                          <path d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
-                        </svg>
-                        <span class="ms-2 text-lg font-bold text-gray-900 dark:text-white">3.0 out of 5</span>
-                      </div>
-                    </div>
-                    <div class="col-span-2">
-                      <label for="title" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Review title</label>
-                      <input type="text" name="title" id="title" class="block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" required="" />
-                    </div>
-                    <div class="col-span-2">
-                      <label for="description" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Review description</label>
-                      <textarea id="description" rows="6" class="mb-2 block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" required=""></textarea>
-                      <p class="ms-auto text-xs text-gray-500 dark:text-gray-400">Problems with the product or delivery? <a href="#" class="text-primary-600 hover:underline dark:text-primary-500">Send a report</a>.</p>
-                    </div>
-                    <div class="col-span-2">
-                      <p class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Add real photos of the product to help other customers <span class="text-gray-500 dark:text-gray-400">(Optional)</span></p>
-                      <div class="flex w-full items-center justify-center">
-                        <label for="dropzone-file" class="dark:hover:bg-bray-800 flex h-52 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-white hover:bg-gray-100 dark:border-gray-600 bg-white dark:bg-gray-700 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                          <div class="flex flex-col items-center justify-center pb-6 pt-5">
-                            <svg class="mb-4 h-8 w-8 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
-                            </svg>
-                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-                          </div>
-                          <input id="dropzone-file" type="file" class="hidden" />
-                        </label>
-                      </div>
-                    </div>
-                    <div class="col-span-2 flex items-center space-x-4">
-                      <label for="recommendation" class="block text-sm font-medium text-gray-900 dark:text-white">Do you recommend this product?</label>
-                      <div class="flex items-center">
-                        <input id="recommendation-radio" type="radio" value="" name="recommendation-radio" class="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
-                        <label for="recommendation-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Yes</label>
-                      </div>
-                      <div class="flex items-center">
-                        <input checked id="recommendation-radio-2" type="radio" value="" name="recommendation-radio" class="h-4 w-4 border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
-                        <label for="recommendation-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No</label>
-                      </div>
-                    </div>
-                    <div class="col-span-2">
-                      <div class="flex items-center">
-                        <input id="inline-review-checkbox" type="checkbox" value="" class="h-4 w-4 rounded border-gray-300 bg-white text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
-                        <label for="inline-review-checkbox" class="ms-2 text-sm font-medium text-gray-500 dark:text-gray-400">By publishing this review you agree with the <a href="#" class="text-primary-600 hover:underline dark:text-primary-500">terms and conditions</a>.</label>
-                      </div>
-                    </div>
-                  </div>
-                  <div>
-                    <button type="submit" class="me-2 inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Submit review</button>
-                    <button type="reset" class="me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Reset</button>
-                  </div>
-                </form>
-              </div>
             </div>
           </section>
-
-          <!-- Report modal -->
-          <div id="report-modal" tabindex="-1" aria-hidden="true" class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden antialiased antialiased md:inset-0">
-            <div class="relative max-h-full w-full max-w-lg p-4">
-              <!-- Modal content -->
-              <div class="relative rounded-lg bg-white shadow dark:bg-gray-800">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between rounded-t border-b border-gray-200 p-4 dark:border-gray-700 md:p-5">
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white">File a report</h3>
-                  <button type="button" class="ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="report-modal">
-                    <svg class="h-3 w-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                  </button>
-                </div>
-                <!-- Modal body -->
-                <form class="p-4 md:p-5">
-                  <div class="mb-4 grid grid-cols-2 gap-4">
-                    <div class="col-span-2">
-                      <label for="issue-radio" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">What kind of issue you're having?</label>
-                      <div class="mb-2 flex items-center">
-                        <input id="issue-radio" type="radio" value="" name="issue-radio" class="h-4 w-4 border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
-                        <label for="issue-radio" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Report listing abuse</label>
-                      </div>
-                      <div class="flex items-center">
-                        <input checked id="issue-radio-2" type="radio" value="" name="issue-radio" class="h-4 w-4 border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
-                        <label for="issue-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Report a violation</label>
-                      </div>
-                    </div>
-                    <div class="col-span-2">
-                      <label for="reason" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Report reason</label>
-                      <input type="text" name="reason" id="reason" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" required="" />
-                    </div>
-                    <div class="col-span-2">
-                      <label for="description" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Describe your issue</label>
-                      <textarea id="description" rows="6" class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-500 dark:bg-gray-600 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500" required=""></textarea>
-                    </div>
-                    <div class="col-span-2">
-                      <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white" for="file_input">Add an attachment</label>
-                      <input class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder:text-gray-400" id="file_input" type="file" />
-                    </div>
-                    <div class="col-span-2">
-                      <div class="flex items-center">
-                        <input id="link-checkbox" type="checkbox" value="" class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
-                        <label for="link-checkbox" class="ms-2 text-sm font-medium text-gray-500 dark:text-gray-400">I have read and agree with the <a href="#" class="text-primary-600 hover:underline dark:text-primary-500">terms and conditions</a>.</label>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="border-t border-gray-200 pt-4 dark:border-gray-700 md:pt-5">
-                    <button type="submit" class="me-2 inline-flex items-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Send report</button>
-                    <button type="button" data-modal-toggle="report-modal" class="me-2 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700">Cancel</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
 <!--             *ngIf="serviceProviderReviews$ | async as serviceProviderReviewPageable">-->
 <!--          <div>-->
 <!--            <div class="border-b border-gray-200">-->
