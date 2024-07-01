@@ -22,4 +22,7 @@ export class RatingComponent {
   @Input()
   rating: any = 0;
 
+  @Input()
+  readOnly: boolean = true;
+
 }
