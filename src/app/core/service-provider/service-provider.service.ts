@@ -12,6 +12,7 @@ import {Appointment} from "../appointment/appointment.interface";
 import {BasicInfoForm, DocumentAndCredentialsForm} from "./service-provider-signup.service";
 import {Image} from "../file/image.interface";
 import {ServiceProviderInput} from "./service-provider-input.interface";
+import {ReviewInput} from "../review/review-input.interface";
 
 @Injectable({
   providedIn: 'root'
@@ -249,4 +250,7 @@ export class ProviderService {
     return this.httpClient.post(`${this.url}/me/payment-accounts`, {}, {responseType: 'text'});
   }
 
+  saveReview(id: string, serviceId: number, serviceProviderId: string, customerId: string, createdAt: Date, input: ReviewInput){
+    return this.httpClient.post<void>(`${this.url}/${id}/appointments/${serviceId}/${serviceProviderId}/${customerId}/${createdAt}/reviews`, input);
+  }
 }
