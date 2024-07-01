@@ -170,7 +170,7 @@ export interface BankingDetailsForm {
 export interface ContactInfo {
   email_address: string;
   phone_number: string;
-  whatsapp: string;
+  fax_number: string;
 }
 
 export interface Coverage {
@@ -183,6 +183,7 @@ export interface DocumentAndCredentialsForm {
   front_identity_card: File;
   back_identity_card: File;
   ssm: File;
+  business_profile_image: File;
 }
 
 export interface SocialMediaLink {
@@ -207,6 +208,12 @@ export interface BasicInfoForm {
     phone_number: string;
     website: string;
   };
+  social_media:{
+    facebook: string;
+    instagram: string;
+    twitter: string;
+    whatsapp: string;
+  }
   service_details: {
     coverage: {
       value: State;
