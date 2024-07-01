@@ -38,8 +38,6 @@ export class ServiceProviderOnboardingComponent implements OnInit {
 
   provider$!: Observable<ServiceProvider>;
 
-  // steps:string[]  = ['Basic Information', 'Document', 'Payment Details', 'Album'];
-  // currentStep: string = 'Basic Information';
 
   constructor(private serviceProviderSignupService: ServiceProviderSignupService,
               private providerService: ProviderService,
@@ -56,15 +54,17 @@ export class ServiceProviderOnboardingComponent implements OnInit {
         if (serviceProvider) {
           this.serviceProviderSignupService.currentStepIndex = 1;
         }
-        if ((serviceProvider.front_identity_card && serviceProvider.back_identity_card && serviceProvider.ssm)
+        if ((serviceProvider?.['front_identity_card'] && serviceProvider?.['back_identity_card'] && serviceProvider?.['ssm'])
           || !status) {
           this.serviceProviderSignupService.currentStepIndex = 2;
         }
-        if (serviceProvider.stripe_account_id && status) {
+        if (serviceProvider?.['stripe_account_id'] && status) {
           this.router.navigate(['completed'], {relativeTo: this.activatedRoute});
+        } else {
+          this.serviceProviderSignupService.currentStepIndex = 0;
         }
 
-        return serviceProvider;
+        return serviceProvider || {} as ServiceProvider;
       }))
     // this.providerService.findCurrentServiceProvider().subscribe({
     //   next: res => {
