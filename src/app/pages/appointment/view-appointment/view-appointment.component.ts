@@ -44,7 +44,7 @@ export class ViewAppointmentComponent {
   pageRequest: PageRequest = {
     page: 0,
     page_size: 5,
-    sort: '',
+    sort: 'createdAt,DESC',
     search: {
       keyword: '',
       attributes: []
