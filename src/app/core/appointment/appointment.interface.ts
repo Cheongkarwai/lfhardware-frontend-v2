@@ -1,5 +1,6 @@
 import {ContactInfo} from "../service-provider/service-provider-signup.service";
 import {ServiceProvider} from "../service-provider/service-provider.interface";
+import {Address} from "../order/order.interface";
 
 export interface Appointment{
   id: string;
@@ -23,6 +24,8 @@ export interface Appointment{
   job_completion_datetime: Date;
   review_datetime: Date;
   status_last_update: Date;
+  address: Address;
+  has_review: boolean;
   appointment_completion_images: AppointmentCompletionImage[];
 }
 

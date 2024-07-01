@@ -13,6 +13,8 @@ export class AppointmentService {
   private readonly url = `${environment.api_url}/appointments`;
 
   refreshServiceProviderManageAppointment$: ReplaySubject<void> = new ReplaySubject<void>(1);
+  refreshAdminManageAppointment$: ReplaySubject<void> = new ReplaySubject<void>(1);
+  refreshAppointment$: ReplaySubject<void> = new ReplaySubject<void>(1);
 
   constructor(private httpClient: HttpClient) {
   }
@@ -85,5 +87,13 @@ export class AppointmentService {
 
   save(body: { estimated_price: number; service_provider_id: string; service_id: number; status: string }) {
     return this.httpClient.post(`${this.url}`, body, {responseType: 'text'});
+  }
+
+  createTransfer(serviceId: number, serviceProviderId: string, customerId: string, createdAt: Date) {
+    return this.httpClient.post<void>(`${this.url}/${serviceId}/${serviceProviderId}/${customerId}/${createdAt}/funds/transfer`, {});
+  }
+
+  viewReceipt(serviceId: number, serviceProviderId: string, customerId: string, createdAt: Date) {
+    return this.httpClient.get(`${this.url}/${serviceId}/${serviceProviderId}/${customerId}/${createdAt}/receipt`, {responseType: 'text'});
   }
 }
