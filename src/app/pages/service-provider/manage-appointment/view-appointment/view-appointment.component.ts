@@ -117,6 +117,7 @@ export class ViewAppointmentComponent implements OnInit {
               }
             }).afterClosed().subscribe(res => {
               this.dialogRef.close();
+              this.appointmentService.refreshServiceProviderManageAppointment$.next();
             })
           },
           error: err => {
@@ -155,6 +156,7 @@ export class ViewAppointmentComponent implements OnInit {
               }
             }).afterClosed().subscribe(res => {
               this.dialogRef.close();
+              this.appointmentService.refreshServiceProviderManageAppointment$.next();
             })
           },
           error: err => {
@@ -197,6 +199,7 @@ export class ViewAppointmentComponent implements OnInit {
                 }
               }).afterClosed().subscribe(res => {
                 this.dialogRef.close();
+                this.appointmentService.refreshServiceProviderManageAppointment$.next();
               })
             },
             error: err => {
