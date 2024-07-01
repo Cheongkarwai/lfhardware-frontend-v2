@@ -122,7 +122,7 @@ export class ManageAppointmentComponent implements OnInit, AfterViewInit {
     this.appointmentPageable = combineLatest([
       this.pagination$.pipe(startWith(this.pageRequest)),
       this.searchControl.valueChanges.pipe(startWith('')),
-      this.refresh$.pipe(startWith('')),
+      this.appointmentService.refreshServiceProviderManageAppointment$.pipe(startWith('')),
       this.filters[0].formArray.valueChanges.pipe(startWith([]))
     ])
       .pipe(
@@ -222,7 +222,7 @@ export class ManageAppointmentComponent implements OnInit, AfterViewInit {
                   status: Status.SUCCESS
                 }
               }).afterClosed().subscribe(res => {
-                this.refresh$.next();
+                this.appointmentService.refreshServiceProviderManageAppointment$.next();
                 this.table.uncheckAll();
               })
             },
@@ -266,7 +266,7 @@ export class ManageAppointmentComponent implements OnInit, AfterViewInit {
                   status: Status.SUCCESS
                 }
               }).afterClosed().subscribe(res => {
-                this.refresh$.next();
+                this.appointmentService.refreshServiceProviderManageAppointment$.next();
                 this.table.uncheckAll();
               })
             },
