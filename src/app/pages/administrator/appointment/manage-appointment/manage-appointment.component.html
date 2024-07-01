@@ -47,7 +47,7 @@
     <div class="border rounded-[0.5rem]  shadow-sm p-3 table-responsive-md"
          *ngIf="appointments$ | async as appointmentPageable">
       <app-table [columns]="columns" layout="list"
-                 [data]="appointmentPageable" [enableEdit]="true"
+                 [data]="appointmentPageable"
                  [enableInfo]="true" (view)="openViewDialog($event)"
                  [filters]="filters" [searchControl]="searchControl"></app-table>
       <tui-table-pagination
