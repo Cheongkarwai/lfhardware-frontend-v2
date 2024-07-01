@@ -109,8 +109,9 @@ export class ManageAppointmentComponent implements OnInit {
     this.appointments$ = combineLatest([
       this.searchControl.valueChanges.pipe(startWith('')),
       this.filters[0].formArray.valueChanges.pipe(startWith([])),
+      this.appointmentService.refreshServiceProviderManageAppointment$.asObservable().pipe(startWith('')),
       this.pagination$.pipe(startWith(this.pageRequest))])
-      .pipe(switchMap(([keyword, statusArray , page])=>{
+      .pipe(switchMap(([keyword, statusArray , refresh, page])=>{
         page.search.keyword = '';
         if (keyword) {
           page.search.keyword = keyword;
@@ -176,7 +177,8 @@ export class ManageAppointmentComponent implements OnInit {
     this.dialog.open(ViewAppointmentComponent, {
       data: {
         appointment: appointment
-      }
+      },
+      maxHeight: 500
     });
   }
 
