@@ -15,6 +15,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {ToastService} from "../../../../core/dialog/toast.service";
 import {ConfirmationDialogComponent} from "../../../../components/confirmation-dialog/confirmation-dialog.component";
 import {RouterModule} from "@angular/router";
+import {AppointmentDetailsComponent} from "../../appointment-details/appointment-details.component";
 
 @Component({
   selector: 'app-list-view',
@@ -75,7 +76,7 @@ export class ListViewComponent {
   appointments: Appointment[] = [];
   refresh$: ReplaySubject<string> = new ReplaySubject<string>(1);
   layout: string = 'list';
-  status:string[]= ['PENDING', 'WORK_IN_PROGRESS','CONFIRMED', 'REVIEW'];
+  status:string[]= ['PENDING', 'WORK_IN_PROGRESS','CONFIRMED','WORK_COMPLETED', 'REVIEW'];
 
   constructor(private customerService: CustomerService,
               private appointmentService: AppointmentService,
@@ -115,7 +116,9 @@ export class ListViewComponent {
 
   payAppointmentFee(appointment: Appointment) {
     this.appointmentService.payAppointmentFees(appointment).subscribe({
-      next: res => window.open(res),
+      next: res => {
+        window.location.href = res;
+      },
       error: err => {
         this.toastService.open('Something wrong during payment', 'error');
       }
@@ -198,5 +201,26 @@ export class ListViewComponent {
 
   changeLayout(layout: string) {
     this.layout = layout;
+  }
+
+  viewDetails(serviceId: number, serviceProviderId: string, createdAt: Date) {
+    this.dialog.open(AppointmentDetailsComponent, {
+      data: {
+        serviceId: serviceId,
+        serviceProviderId: serviceProviderId,
+        createdAt: createdAt
+      },
+      maxHeight:600,
+    });
+  }
+
+  viewReceipt(appointment: Appointment) {
+    this.appointmentService.viewReceipt(appointment.service.id, appointment.service_provider.id, appointment.customer.id, appointment.created_at)
+      .subscribe({
+        next:res=> window.open(res),
+        error:err=> {
+          this.toastService.open('Something went wrong when opening receipt','error');
+        }
+      });
   }
 }
