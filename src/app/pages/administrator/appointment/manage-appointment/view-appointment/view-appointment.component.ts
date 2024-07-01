@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {CommonModule} from "@angular/common";
+import {CommonModule, CurrencyPipe} from "@angular/common";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {forkJoin, map, Observable, startWith, switchMap} from "rxjs";
 import {initFlowbite} from "flowbite";
@@ -23,11 +23,13 @@ import {ConfirmationDialogComponent} from "../../../../../components/confirmatio
 import {ToastService} from "../../../../../core/dialog/toast.service";
 import {ProviderService} from "../../../../../core/service-provider/service-provider.service";
 import {ServiceProviderDetails} from "../../../../../core/service-provider/service-provider-details";
+import {PaymentService} from "../../../../../core/payment/payment.service";
 
 @Component({
   selector: 'app-view-appointment',
   standalone: true,
   imports: [CommonModule, BadgeComponent, DropdownComponent, ButtonComponent, AppointmentProgressBarComponent],
+  providers: [CurrencyPipe],
   templateUrl: './view-appointment.component.html',
   styleUrl: './view-appointment.component.scss'
 })
@@ -43,7 +45,9 @@ export class ViewAppointmentComponent implements OnInit {
               private customerService: CustomerService,
               private appointmentService: AppointmentService,
               private dialog: MatDialog,
-              private toastService: ToastService) {
+              private toastService: ToastService,
+              private paymentService: PaymentService,
+              private currencyPipe: CurrencyPipe) {
   }
 
   ngOnInit() {
@@ -68,6 +72,8 @@ export class ViewAppointmentComponent implements OnInit {
       return `Appointment #${id} is in progress`;
     } else if (status === 'CONFIRMED') {
       return `Appointment #${id} is confirmed`;
+    }else if(status === 'REVIEW'){
+      return `Appointment #${id} has been reviewed`
     }
     return '';
   }
@@ -99,7 +105,10 @@ export class ViewAppointmentComponent implements OnInit {
           next: res => {
             this.dialogRef.close();
             this.dialogRef.afterClosed().subscribe({
-              next: res => this.toastService.open(this.getUpdateStatusMessage(status, this.data.appointment.id), 'success')
+              next: res => {
+                this.appointmentService.refreshServiceProviderManageAppointment$.next();
+                this.toastService.open(this.getUpdateStatusMessage(status, this.data.appointment.id), 'success')
+              }
             });
           },
           error: err => this.toastService.open(`Something went wrong when updating appointment status to ${status}`, 'success')
@@ -127,5 +136,30 @@ export class ViewAppointmentComponent implements OnInit {
     });
   }
 
+  releasePayment(appointment: Appointment){
+
+    this.dialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: `Release payment of ${this.currencyPipe.transform(appointment.estimated_price, 'MYR')}`,
+        text: `Are you sure you want to release payment to ${appointment.service_provider.name}? All of the data will be permanently updated. This action cannot be undone.`,
+        icon: 'warning'
+      }
+    }).afterClosed().subscribe(res => {
+      if (res) {
+        this.appointmentService.createTransfer(appointment.service.id, appointment.service_provider.id, appointment.customer.id, appointment.created_at)
+          .subscribe({
+            next:res=> {
+              this.dialogRef.close();
+              this.dialogRef.afterClosed().subscribe({
+                next: res => {
+                  this.appointmentService.refreshServiceProviderManageAppointment$.next();
+                  this.toastService.open(`#Appointment ${appointment.id} with estimated price of RM${appointment.estimated_price} is released to ${appointment.service_provider.name}`, 'success')
+                }
+              });
+            }
+          });
+      }
+    });
+  }
 
 }
