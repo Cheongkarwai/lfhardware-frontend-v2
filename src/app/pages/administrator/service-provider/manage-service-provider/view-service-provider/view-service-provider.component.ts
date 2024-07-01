@@ -1,17 +1,17 @@
-import {Component, Inject, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {Observable} from "rxjs";
 import {ServiceProviderDetails} from "../../../../../core/service-provider/service-provider-details";
 import {ProviderService} from "../../../../../core/service-provider/service-provider.service";
-import {POLYMORPHEUS_CONTEXT, PolymorpheusContent, PolymorpheusModule} from "@tinkoff/ng-polymorpheus";
-import {TuiAlertService, TuiButtonModule, TuiDialogContext, TuiRootModule} from "@taiga-ui/core";
-import {AsyncPipe, CommonModule, NgIf} from "@angular/common";
+import {PolymorpheusModule} from "@tinkoff/ng-polymorpheus";
+import {TuiButtonModule, TuiRootModule} from "@taiga-ui/core";
+import {CommonModule} from "@angular/common";
 import {LoadingSpinnerComponent} from "../../../../../components/loading-spinner/loading-spinner.component";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {BadgeComponent} from "../../../../../components/badge/badge.component";
 import {DocumentPreviewComponent} from "../../../../../components/document-preview/document-preview.component";
 import {PreviewButtonComponent} from "../../../../../components/preview-button/preview-button.component";
-import {TuiPreviewActionModule, TuiPreviewDialogService, TuiPreviewModule} from "@taiga-ui/addon-preview";
-import {tuiClamp, TuiSwipe, TuiSwipeModule} from "@taiga-ui/cdk";
+import {TuiPreviewActionModule, TuiPreviewModule} from "@taiga-ui/addon-preview";
+import {TuiSwipeModule} from "@taiga-ui/cdk";
 import {FileService} from "../../../../../core/file/file.service";
 import {DownloadButtonComponent} from "../../../../../components/download-button/download-button.component";
 import {
