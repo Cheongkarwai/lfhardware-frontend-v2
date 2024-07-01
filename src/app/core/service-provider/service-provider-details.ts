@@ -22,7 +22,8 @@ export interface ServiceProviderDetails {
   social_media: {
     facebook: string;
     instagram: string;
-    tiktok: string;
+    twitter: string;
+    whatsapp: string;
   },
   front_identity_card: string;
   back_identity_card: string;
@@ -33,4 +34,5 @@ export interface ServiceProviderReview extends Review {
   service_provider: ServiceProvider;
   customer: Customer
 }
+
 
