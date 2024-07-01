@@ -1,6 +1,8 @@
 <div id="readProductModal" tabindex="-1" aria-hidden="true"
      class="overflow-y-auto overflow-x-hidden top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full"
      *ngIf="appointmentInfo$ | async as appointmentInfo">
+<!--  <button (click)="releasePayment(appointmentInfo[2].service.id, appointmentInfo[2].service_provider.id, appointmentInfo[2].customer.id, appointmentInfo[2].created_at)">Release</button>-->
+
   <div class="relative p-4 w-full max-w-3xl h-full md:h-auto">
     <!-- Modal content -->
     <div class="relative p-4 bg-white rounded-lg dark:bg-gray-800 sm:p-5">
@@ -92,8 +94,8 @@
               <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{appointmentInfo[3]?.contact_info?.phone_number}}</dd>
             </dl>
             <dl class="py-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
-              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Service Provider Whatsapp</dt>
-              <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{appointmentInfo[3]?.contact_info?.whatsapp}}</dd>
+              <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Service Provider Fax Number</dt>
+              <dd class="mb-4 font-light text-gray-500 sm:mb-5 dark:text-gray-400">{{appointmentInfo[3]?.contact_info?.fax_number}}</dd>
             </dl>
             <dl class="py-4 sm:flex sm:items-center sm:justify-between sm:gap-4">
               <dt class="mb-2 font-semibold leading-none text-gray-900 dark:text-white">Service Provider Email Address</dt>
@@ -108,7 +110,7 @@
            <app-button text="Approve" (click)="updateStatus('REVIEW')"></app-button>
          </ng-container>
           <ng-container *ngIf="appointmentInfo[2].status === 'REVIEW'">
-            <app-button text="Release Payment" (click)="updateStatus('COMPLETED')"></app-button>
+            <app-button text="Release Payment" (click)="releasePayment(appointmentInfo[2])"></app-button>
           </ng-container>
         </div>
       </div>
