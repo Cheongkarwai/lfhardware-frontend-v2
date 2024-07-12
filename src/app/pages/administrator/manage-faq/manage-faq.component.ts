@@ -15,6 +15,7 @@ import {DialogModule} from "@angular/cdk/dialog";
 import {MatDialog, MatDialogModule} from "@angular/material/dialog";
 import {AddFaqComponent} from "./add-faq/add-faq.component";
 import {TextInputComponent} from "../../../components/text-input/text-input.component";
+import {Breadcrumb, BreadcrumbComponent} from "../../../components/breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-manage-faq',
@@ -26,12 +27,28 @@ import {TextInputComponent} from "../../../components/text-input/text-input.comp
     ReactiveFormsModule,
     ButtonComponent,
     MatDialogModule,
-    TextInputComponent
+    TextInputComponent,
+    BreadcrumbComponent
   ],
   templateUrl: './manage-faq.component.html',
   styleUrl: './manage-faq.component.scss'
 })
 export class ManageFaqComponent implements OnInit {
+
+  breadcrumbItems: Breadcrumb[] = [
+    {
+      caption: 'Home',
+      routerLink: '',
+    },
+    {
+      caption: 'Page Settings',
+      routerLink: '/page-settings'
+    },
+    {
+      caption: 'Manage FAQ',
+      routerLink: '/manage-faq'
+    },
+  ];
 
   faqFormArray!: FormArray;
   faqs$!: Observable<Faq[]>;

@@ -20,6 +20,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {Filter} from "../../../../components/table-header/table-header.component";
 import {EditServiceProviderComponent} from "./edit-service-provider/edit-service-provider.component";
 import {AddServiceProviderComponent} from "./add-service-provider/add-service-provider.component";
+import {Breadcrumb, BreadcrumbComponent} from "../../../../components/breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-manage-service-provider',
@@ -36,11 +37,28 @@ import {AddServiceProviderComponent} from "./add-service-provider/add-service-pr
     LoadingSpinnerComponent,
     ReactiveFormsModule,
     ButtonComponent,
+    BreadcrumbComponent,
   ],
   templateUrl: './manage-service-provider.component.html',
   styleUrl: './manage-service-provider.component.scss'
 })
 export class ManageServiceProviderComponent implements OnInit, OnDestroy{
+
+  breadcrumbItems: Breadcrumb[] = [
+    {
+      caption: 'Home',
+      routerLink: '',
+    },
+    {
+      caption: 'Service Provider',
+      routerLink: '/service-provider'
+    },
+    {
+      caption: 'Manage Service Provider',
+      routerLink: '/manage-service-provider'
+    },
+  ];
+
   page = 0;
   size = 50;
   columns = [

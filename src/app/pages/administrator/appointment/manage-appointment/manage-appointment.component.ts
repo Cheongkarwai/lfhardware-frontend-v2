@@ -11,6 +11,7 @@ import {AppointmentTable} from "../../../../core/appointment/appointment-table.i
 import {MatDialog} from "@angular/material/dialog";
 import {ViewAppointmentComponent} from "./view-appointment/view-appointment.component";
 import {Filter} from "../../../../components/table-header/table-header.component";
+import {Breadcrumb, BreadcrumbComponent} from "../../../../components/breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-manage-appointment',
@@ -20,12 +21,28 @@ import {Filter} from "../../../../components/table-header/table-header.component
     TuiTablePaginationModule,
     ReactiveFormsModule,
     RouterLink,
-    CommonModule
+    CommonModule,
+    BreadcrumbComponent
   ],
   templateUrl: './manage-appointment.component.html',
   styleUrl: './manage-appointment.component.scss'
 })
 export class ManageAppointmentComponent implements OnInit {
+
+  breadcrumbItems: Breadcrumb[] = [
+    {
+      caption: 'Home',
+      routerLink: '',
+    },
+    {
+      caption: 'Page Settings',
+      routerLink: '/page-settings'
+    },
+    {
+      caption: 'Manage Form',
+      routerLink: '/manage-form'
+    },
+  ];
 
   //Filters
   filters: Filter[] = [{

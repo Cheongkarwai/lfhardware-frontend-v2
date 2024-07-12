@@ -16,6 +16,7 @@ import {ButtonComponent} from "../../../../components/button/button.component";
 import {FormControl, FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {RouterLink} from "@angular/router";
 import {AlertService} from "../../../../core/service/alert.service";
+import {Breadcrumb, BreadcrumbComponent} from "../../../../components/breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-manage-product',
@@ -32,6 +33,7 @@ import {AlertService} from "../../../../core/service/alert.service";
     FormsModule,
     RouterLink,
     ReactiveFormsModule,
+    BreadcrumbComponent,
   ],
   providers: [
     tuiTablePaginationOptionsProvider({
@@ -42,6 +44,22 @@ import {AlertService} from "../../../../core/service/alert.service";
   styleUrl: './manage-product.component.scss'
 })
 export class ManageProductComponent implements OnInit {
+
+  breadcrumbItems: Breadcrumb[] = [
+    {
+      caption: 'Home',
+      routerLink: '',
+    },
+    {
+      caption: 'Product',
+      routerLink: '/product'
+    },
+    {
+      caption: 'Manage Product',
+      routerLink: '/manage-product'
+    },
+  ];
+
   columns = [
     {key: 'image', value: 'Image'},
     {key: 'name', value: 'Name'},

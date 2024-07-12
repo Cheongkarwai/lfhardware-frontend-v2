@@ -20,6 +20,7 @@ import {DialogSubscriptionService} from "../../../../core/dialog/dialog.service"
 import {ButtonComponent} from "../../../../components/button/button.component";
 import {AlertService} from "../../../../core/service/alert.service";
 import {Status} from "../../../../components/alert-dialog/alert-dialog.component";
+import {Breadcrumb, BreadcrumbComponent} from "../../../../components/breadcrumb/breadcrumb.component";
 
 @Component({
   selector: 'app-manage-order',
@@ -40,12 +41,29 @@ import {Status} from "../../../../components/alert-dialog/alert-dialog.component
     NgbNavItem,
     LoadingSpinnerComponent,
     ReactiveFormsModule,
-    ButtonComponent
+    ButtonComponent,
+    BreadcrumbComponent
   ],
   templateUrl: './manage-order.component.html',
   styleUrl: './manage-order.component.scss'
 })
 export class ManageOrderComponent {
+
+  breadcrumbItems: Breadcrumb[] = [
+    {
+      caption: 'Home',
+      routerLink: '',
+    },
+    {
+      caption: 'Orders',
+      routerLink: '/order'
+    },
+    {
+      caption: 'Manage Order',
+      routerLink: '/manage-order'
+    },
+  ];
+
   page = 0;
   size = 50;
   columns = [

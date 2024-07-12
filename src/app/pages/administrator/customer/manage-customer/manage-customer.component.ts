@@ -41,6 +41,22 @@ export interface CustomerTable {
   styleUrl: './manage-customer.component.scss'
 })
 export class ManageCustomerComponent implements OnInit {
+
+  breadcrumbItems = [
+    {
+      caption: 'Home',
+      routerLink: '',
+    },
+    {
+      caption: 'Customer',
+      routerLink: '/customer'
+    },
+    {
+      caption: 'Manage Customer',
+      routerLink: '/manage-customer'
+    },
+  ];
+
   search: FormControl<string | null> = new FormControl<string | null>('');
   customerPageable$!: Observable<Pageable<CustomerTable>>;
   pageRequest: PageRequest = {

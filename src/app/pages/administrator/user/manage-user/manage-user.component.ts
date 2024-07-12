@@ -98,15 +98,12 @@ export class ManageUserComponent {
               has_previous_page: users.has_previous_page,
               items: users.items.map(user => {
                 return {
+                  id: user.id,
                   username: user.username,
-                  email_address: user.profile.email_address,
-                  phone_number: user.profile.phone_number,
-                  role: user.roles.map(role => role.name).join(', '),
-                  address_line_1: user.profile.address?.line_1,
-                  address_line_2: user.profile.address?.line_2,
-                  state: user.profile.address?.state || '',
-                  city: user.profile.address?.city || '',
-                  zipcode: user.profile.address?.zipcode || ''
+                  email: user.profile.email_address,
+                  first_name: user.first_name,
+                  last_name: user.last_name,
+                  email_verified: user.email_verified
                 } as UserTable;
               })
             } as Pageable<UserTable>
