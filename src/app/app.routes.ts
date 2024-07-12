@@ -77,6 +77,7 @@ import {
   ManageAppointmentComponent
 } from "./pages/administrator/appointment/manage-appointment/manage-appointment.component";
 import {userOnboardingGuard} from "./core/guard/user-onboarding.guard";
+import {ManageFormComponent} from "./pages/administrator/page-settings/manage-form/manage-form.component";
 
 export const routes: Routes = [
   {
@@ -233,7 +234,8 @@ export const routes: Routes = [
       {
         path: 'page-settings', component: PageSettingsComponent,
         children: [
-          {path: 'manage-faq', component: ManageFaqComponent}
+          {path: 'manage-faq', component: ManageFaqComponent},
+          {path: 'manage-form', component: ManageFormComponent}
         ]
       },
       {
