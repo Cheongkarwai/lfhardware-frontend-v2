@@ -7,26 +7,32 @@ import {BehaviorSubject, shareReplay} from "rxjs";
 import {ServiceDetails} from "./service-details.interface";
 
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root'
 })
-export class ProviderBusinessService{
+export class ProviderBusinessService {
 
   private url = `${environment.api_url}/services`
 
   private serviceCategories$ = new BehaviorSubject<ServiceCategory[]>([]);
-  constructor(private httpClient:HttpClient){}
 
-  findAllServices(){
+  constructor(private httpClient: HttpClient) {
+  }
+
+  findAllServices() {
     //this.httpClient.get<ServiceCategory[]>(this.url).subscribe(res=> this.serviceCategories$.next(res));
     return this.httpClient.get<ServiceCategory[]>(this.url).pipe(shareReplay());
   }
 
-  get serviceCategoriesObs(){
+  get serviceCategoriesObs() {
     return this.serviceCategories$.asObservable();
   }
 
 
   findDetailsById(id: number) {
     return this.httpClient.get<ServiceDetails>(`${this.url}/${id}/details`);
+  }
+
+  findFormByServiceId(id: any) {
+    return this.httpClient.get<{ configuration: { elements: any[] } }>(`${this.url}/${id}/forms`)
   }
 }
