@@ -1,0 +1,44 @@
+<div class="flex justify-between py-10 flex-wrap">
+  <div class="flex flex-col gap-3">
+    <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+    <div>
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">All forms</h1>
+    </div>
+  </div>
+</div>
+<div class="w-100 vh-100">
+  <div *ngIf="configuration$ | async" class="grid grid-cols-3">
+    <div class="col-span-3" *ngIf="services$ | async as services">
+      <label for="small" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a service</label>
+      <select [formControl]="serviceControl"
+              class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-rose-500 focus:border-rose-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-rose-500 dark:focus:border-rose-500">
+        <option value="" [disabled]="true">Select a service</option>
+        <option *ngFor="let service of services" [ngValue]="service">{{service.name}}</option>
+      </select>
+    </div>
+      <survey [model]="surveyModel" class="col-span-3 md:col-span-2"></survey>
+      <form class="col-span-3 md:col-span-1 d-flex justify-center items-center border-2 p-4">
+        <label for="small" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a form
+          control</label>
+        <select [formControl]="selectControl" id="small"
+                class="block w-full p-2 mb-6 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-rose-500 focus:border-rose-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-rose-500 dark:focus:border-rose-500">
+          <option value="''">Select a form control</option>
+          <option value="RADIOBUTTON">Radio button</option>
+          <option value="INPUTTEXT">Input Text</option>
+          <option value="CHECKBOX">Checkbox</option>
+          <option value="DATE">Date Picker</option>
+          <option value="DATETIME">Date Time Picker</option>
+        </select>
+        <ng-container [ngSwitch]="selectControl.getRawValue()">
+          <app-radio-button-form *ngSwitchCase="'RADIOBUTTON'"></app-radio-button-form>
+          <app-input-text-form *ngSwitchCase="'INPUTTEXT'"></app-input-text-form>
+          <app-checkbox-form *ngSwitchCase="'CHECKBOX'"></app-checkbox-form>
+          <app-date-form *ngSwitchCase="'DATE'"></app-date-form>
+          <app-datetime-form *ngSwitchCase="'DATETIME'"></app-datetime-form>
+        </ng-container>
+        <div class="flex justify-end">
+          <app-button text="Save" (click)="saveForm()"></app-button>
+        </div>
+      </form>
+  </div>
+</div>
