@@ -18,7 +18,7 @@
         <div>
           <app-phone-input placeholder="1128188291" title="Business phone number"
                            [prefixControl]="businessPhoneNumberPrefixControl"
-                           [control]="businessPhoneNumberControl"></app-phone-input>
+                           [control]="businessPhoneNumberControl" ></app-phone-input>
         </div>
         <div>
           <app-phone-input placeholder="3 28188291" title="Business fax number"
@@ -38,7 +38,7 @@
               <app-dropdown [control]="businessCityControl" [items]="cityItems" title="Select a city" placeholder="Select a city"></app-dropdown>
             </div>
             <div *ngIf="stateItems$ | async as stateItems">
-              <app-dropdown [control]="businessStateControl" [items]="stateItems" title="Select a city" placeholder="Select a state"></app-dropdown>
+              <app-dropdown [control]="businessStateControl" [items]="stateItems" title="Select a state" placeholder="Select a state"></app-dropdown>
             </div>
 <!--            <app-text-input [control]="businessStateControl" placeholder="Enter your business address state"-->
 <!--                            title="State"-->
